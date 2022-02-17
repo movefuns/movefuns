@@ -1,6 +1,6 @@
 # starcoin-framework-commons
 
-The Move commons library for starcoin-framework. 
+The Move commons library on starcoin-framework. 
 
 The goal of this library is to provide a common extension library on the starcoin-framework, and simplifying the development of DApp SmartContracts on Move, like apache-commons library on Java.
 

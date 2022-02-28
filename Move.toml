@@ -6,7 +6,6 @@ version = "0.0.1"
 [addresses]
 StarcoinFramework = "0x1"
 SFC = "0x2"
-Base64 = "0x2"
 
 [dependencies]
 StarcoinFramework = {git = "https://github.com/starcoinorg/starcoin.git", subdir="vm/stdlib", rev="3e895169a8f8dd883277050bb90645c52a370cee"}

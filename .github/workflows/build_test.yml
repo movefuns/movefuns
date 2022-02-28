@@ -20,7 +20,7 @@ jobs:
           profile: minimal
       - name: setup environment
         run: |
-          bash curl -s https://raw.githubusercontent.com/starcoinorg/starcoin-framework/main/scripts/dev_setup.sh | bash /dev/stdin -b -t -y -p
+          bash apt install curl -y && curl -s https://raw.githubusercontent.com/starcoinorg/starcoin-framework/main/scripts/dev_setup.sh | bash /dev/stdin -b -t -y -p
       - name: build
         run: |
           source "$HOME/.profile"

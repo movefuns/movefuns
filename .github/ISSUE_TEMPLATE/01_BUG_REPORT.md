@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 about: Create a report to help starcoin-framework-commons to improve
-title: "bug: "
+title: "[bug]"
 labels: "bug"
 assignees: ""
 ---

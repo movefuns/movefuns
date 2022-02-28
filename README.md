@@ -12,7 +12,7 @@ Download from the release page of [starcoiorg/starcoin](https://github.com/starc
 Or use:
 
 ```shell
-cargo install --git https://github.com/starcoinorg/starcoin --bin mpm
+curl -s https://raw.githubusercontent.com/starcoinorg/starcoin-framework/main/scripts/dev_setup.sh | bash /dev/stdin -b -t
 ```
 
 ## Build and test

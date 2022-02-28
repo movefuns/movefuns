@@ -1,6 +1,5 @@
-module Base64::Base64{
+module SFC::Base64{
     use StarcoinFramework::Vector;
-    use StarcoinFramework::Debug;
 
     public fun encode(str:&vector<u8>):vector<u8>{
             if(Vector::is_empty(str)){
@@ -115,16 +114,17 @@ module Base64::Base64{
 
             return res
     }
+
     #[test]
     fun test(){
         let str = b"abcdefghijklmnopqrstuvwsyzABCDEFGHIJKLMNOPQRSTUVWSYZ1234567890+/sdfa;fij;woeijfoawejif;oEQJJ'";
-        Debug::print(&str);
-        let code = &encode(&str);
-        Debug::print(code);
-        let str_ = &decode(code);
-        Debug::print(str_);
+        //StarcoinFramework::Debug::print(&str);
+        let code = encode(&str);
+        //StarcoinFramework::Debug::print(&code);
+        let decode_str = decode(&code);
+        //StarcoinFramework::Debug::print(&decode_str);
+        assert!(str == decode_str, 1000);
     }
-
 
     
 }

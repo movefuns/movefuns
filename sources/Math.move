@@ -46,10 +46,8 @@ module SFC::Math {
 
     #[test]
     fun test_sqrt_u256_big(){
-        //TODO add assert
-        let max = U256::from_little_endian(x"ffffffffffffffff");
-        StarcoinFramework::Debug::print(&max);
-        let result = sqrt_u256(max);
-        StarcoinFramework::Debug::print(&result);
+        let n_2 = U256::from_u64(2);
+        let n_big = U256::from_u64(254);
+        assert!(sqrt_u256(U256::pow(copy n_2, copy n_big)) == U256::to_u128(&U256::pow(copy n_2, U256::div(copy n_big, copy n_2))), 5);
     }
 }

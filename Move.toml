@@ -5,7 +5,8 @@ version = "0.0.1"
 
 [addresses]
 StarcoinFramework = "0x1"
-SFC = "0x2"
+#TODO update publish address to official multi sign address.
+SFC = "0xe69e6ca2cd09be2a8f8d6722a8a60089"
 
 [dependencies]
 StarcoinFramework = {git = "https://github.com/starcoinorg/starcoin-framework.git", rev="cf1deda180af40a8b3e26c0c7b548c4c290cd7e7"}

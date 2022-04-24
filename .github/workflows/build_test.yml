@@ -30,10 +30,10 @@ jobs:
         run: |
           source "$HOME/.profile"
           mpm package test
-      - name: spec test
+      - name: integration test
         run: |
           source "$HOME/.profile"
-          mpm package test
+          mpm integration-test
 #      - name: move-prover-test
 #        run: |
 #          source "$HOME/.profile"

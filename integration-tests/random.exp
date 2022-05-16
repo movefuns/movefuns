@@ -1,22 +1,9 @@
 processed 3 tasks
 
 task 2 'run'. lines 5-15:
-Error: warning[W09001]: unused alias
-  ┌─ /tmp/.tmpGF7jNt:8:28
-  │
-8 │     use StarcoinFramework::Debug;
-  │                            ^^^^^ Unused 'use' of alias 'Debug'. Consider removing it
-
-error[E03009]: unbound variable
-   ┌─ /tmp/.tmpGF7jNt:10:51
-   │
-10 │         let num: u128 = Random::random(&_account, n);
-   │                                                   ^ Invalid variable usage. Unbound variable 'n'
-
-error[E03009]: unbound variable
-   ┌─ /tmp/.tmpGF7jNt:11:35
-   │
-11 │         assert!(num >= 0 && num < n, 1000);
-   │                                   ^ Invalid variable usage. Unbound variable 'n'
-
-
+{
+  "gas_used": 167770,
+  "status": {
+    "Keep": "Executed"
+  }
+}

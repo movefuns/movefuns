@@ -5,11 +5,11 @@
 //# run --signers SFC
 script {
     use SFC::Random;
-    use StarcoinFramework::Debug;
 
     fun get_random_number(_account: signer) {
+        let n = 1000;
         let num: u128 = Random::random(&_account, n);
-        assert!(num >= 0 && num < n, 1000);
+        assert!(num >= 0 && num < n, 100);
     }
 }
 // check: EXECUTED

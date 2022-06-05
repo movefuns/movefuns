@@ -95,7 +95,7 @@ script {
     use StarcoinFramework::STC::STC;
     use StarcoinFramework::Vector;
 
-    fun exceed_amount_limit() {
+    fun claim() {
         let account: address = @0x0000000000000000000000000a550c18;
         let index = 0u64;
         let amount = 1000000000u128;
@@ -116,7 +116,7 @@ script {
     use SFC::MerkleDistributor;
     use StarcoinFramework::STC::STC;
 
-    fun exceed_amount_limit() {
+    fun check_claimed_again() {
         let index = 0u64;
         assert!(MerkleDistributor::is_claimed<STC>(@distributor, index), 101);
     }

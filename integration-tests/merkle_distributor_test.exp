@@ -1,0 +1,51 @@
+processed 7 tasks
+
+task 2 'run'. lines 40-55:
+{
+  "gas_used": 72575,
+  "status": {
+    "Keep": "Executed"
+  }
+}
+
+task 3 'run'. lines 56-69:
+{
+  "gas_used": 39417,
+  "status": {
+    "Keep": "Executed"
+  }
+}
+
+task 4 'run'. lines 70-91:
+{
+  "gas_used": 176122,
+  "status": {
+    "Keep": {
+      "MoveAbort": [
+        {
+          "Module": {
+            "address": "0xe69e6ca2cd09be2a8f8d6722a8a60089",
+            "name": "MerkleDistributor"
+          }
+        },
+        511
+      ]
+    }
+  }
+}
+
+task 5 'run'. lines 92-113:
+{
+  "gas_used": 233004,
+  "status": {
+    "Keep": "Executed"
+  }
+}
+
+task 6 'run'. lines 114-124:
+{
+  "gas_used": 18763,
+  "status": {
+    "Keep": "Executed"
+  }
+}

@@ -1,6 +1,5 @@
 module SFC::String {
     use StarcoinFramework::Vector;
-    use StarcoinFramework::Debug;
 
     const HEX_SYMBOLS: vector<u8> = b"0123456789abcdef";
 
@@ -59,11 +58,9 @@ module SFC::String {
     fun test_to_hex_string() {
         let v = 12345678;
         let s = to_hex_string(v);
-        Debug::print(&s);
         assert!(b"0xbc614e" == s, 1);
 
         let s1 = to_hex_string_fixed_length(v, 5);
-        Debug::print(&s1);
         assert!(b"0x0000bc614e" == s1, 1)
     }
 
@@ -71,7 +68,6 @@ module SFC::String {
     fun test_to_string() {
         let v = 12345678;
         let s = to_string(v);
-        Debug::print(&s);
         assert!(b"12345678" == s, 1)
     }
 }

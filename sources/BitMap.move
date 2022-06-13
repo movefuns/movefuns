@@ -1,6 +1,5 @@
 module SFC::BitMap{
     use StarcoinFramework::Vector;
-    use StarcoinFramework::Debug;
 
     struct Item has store, drop, copy {
         index: u128,
@@ -63,14 +62,18 @@ module SFC::BitMap{
     #[test]
     fun test() {
         let bitMap: BitMap = new();
+
+        assert!(get(&mut bitMap, 100) == false, 1);
+
         set(&mut bitMap, 100);
-        Debug::print(&get(&mut bitMap, 100));
-        Debug::print(&bitMap);
+
+        assert!(get(&mut bitMap, 100) == true, 1);
         assert!(get(&mut bitMap, 1) == false, 1);
         assert!(get(&mut bitMap, 99) == false, 1);
-        assert!(get(&mut bitMap, 100) == true, 1);
         assert!(get(&mut bitMap, 101) == false, 1);
+
         unset(&mut bitMap, 100);
+
         assert!(get(&mut bitMap, 100) == false, 1);
         assert!(get(&mut bitMap, 101) == false, 1);
     }

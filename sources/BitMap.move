@@ -41,7 +41,7 @@ module SFC::BitMap{
                 return
             };
             i = i + 1
-        }
+        };
         Vector::push_back(&mut bitMap.data, Item { index, isSet: true })
     }
 

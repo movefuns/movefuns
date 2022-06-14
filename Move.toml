@@ -8,6 +8,6 @@ StarcoinFramework = "0x1"
 SFC = "0x6ee3f577c8da207830c31e1f0abb4244"
 
 [dependencies]
-StarcoinFramework = {git = "https://github.com/starcoinorg/starcoin-framework.git", rev="cf1deda180af40a8b3e26c0c7b548c4c290cd7e7"}
+StarcoinFramework = {git = "https://github.com/starcoinorg/starcoin-framework.git", rev="92fb22ab565d89f77fdcb8d40105d9ee0ba0aed3"}
 
 [dev-dependencies]

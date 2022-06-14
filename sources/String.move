@@ -17,7 +17,7 @@ module SFC::StringUtil {
         ASCII::string(buffer)
     }
 
-    /// Converts a `u128` to its ASCII `string` hexadecimal representation.
+    /// Converts a `u128` to its `ASCII::String` hexadecimal representation.
     public fun to_hex_string(value: u128): String {
         if (value == 0) {
             return ASCII::string(b"0x00")
@@ -31,8 +31,8 @@ module SFC::StringUtil {
         to_hex_string_fixed_length(value, length)
     }
 
-    /// Converts a `u128` to its ASCII `string` hexadecimal representation with fixed length (in byte).
-    /// so returned string is (2 * length) in size
+    /// Converts a `u128` to its `ASCII::String` hexadecimal representation with fixed length (in whole bytes).
+    /// so the returned String is `2 * length + 2`(with '0x') in size
     public fun to_hex_string_fixed_length(value: u128, length: u128): String {
         let buffer = Vector::empty<u8>();
 

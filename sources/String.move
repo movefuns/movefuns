@@ -8,15 +8,8 @@ module SFC::StringUtil {
         if (value == 0) {
             return ASCII::string(b"0")
         };
-        let temp: u128 = value;
-        let digits: u8 = 0;
-        while (temp != 0) {
-            digits = digits + 1;
-            temp = temp / 10;
-        };
         let buffer = Vector::empty<u8>();
         while (value != 0) {
-            digits = digits - 1;
             Vector::push_back(&mut buffer, ((48 + value % 10) as u8));
             value = value / 10;
         };

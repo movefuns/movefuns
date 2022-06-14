@@ -61,7 +61,7 @@ module SFC::BitMap{
         while (i < len) {
             let item = Vector::borrow_mut(v, i);
             if (item.index == itemIndex) {
-                // `xor` with `2 ** 128 - 1` to emulate bit invert here 
+                // `xor` with `2 ** 128 - 1` to emulate int bit invert operation
                 item.bits = item.bits & (340282366920938463463374607431768211455 ^ mask);
                 return
             };
@@ -71,7 +71,7 @@ module SFC::BitMap{
 
     #[test]
     fun test() {
-        let bitMap: BitMap = empty();
+        let bitMap: BitMap = new();
 
         assert!(get(&mut bitMap, 0) == false, 1);
         set(&mut bitMap, 0);

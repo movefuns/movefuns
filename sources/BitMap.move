@@ -19,7 +19,7 @@ module SFC::BitMap{
     public fun get(bitMap: &mut BitMap, index: u128): bool {
         let itemIndex = index >> 7;
         let mask = 1 << (index & 0x7f as u8);
-        
+
         let i = 0;
         let v = &bitMap.data;
         let len = Vector::length(v);
@@ -61,7 +61,7 @@ module SFC::BitMap{
         while (i < len) {
             let item = Vector::borrow_mut(v, i);
             if (item.index == itemIndex) {
-                // we use bit `xor` with `2 ** 128 - 1` to emulate bit invert op here 
+                // `xor` with `2 ** 128 - 1` to emulate bit invert here 
                 item.bits = item.bits & (340282366920938463463374607431768211455 ^ mask);
                 return
             };

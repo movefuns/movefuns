@@ -1,10 +1,13 @@
-module SFC::BitMap{
+module SFC::BitMap {
     use StarcoinFramework::Vector;
 
     const MAX_U128: u128 = 340282366920938463463374607431768211455;
 
     struct Item has store, drop, copy {
-        index: u128,
+        // use lower 121 bit of key to discriminate items
+        key: u128,
+        // use bits to store 128 input for one key
+        // reduce struct mem usage in vector to 1 / 128 in best cases (for sequential input keys)
         bits: u128
     }
 
@@ -18,16 +21,16 @@ module SFC::BitMap{
         }
     }
 
-    public fun get(bitMap: &mut BitMap, index: u128): bool {
-        let itemIndex = index >> 7;
-        let mask = 1 << (index & 0x7f as u8);
+    public fun get(bitMap: &mut BitMap, key: u128): bool {
+        let targetKey = key >> 7;
+        let mask = 1 << (key & 0x7f as u8);
 
         let i = 0;
         let v = &bitMap.data;
         let len = Vector::length(v);
         while (i < len) {
             let item = Vector::borrow(v, i);
-            if (item.index == itemIndex) {
+            if (item.key == targetKey) {
                 return item.bits & mask != 0
             };
             i = i + 1;
@@ -35,34 +38,34 @@ module SFC::BitMap{
         false
     }
 
-    public fun set(bitMap: &mut BitMap, index: u128) {
-        let itemIndex = index >> 7;
-        let mask = 1 << (index & 0x7f as u8);
+    public fun set(bitMap: &mut BitMap, key: u128) {
+        let targetKey = key >> 7;
+        let mask = 1 << (key & 0x7f as u8);
 
         let i = 0;
         let v = &mut bitMap.data;
         let len = Vector::length(v);
         while (i < len) {
             let item = Vector::borrow_mut(v, i);
-            if (item.index == itemIndex) {
+            if (item.key == targetKey) {
                 item.bits = item.bits | mask;
                 return
             };
             i = i + 1
         };
-        Vector::push_back(&mut bitMap.data, Item { index: itemIndex, bits: mask })
+        Vector::push_back(&mut bitMap.data, Item { key: targetKey, bits: mask })
     }
 
-    public fun unset(bitMap: &mut BitMap, index: u128) {
-        let itemIndex = index >> 7;
-        let mask = 1 << (index & 0x7f as u8);
+    public fun unset(bitMap: &mut BitMap, key: u128) {
+        let targetKey = key >> 7;
+        let mask = 1 << (key & 0x7f as u8);
 
         let i = 0;
         let v = &mut bitMap.data;
         let len = Vector::length(v);
         while (i < len) {
             let item = Vector::borrow_mut(v, i);
-            if (item.index == itemIndex) {
+            if (item.key == targetKey) {
                 // `xor` with `MAX_U128` to emulate bit invert operator
                 item.bits = item.bits & (MAX_U128 ^ mask);
                 return

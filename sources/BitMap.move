@@ -6,7 +6,7 @@ module SFC::BitMap {
     struct Item has store, drop, copy {
         // use lower 121 bit of key to discriminate items
         key: u128,
-        // use bits to store 128 input for one key
+        // use bits to store at most 128 input for one key
         // reduce struct mem usage in vector to 1 / 128 in best case (for sequential input keys)
         bits: u128
     }

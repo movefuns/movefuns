@@ -7,7 +7,7 @@ module SFC::BitMap {
         // use lower 121 bit of key to discriminate items
         key: u128,
         // use bits to store 128 input for one key
-        // reduce struct mem usage in vector to 1 / 128 in best cases (for sequential input keys)
+        // reduce struct mem usage in vector to 1 / 128 in best case (for sequential input keys)
         bits: u128
     }
 
@@ -98,7 +98,7 @@ module SFC::BitMap {
         unset(&mut bitMap, 88);
         assert!(get(&mut bitMap, 88) == false, 1);
 
-        // test `2 ** 128 - 1`
+        // test `MAX_U128`
         assert!(get(&mut bitMap, MAX_U128) == false, 1);
         set(&mut bitMap, MAX_U128);
         assert!(get(&mut bitMap, MAX_U128) == true, 1);

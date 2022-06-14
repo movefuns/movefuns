@@ -10,7 +10,7 @@ module SFC::BitMap{
         data: vector<Item>
     }
 
-    public fun empty(): BitMap {
+    public fun new(): BitMap {
         BitMap {
             data: Vector::empty<Item>()
         }

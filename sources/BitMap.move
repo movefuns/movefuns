@@ -71,20 +71,33 @@ module SFC::BitMap{
 
     #[test]
     fun test() {
-        let bitMap: BitMap = new();
+        let bitMap: BitMap = empty();
 
+        assert!(get(&mut bitMap, 0) == false, 1);
+        set(&mut bitMap, 0);
+        assert!(get(&mut bitMap, 0) == true, 1);
         assert!(get(&mut bitMap, 100) == false, 1);
-
         set(&mut bitMap, 100);
-
         assert!(get(&mut bitMap, 100) == true, 1);
         assert!(get(&mut bitMap, 1) == false, 1);
+        set(&mut bitMap, 1);
+        assert!(get(&mut bitMap, 1) == true, 1);
         assert!(get(&mut bitMap, 99) == false, 1);
+        set(&mut bitMap, 88);
+        assert!(get(&mut bitMap, 88) == true, 1);
         assert!(get(&mut bitMap, 101) == false, 1);
-
         unset(&mut bitMap, 100);
-
         assert!(get(&mut bitMap, 100) == false, 1);
         assert!(get(&mut bitMap, 101) == false, 1);
+        assert!(get(&mut bitMap, 88) == true, 1);
+        unset(&mut bitMap, 88);
+        assert!(get(&mut bitMap, 88) == false, 1);
+
+        // test `2 ** 128 - 1`
+        assert!(get(&mut bitMap, 340282366920938463463374607431768211455) == false, 1);
+        set(&mut bitMap, 340282366920938463463374607431768211455);
+        assert!(get(&mut bitMap, 340282366920938463463374607431768211455) == true, 1);
+        unset(&mut bitMap, 340282366920938463463374607431768211455);
+        assert!(get(&mut bitMap, 340282366920938463463374607431768211455) == false, 1);
     }
 }

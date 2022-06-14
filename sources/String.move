@@ -8,15 +8,8 @@ module SFC::StringUtil {
         if (value == 0) {
             return ASCII::string(b"0")
         };
-        let temp: u128 = value;
-        let digits: u8 = 0;
-        while (temp != 0) {
-            digits = digits + 1;
-            temp = temp / 10;
-        };
         let buffer = Vector::empty<u8>();
         while (value != 0) {
-            digits = digits - 1;
             Vector::push_back(&mut buffer, ((48 + value % 10) as u8));
             value = value / 10;
         };
@@ -24,7 +17,7 @@ module SFC::StringUtil {
         ASCII::string(buffer)
     }
 
-    /// Converts a `uint256` to its ASCII `string` hexadecimal representation.
+    /// Converts a `u128` to its `ASCII::String` hexadecimal representation.
     public fun to_hex_string(value: u128): String {
         if (value == 0) {
             return ASCII::string(b"0x00")
@@ -38,14 +31,14 @@ module SFC::StringUtil {
         to_hex_string_fixed_length(value, length)
     }
 
-    /// Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length (in byte).
-    /// so returned string is (2 * length) in size
+    /// Converts a `u128` to its `ASCII::String` hexadecimal representation with fixed length (in whole bytes).
+    /// so the returned String is `2 * length + 2`(with '0x') in size
     public fun to_hex_string_fixed_length(value: u128, length: u128): String {
         let buffer = Vector::empty<u8>();
 
         let i: u128 = 0;
         while (i < length * 2) {
-            Vector::push_back(&mut buffer, *Vector::borrow(&mut HEX_SYMBOLS, (value as u64 ) & 0xf));
+            Vector::push_back(&mut buffer, *Vector::borrow(&mut HEX_SYMBOLS, (value & 0xf as u64)));
             value = value >> 4;
             i = i + 1;
         };
@@ -59,7 +52,9 @@ module SFC::StringUtil {
     fun test_to_string() {
         assert!(b"0" == ASCII::into_bytes(to_string(0)), 1);
         assert!(b"1" == ASCII::into_bytes(to_string(1)), 1);
+        assert!(b"10" == ASCII::into_bytes(to_string(10)), 1);
         assert!(b"12345678" == ASCII::into_bytes(to_string(12345678)), 1);
+        assert!(b"340282366920938463463374607431768211455" == ASCII::into_bytes(to_string(340282366920938463463374607431768211455)), 1);
     }
 
     #[test]
@@ -67,6 +62,7 @@ module SFC::StringUtil {
         assert!(b"0x00" == ASCII::into_bytes(to_hex_string(0)), 1);
         assert!(b"0x01" == ASCII::into_bytes(to_hex_string(1)), 1);
         assert!(b"0xbc614e" == ASCII::into_bytes(to_hex_string(12345678)), 1);
+        assert!(b"0xffffffffffffffffffffffffffffffff" == ASCII::into_bytes(to_hex_string(340282366920938463463374607431768211455)), 1);
     }
 
     #[test]
@@ -76,6 +72,7 @@ module SFC::StringUtil {
         assert!(b"0x10" == ASCII::into_bytes(to_hex_string_fixed_length(16, 1)), 1);
         assert!(b"0x0011" == ASCII::into_bytes(to_hex_string_fixed_length(17, 2)), 1);
         assert!(b"0x0000bc614e" == ASCII::into_bytes(to_hex_string_fixed_length(12345678, 5)), 1);
+        assert!(b"0xffffffffffffffffffffffffffffffff" == ASCII::into_bytes(to_hex_string_fixed_length(340282366920938463463374607431768211455, 16)), 1);
     }
 
 }

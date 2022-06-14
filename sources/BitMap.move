@@ -3,7 +3,7 @@ module SFC::BitMap{
 
     struct Item has store, drop, copy {
         index: u128,
-        isSet: bool
+        bits: u128
     }
 
     struct BitMap has store, drop {
@@ -17,13 +17,16 @@ module SFC::BitMap{
     }
 
     public fun get(bitMap: &mut BitMap, index: u128): bool {
+        let itemIndex = index >> 7;
+        let mask = 1 << (index & 0x7f as u8);
+        
         let i = 0;
         let v = &bitMap.data;
         let len = Vector::length(v);
         while (i < len) {
             let item = Vector::borrow(v, i);
-            if (item.index == index) {
-                return item.isSet
+            if (item.index == itemIndex) {
+                return item.bits & mask != 0
             };
             i = i + 1;
         };
@@ -31,28 +34,35 @@ module SFC::BitMap{
     }
 
     public fun set(bitMap: &mut BitMap, index: u128) {
+        let itemIndex = index >> 7;
+        let mask = 1 << (index & 0x7f as u8);
+
         let i = 0;
         let v = &mut bitMap.data;
         let len = Vector::length(v);
         while (i < len) {
             let item = Vector::borrow_mut(v, i);
-            if (item.index == index) {
-                item.isSet = true;
+            if (item.index == itemIndex) {
+                item.bits = item.bits | mask;
                 return
             };
             i = i + 1
         };
-        Vector::push_back(&mut bitMap.data, Item { index, isSet: true })
+        Vector::push_back(&mut bitMap.data, Item { index: itemIndex, bits: mask })
     }
 
     public fun unset(bitMap: &mut BitMap, index: u128) {
+        let itemIndex = index >> 7;
+        let mask = 1 << (index & 0x7f as u8);
+
         let i = 0;
         let v = &mut bitMap.data;
         let len = Vector::length(v);
         while (i < len) {
             let item = Vector::borrow_mut(v, i);
-            if (item.index == index) {
-                item.isSet = false;
+            if (item.index == itemIndex) {
+                // we use bit `xor` with `2 ** 128 - 1` to emulate bit invert op here 
+                item.bits = item.bits & (340282366920938463463374607431768211455 ^ mask);
                 return
             };
             i = i + 1

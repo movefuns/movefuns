@@ -4,6 +4,7 @@ The Move commons library on starcoin-framework.
 
 The goal of this library is to provide a common extension library on the starcoin-framework, and simplifying the development of DApp SmartContracts on Move, like [apache-commons](https://commons.apache.org/) library on Java or [openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts) on Solidity.
 
+The library was deployed on the multi-Sign  address     ``` 0x6ee3f577c8da207830c31e1f0abb4244 ```
 
 ## Install mpm
 

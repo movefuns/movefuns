@@ -1,6 +1,8 @@
 module SFC::BitMap{
     use StarcoinFramework::Vector;
 
+    const MAX_U128: u128 = 340282366920938463463374607431768211455;
+
     struct Item has store, drop, copy {
         index: u128,
         bits: u128
@@ -61,8 +63,8 @@ module SFC::BitMap{
         while (i < len) {
             let item = Vector::borrow_mut(v, i);
             if (item.index == itemIndex) {
-                // `xor` with `2 ** 128 - 1` to emulate int bit invert operation
-                item.bits = item.bits & (340282366920938463463374607431768211455 ^ mask);
+                // `xor` with `MAX_U128` to emulate bit invert operator
+                item.bits = item.bits & (MAX_U128 ^ mask);
                 return
             };
             i = i + 1
@@ -94,10 +96,10 @@ module SFC::BitMap{
         assert!(get(&mut bitMap, 88) == false, 1);
 
         // test `2 ** 128 - 1`
-        assert!(get(&mut bitMap, 340282366920938463463374607431768211455) == false, 1);
-        set(&mut bitMap, 340282366920938463463374607431768211455);
-        assert!(get(&mut bitMap, 340282366920938463463374607431768211455) == true, 1);
-        unset(&mut bitMap, 340282366920938463463374607431768211455);
-        assert!(get(&mut bitMap, 340282366920938463463374607431768211455) == false, 1);
+        assert!(get(&mut bitMap, MAX_U128) == false, 1);
+        set(&mut bitMap, MAX_U128);
+        assert!(get(&mut bitMap, MAX_U128) == true, 1);
+        unset(&mut bitMap, MAX_U128);
+        assert!(get(&mut bitMap, MAX_U128) == false, 1);
     }
 }

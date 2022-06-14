@@ -24,7 +24,7 @@ task 4 'run'. lines 70-91:
       "MoveAbort": [
         {
           "Module": {
-            "address": "0xe69e6ca2cd09be2a8f8d6722a8a60089",
+            "address": "92fb22ab565d89f77fdcb8d40105d9ee0ba0aed3",
             "name": "MerkleDistributor"
           }
         },

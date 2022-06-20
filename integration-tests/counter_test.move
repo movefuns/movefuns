@@ -28,13 +28,16 @@ module alice::DummyModule {
 
 //# run --signers alice
 script {
-    use alice::DummyModule;
+    use alice::DummyModule::{Self, DummyType};
+    use SFC::Counter;
     use StarcoinFramework::Signer;
 
     fun main(account: signer) {
         let addr = Signer::address_of(&account);
 
+        assert!(!Counter::has_counter<DummyType>(addr), 100);
         DummyModule::init(&account);
+        assert!(Counter::has_counter<DummyType>(addr), 100);
         let value = DummyModule::current(&addr);
         assert!(value == 0, 101);
 

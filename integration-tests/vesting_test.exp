@@ -1,0 +1,35 @@
+processed 6 tasks
+
+task 3 'run'. lines 9-24:
+{
+  "gas_used": 48512,
+  "status": {
+    "Keep": {
+      "MoveAbort": [
+        {
+          "Module": {
+            "address": "0x6ee3f577c8da207830c31e1f0abb4244",
+            "name": "Vesting"
+          }
+        },
+        773
+      ]
+    }
+  }
+}
+
+task 4 'run'. lines 25-40:
+{
+  "gas_used": 36662,
+  "status": {
+    "Keep": "Executed"
+  }
+}
+
+task 5 'run'. lines 41-54:
+{
+  "gas_used": 137826,
+  "status": {
+    "Keep": "Executed"
+  }
+}

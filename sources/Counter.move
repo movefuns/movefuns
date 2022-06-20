@@ -37,4 +37,9 @@ module SFC::Counter {
         let c_ref = &borrow_global<Counter<T>>(addr).value;
         *c_ref
     }
+
+    /// Check if `addr` has a counter
+    public fun has_counter<T>(addr: address): bool {
+        exists<Counter<T>>(addr)
+    }
 }

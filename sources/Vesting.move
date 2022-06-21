@@ -58,10 +58,6 @@ module SFC::Vesting {
         *&mut cred.total = amount;
     }
 
-    // spec add_vesting {
-    //     aborts_if start >= Timestamp::now_milliseconds();
-    // }
-
     /// Release the tokens that have already vested.
     public fun release<TokenType: store>(beneficiary: address) acquires Credentials {
         assert!(exists<Credentials<TokenType>>(beneficiary), Errors::not_published(ERR_CREDENTIALS_NOT_EXISTS));

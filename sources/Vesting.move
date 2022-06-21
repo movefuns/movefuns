@@ -6,6 +6,7 @@ module SFC::Vesting {
     use StarcoinFramework::Timestamp;
     use StarcoinFramework::Errors;
     use StarcoinFramework::Math;
+    use StarcoinFramework::Event;
 
     const ERR_STARTTIME_EXPIRED: u64 = 0;
     const ERR_INSUFFICIENT_BALANCE: u64 = 1;
@@ -13,6 +14,29 @@ module SFC::Vesting {
     const ERR_CREDENTIALS_NOT_EXISTS: u64 = 3;
 
     struct MyCounter has drop {}
+    /// Event emitted when a new vesting created.
+    struct CreateEvent has drop, store {
+        /// funds added to the system
+        total: u128,
+        /// address of the beneficiary
+        beneficiary: address,
+        /// timestampe when the vesting starts
+        start: u64,
+        /// vesting duration
+        duration: u64,
+        /// full info of Token.
+        token_code: Token::TokenCode,
+    }
+    /// Event emitted when vested tokens released.
+    struct ReleaseEvent has drop, store {
+        /// funds added to the system
+        amount: u128,
+        /// address of the beneficiary
+        beneficiary: address,
+        /// full info of Token.
+        token_code: Token::TokenCode,
+    }
+
     struct Credentials<phantom TokenType: store> has key {
         token: Token::Token<TokenType>,
         start: u64,
@@ -20,6 +44,8 @@ module SFC::Vesting {
         id: u64,
         released: u128, 
         total: u128,
+        create_events: Event::EventHandle<CreateEvent>,
+        release_events: Event::EventHandle<ReleaseEvent>,
     }
 
     /// Beneficiary call accept first to get the Credentials resource.
@@ -33,6 +59,8 @@ module SFC::Vesting {
             id: 0,
             released: 0,
             total: 0,
+            create_events: Event::new_event_handle<CreateEvent>(beneficiary),
+            release_events: Event::new_event_handle<ReleaseEvent>(beneficiary),
         };
         move_to<Credentials<TokenType>>(beneficiary, cred);
     }
@@ -56,6 +84,16 @@ module SFC::Vesting {
         *&mut cred.duration = duration;
         *&mut cred.id = Counter::increment<MyCounter>(grantor, &MyCounter{});
         *&mut cred.total = amount;
+        Event::emit_event(
+            &mut cred.create_events, 
+            CreateEvent {
+                total: amount,
+                beneficiary: beneficiary,
+                start: start,
+                duration: duration,
+                token_code: Token::token_code<TokenType>(),
+            }
+        );
     }
 
     /// Release the tokens that have already vested.
@@ -67,6 +105,14 @@ module SFC::Vesting {
         
         *&mut cred.released = cred.released + releasable;
         Account::deposit<TokenType>(beneficiary, Token::withdraw<TokenType>(&mut cred.token, releasable));
+        Event::emit_event(
+            &mut cred.release_events,
+            ReleaseEvent {
+                amount: releasable,
+                beneficiary: beneficiary,
+                token_code: Token::token_code<TokenType>(),
+            }
+        );
     } 
 
     /// Get the start timestamp of vesting for address `addr`

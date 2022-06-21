@@ -5,6 +5,7 @@ module SFC::Vesting {
     use StarcoinFramework::Signer;
     use StarcoinFramework::Timestamp;
     use StarcoinFramework::Errors;
+    use StarcoinFramework::Math;
 
     const ERR_STARTTIME_EXPIRED: u64 = 0;
     const ERR_INSUFFICIENT_BALANCE: u64 = 1;
@@ -15,7 +16,7 @@ module SFC::Vesting {
     struct Credentials<phantom TokenType: store> has key {
         token: Token::Token<TokenType>,
         start: u64,
-        durationSeconds: u64,
+        duration: u64,
         id: u64,
         released: u128, 
         total: u128,
@@ -28,7 +29,7 @@ module SFC::Vesting {
         let cred = Credentials<TokenType> {
             token: Token::zero<TokenType>(),
             start: 0,
-            durationSeconds: 0,
+            duration: 0,
             id: 0,
             released: 0,
             total: 0,
@@ -37,12 +38,12 @@ module SFC::Vesting {
     }
 
     /// 111 add some token and vesting schedule, and generate a Credentials.
-    public fun add_vesting<TokenType: store>(grantor: &signer, amount: u128, beneficiary: address, start: u64, durationSeconds: u64) 
+    public fun add_vesting<TokenType: store>(grantor: &signer, amount: u128, beneficiary: address, start: u64, duration: u64) 
     acquires Credentials {
-        assert!(start >= Timestamp::now_seconds(), Errors::custom(ERR_STARTTIME_EXPIRED));
+        assert!(exists<Credentials<TokenType>>(beneficiary), Errors::not_published(ERR_CREDENTIALS_NOT_EXISTS));
+        assert!(start >= Timestamp::now_milliseconds(), Errors::custom(ERR_STARTTIME_EXPIRED));
         assert!(Account::balance<TokenType>(Signer::address_of(grantor)) >= amount, 
                 Errors::limit_exceeded(ERR_INSUFFICIENT_BALANCE));
-        assert!(exists<Credentials<TokenType>>(beneficiary), Errors::not_published(ERR_CREDENTIALS_NOT_EXISTS));
         
         if (!Counter::has_counter<Counter::Counter<MyCounter>>(Signer::address_of(grantor))) {
             Counter::init<MyCounter>(grantor);
@@ -52,20 +53,20 @@ module SFC::Vesting {
         let token = Account::withdraw<TokenType>(grantor, amount);
         Token::deposit<TokenType>(&mut cred.token, token);
         *&mut cred.start = start;
-        *&mut cred.durationSeconds = durationSeconds;
+        *&mut cred.duration = duration;
         *&mut cred.id = Counter::increment<MyCounter>(grantor, &MyCounter{});
         *&mut cred.total = amount;
     }
 
     // spec add_vesting {
-    //     aborts_if start >= Timestamp::now_seconds();
+    //     aborts_if start >= Timestamp::now_milliseconds();
     // }
 
     /// Release the tokens that have already vested.
     public fun release<TokenType: store>(beneficiary: address) acquires Credentials {
         assert!(exists<Credentials<TokenType>>(beneficiary), Errors::not_published(ERR_CREDENTIALS_NOT_EXISTS));
         let cred = borrow_global_mut<Credentials<TokenType>>(beneficiary);
-        let vested = vested_amount(cred.total, cred.start, cred.durationSeconds);
+        let vested = vested_amount(cred.total, cred.start, cred.duration);
         let releasable = vested - cred.released;
         
         *&mut cred.released = cred.released + releasable;
@@ -81,7 +82,7 @@ module SFC::Vesting {
     /// Get the duration seconds of vesting for address `addr`
     public fun duration_seconds<TokenType: store>(addr: address): u64 acquires Credentials {
         assert!(exists<Credentials<TokenType>>(addr), Errors::not_published(ERR_CREDENTIALS_NOT_EXISTS));
-        borrow_global<Credentials<TokenType>>(addr).durationSeconds
+        borrow_global<Credentials<TokenType>>(addr).duration
     }
 
     /// Amount of already released
@@ -92,13 +93,13 @@ module SFC::Vesting {
 
     /// Calculates the amount of tokens that has already vested. Default implementation is a linear vesting curve.
     fun vested_amount(total: u128, start: u64, duration: u64): u128 {
-        let now = Timestamp::now_seconds();
+        let now = Timestamp::now_milliseconds();
         if (now < start) {
             0u128
         } else if (now > start + duration) {
             total
         } else {
-            total * ((now - start) / duration as u128)
+            Math::mul_div(total, ((now - start) as u128), (duration as u128))
         }
     }
 }

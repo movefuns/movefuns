@@ -1,8 +1,8 @@
-processed 6 tasks
+processed 12 tasks
 
-task 3 'run'. lines 9-24:
+task 4 'run'. lines 9-20:
 {
-  "gas_used": 48512,
+  "gas_used": 15341,
   "status": {
     "Keep": {
       "MoveAbort": [
@@ -18,17 +18,61 @@ task 3 'run'. lines 9-24:
   }
 }
 
-task 4 'run'. lines 25-40:
+task 5 'run'. lines 22-32:
 {
-  "gas_used": 36662,
+  "gas_used": 25901,
   "status": {
     "Keep": "Executed"
   }
 }
 
-task 5 'run'. lines 41-54:
+task 7 'run'. lines 36-47:
 {
-  "gas_used": 137826,
+  "gas_used": 18209,
+  "status": {
+    "Keep": {
+      "MoveAbort": [
+        {
+          "Module": {
+            "address": "0x6ee3f577c8da207830c31e1f0abb4244",
+            "name": "Vesting"
+          }
+        },
+        255
+      ]
+    }
+  }
+}
+
+task 8 'run'. lines 49-60:
+{
+  "gas_used": 31606,
+  "status": {
+    "Keep": {
+      "MoveAbort": [
+        {
+          "Module": {
+            "address": "0x6ee3f577c8da207830c31e1f0abb4244",
+            "name": "Vesting"
+          }
+        },
+        264
+      ]
+    }
+  }
+}
+
+task 9 'run'. lines 62-72:
+{
+  "gas_used": 124140,
+  "status": {
+    "Keep": "Executed"
+  }
+}
+
+task 11 'run'. lines 76-90:
+{
+  "gas_used": 93135,
   "status": {
     "Keep": "Executed"
   }

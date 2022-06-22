@@ -23,44 +23,44 @@ module SFC::Counter {
         ensures exists<Counter<T>>(Signer::address_of(account));
     }
 
-    /// Increment the value of Counter and return the value after increment.
-    public fun increment<T>(account: &signer, _witness: &T): u64 acquires Counter {
-        assert!(exists<Counter<T>>(Signer::address_of(account)), Errors::not_published(E_NOT_INITIALIZED));
-        let c_ref = &mut borrow_global_mut<Counter<T>>(Signer::address_of(account)).value;
+    /// Increment the value of Counter owned by `owner` and return the value after increment.
+    public fun increment<T>(owner: address, _witness: &T): u64 acquires Counter {
+        assert!(exists<Counter<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        let c_ref = &mut borrow_global_mut<Counter<T>>(owner).value;
         assert!(*c_ref < MAX_U64, Errors::limit_exceeded(E_U64_OVERFLOW));
         *c_ref = *c_ref + 1;
         *c_ref
     }
 
     spec increment {
-        aborts_if !exists<Counter<T>>(Signer::address_of(account));
-        aborts_if global<Counter<T>>(Signer::address_of(account)).value >= MAX_U64;
+        aborts_if !exists<Counter<T>>(owner);
+        aborts_if global<Counter<T>>(owner).value >= MAX_U64;
     }
 
-    /// Reset the value of Counter.
-    public fun reset<T>(account: &signer, _witness: &T) acquires Counter {
-        assert!(exists<Counter<T>>(Signer::address_of(account)), Errors::not_published(E_NOT_INITIALIZED));
-        let c_ref = &mut borrow_global_mut<Counter<T>>(Signer::address_of(account)).value;
+    /// Reset the Counter owned by `owner`.
+    public fun reset<T>(owner: address, _witness: &T) acquires Counter {
+        assert!(exists<Counter<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        let c_ref = &mut borrow_global_mut<Counter<T>>(owner).value;
         *c_ref = 0;
     }
 
     spec reset {
-        aborts_if !exists<Counter<T>>(Signer::address_of(account));
+        aborts_if !exists<Counter<T>>(owner);
     }
 
     /// Get current Counter value.
-    public fun current<T>(addr: address): u64 acquires Counter {
-        assert!(exists<Counter<T>>(addr), Errors::not_published(E_NOT_INITIALIZED));
-        let c_ref = &borrow_global<Counter<T>>(addr).value;
+    public fun current<T>(owner: address): u64 acquires Counter {
+        assert!(exists<Counter<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        let c_ref = &borrow_global<Counter<T>>(owner).value;
         *c_ref
     }
 
     spec current {
-        aborts_if !exists<Counter<T>>(addr);
+        aborts_if !exists<Counter<T>>(owner);
     }
 
     /// Check if `addr` has a counter
-    public fun has_counter<T>(addr: address): bool {
-        exists<Counter<T>>(addr)
+    public fun has_counter<T>(owner: address): bool {
+        exists<Counter<T>>(owner)
     }
 }

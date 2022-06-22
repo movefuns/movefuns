@@ -7,6 +7,8 @@
 //# publish
 module alice::DummyModule {
     use SFC::Counter;
+    use StarcoinFramework::Signer;
+
     struct DummyType has drop {}
 
     public fun init(account: &signer) {
@@ -14,11 +16,11 @@ module alice::DummyModule {
     }
 
     public fun increment(account: &signer): u64 {
-        Counter::increment<DummyType>(account, &DummyType{})
+        Counter::increment<DummyType>(Signer::address_of(account), &DummyType{})
     }
 
     public fun reset(account: &signer) {
-        Counter::reset<DummyType>(account, &DummyType{});
+        Counter::reset<DummyType>(Signer::address_of(account), &DummyType{});
     }
 
     public fun current(addr: &address): u64 {

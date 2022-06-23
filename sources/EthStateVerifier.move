@@ -1,5 +1,4 @@
-address SFC {
-module EthStateVerifier {
+module SFC::EthStateVerifier {
     use SFC::RLP;
     use StarcoinFramework::Vector;
     use StarcoinFramework::Hash;
@@ -12,6 +11,7 @@ module EthStateVerifier {
         let n2 = (b << 4) >> 4;
         (n1, n2)
     }
+    
     public fun to_nibbles(bytes: &vector<u8>): vector<u8> {
         let result = Vector::empty<u8>();
         let i = 0;
@@ -124,5 +124,4 @@ module EthStateVerifier {
         let key = to_nibbles(&hashed_key);
         return verify_inner(expected_root, key, proof, expected_value, 0, 0)
     }
-}
 }

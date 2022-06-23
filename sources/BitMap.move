@@ -21,7 +21,10 @@ module SFC::BitMap {
         }
     }
 
-    public fun get(bitMap: &mut BitMap, key: u128): bool {
+    public fun get(
+        bitMap: &mut BitMap, 
+        key: u128
+    ): bool {
         let targetKey = key >> 7;
         let mask = 1 << (key & 0x7f as u8);
 
@@ -38,7 +41,10 @@ module SFC::BitMap {
         false
     }
 
-    public fun set(bitMap: &mut BitMap, key: u128) {
+    public fun set(
+        bitMap: &mut BitMap, 
+        key: u128
+    ) {
         let targetKey = key >> 7;
         let mask = 1 << (key & 0x7f as u8);
 
@@ -56,7 +62,10 @@ module SFC::BitMap {
         Vector::push_back(&mut bitMap.data, Item { key: targetKey, bits: mask })
     }
 
-    public fun unset(bitMap: &mut BitMap, key: u128) {
+    public fun unset(
+        bitMap: &mut BitMap, 
+        key: u128
+    ) {
         let targetKey = key >> 7;
         let mask = 1 << (key & 0x7f as u8);
 

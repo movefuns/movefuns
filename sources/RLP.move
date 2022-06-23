@@ -1,7 +1,11 @@
 module SFC::Bytes {
     use StarcoinFramework::Vector;
 
-    public fun slice(data: &vector<u8>, start: u64, end: u64): vector<u8> {
+    public fun slice(
+        data: &vector<u8>, 
+        start: u64, 
+        end: u64
+    ): vector<u8> {
         let i = start;
         let result = Vector::empty<u8>();
         let data_len = Vector::length(data);
@@ -98,7 +102,10 @@ module SFC::RLP {
         rlp
     }
 
-    fun decode(data: &vector<u8>, offset: u64): (vector<vector<u8>>, u64) {
+    fun decode(
+        data: &vector<u8>, 
+        offset: u64
+    ): (vector<vector<u8>>, u64) {
         let data_len = Vector::length(data);
         assert!(offset < data_len, DATA_TOO_SHORT);
         let first_byte = *Vector::borrow(data, offset);
@@ -131,7 +138,12 @@ module SFC::RLP {
         }
     }
 
-    fun decode_children(data: &vector<u8>, offset: u64, child_offset: u64, length: u64): (vector<vector<u8>>, u64) {
+    fun decode_children(
+        data: &vector<u8>, 
+        offset: u64, 
+        child_offset: u64, 
+        length: u64
+    ): (vector<vector<u8>>, u64) {
         let result = Vector::empty();
 
         while (child_offset < offset + 1 + length) {
@@ -144,7 +156,11 @@ module SFC::RLP {
     }
 
 
-    fun unarrayify_integer(data: &vector<u8>, offset: u64, length: u8): u64 {
+    fun unarrayify_integer(
+        data: &vector<u8>, 
+        offset: u64, 
+        length: u8
+    ): u64 {
         let result = 0;
         let i = 0u8;
         while(i < length) {

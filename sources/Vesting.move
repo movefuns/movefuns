@@ -75,8 +75,13 @@ module SFC::Vesting {
     }
 
     /// Add some token and vesting schedule, and generate a Credentials.
-    public fun add_vesting<TokenType: store>(grantor: &signer, amount: u128, beneficiary: address, start: u64, duration: u64) 
-    acquires Vesting {
+    public fun add_vesting<TokenType: store>(
+        grantor: &signer, 
+        amount: u128, 
+        beneficiary: address, 
+        start: u64, 
+        duration: u64
+    ) acquires Vesting {
         let addr = Signer::address_of(grantor);
         assert!(exists<Vesting<TokenType>>(beneficiary), Errors::not_published(ERR_VESTING_NOT_EXISTS));
         assert!(start >= Timestamp::now_milliseconds(), Errors::custom(ERR_STARTTIME_EXPIRED));
@@ -163,7 +168,11 @@ module SFC::Vesting {
     }
 
     /// Get the start timestamp of vesting for address `addr` from `grantor` with `id`.
-    public fun start<TokenType: store>(addr: address, grantor: address, id: u64): u64 acquires Vesting{
+    public fun start<TokenType: store>(
+        addr: address, 
+        grantor: address, 
+        id: u64
+    ): u64 acquires Vesting{
         assert!(exists<Vesting<TokenType>>(addr), Errors::not_published(ERR_VESTING_NOT_EXISTS));
         let vesting = borrow_global<Vesting<TokenType>>(addr);
         let (find, idx) = find_credentials(&vesting.credentials, grantor, id);
@@ -173,7 +182,11 @@ module SFC::Vesting {
     }
 
     /// Get the duration of vesting for address `addr` from `grantor` with `id`.
-    public fun duration<TokenType: store>(addr: address, grantor: address, id: u64): u64 acquires Vesting{
+    public fun duration<TokenType: store>(
+        addr: address, 
+        grantor: address, 
+        id: u64
+    ): u64 acquires Vesting{
         assert!(exists<Vesting<TokenType>>(addr), Errors::not_published(ERR_VESTING_NOT_EXISTS));
         let vesting = borrow_global<Vesting<TokenType>>(addr);
         let (find, idx) = find_credentials(&vesting.credentials, grantor, id);
@@ -183,7 +196,11 @@ module SFC::Vesting {
     }
 
     /// Amount of already released
-    public fun released<TokenType: store>(addr: address, grantor: address, id: u64): u128 acquires Vesting{
+    public fun released<TokenType: store>(
+        addr: address, 
+        grantor: address, 
+        id: u64
+    ): u128 acquires Vesting{
         assert!(exists<Vesting<TokenType>>(addr), Errors::not_published(ERR_VESTING_NOT_EXISTS));
         let vesting = borrow_global<Vesting<TokenType>>(addr);
         let (find, idx) = find_credentials(&vesting.credentials, grantor, id);
@@ -193,7 +210,11 @@ module SFC::Vesting {
     }
 
     /// Amount of unreleased
-    public fun unreleased<TokenType: store>(addr: address, grantor: address, id: u64): u128 acquires Vesting{
+    public fun unreleased<TokenType: store>(
+        addr: address, 
+        grantor: address, 
+        id: u64
+    ): u128 acquires Vesting{
         assert!(exists<Vesting<TokenType>>(addr), Errors::not_published(ERR_VESTING_NOT_EXISTS));
         let vesting = borrow_global<Vesting<TokenType>>(addr);
         let (find, idx) = find_credentials(&vesting.credentials, grantor, id);
@@ -203,7 +224,11 @@ module SFC::Vesting {
     }
 
     /// Find the Credentials from grantor with id.
-    fun find_credentials(creds: &vector<Credentials>, grantor: address, id: u64): (bool, u64) {
+    fun find_credentials(
+        creds: &vector<Credentials>, 
+        grantor: address, 
+        id: u64
+    ): (bool, u64) {
         let len = Vector::length(creds);
         let i = 0u64;
         while (i < len) {
@@ -215,7 +240,11 @@ module SFC::Vesting {
     }
 
     /// Calculates the amount of tokens that has already vested. Default implementation is a linear vesting curve.
-    fun vested_amount(total: u128, start: u64, duration: u64): u128 {
+    fun vested_amount(
+        total: u128, 
+        start: u64, 
+        duration: u64
+    ): u128 {
         let now = Timestamp::now_milliseconds();
         if (now < start) {
             0u128

@@ -88,26 +88,6 @@ module SFC::PseudoRandom{
         return value
     }
     
-    #[test]
-    fun test_bytes_to_u64() {
-        // binary: 01010001 11010011 10101111 11001100 11111101 00001001 10001110 11001101
-        // bytes = [81, 211, 175, 204, 253, 9, 142, 205];
-        let dec = 5896249632111562445;
-
-        let bytes = Vector::empty<u8>();
-        Vector::push_back(&mut bytes, 81);
-        Vector::push_back(&mut bytes, 211);
-        Vector::push_back(&mut bytes, 175);
-        Vector::push_back(&mut bytes, 204);
-        Vector::push_back(&mut bytes, 253);
-        Vector::push_back(&mut bytes, 9);
-        Vector::push_back(&mut bytes, 142);
-        Vector::push_back(&mut bytes, 205);
-
-        let value = bytes_to_u64(bytes);
-        assert!(value == dec, 101);
-    }
-
     /// Generate a random u128
     public fun rand_u128(addr: &address): u128 acquires Counter {
         let _seed: vector<u8> = seed(addr);
@@ -134,4 +114,23 @@ module SFC::PseudoRandom{
         (value % (high - low)) + low
     }
 
+    #[test]
+    fun test_bytes_to_u64() {
+        // binary: 01010001 11010011 10101111 11001100 11111101 00001001 10001110 11001101
+        // bytes = [81, 211, 175, 204, 253, 9, 142, 205];
+        let dec = 5896249632111562445;
+
+        let bytes = Vector::empty<u8>();
+        Vector::push_back(&mut bytes, 81);
+        Vector::push_back(&mut bytes, 211);
+        Vector::push_back(&mut bytes, 175);
+        Vector::push_back(&mut bytes, 204);
+        Vector::push_back(&mut bytes, 253);
+        Vector::push_back(&mut bytes, 9);
+        Vector::push_back(&mut bytes, 142);
+        Vector::push_back(&mut bytes, 205);
+
+        let value = bytes_to_u64(bytes);
+        assert!(value == dec, 101);
+    }
 }

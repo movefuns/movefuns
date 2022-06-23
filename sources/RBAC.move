@@ -20,20 +20,30 @@ module SFC::RBAC {
     }
 
     /// Acquire role resource
-    public fun do_accept_role<Type>(account: &signer, _witness: &Type) {
+    public fun do_accept_role<Type>(
+        account: &signer, 
+        _witness: &Type
+    ) {
         assert!(!exists<Role<Type>>(Signer::address_of(account)), Errors::already_published(EROLE));
         move_to<Role<Type>>(account, Role<Type>{ roles: Vector::empty<u8>() });
     }
 
     /// Release role resource
-    public fun destroy_role<Type>(account: &signer, _witness: &Type) acquires Role {
+    public fun destroy_role<Type>(
+        account: &signer, 
+        _witness: &Type
+    ) acquires Role {
         let addr = Signer::address_of(account);
         assert!(exists<Role<Type>>(addr), Errors::not_published(EROLE));
         let Role<Type> { roles: _ } = move_from<Role<Type>>(addr);
     }
 
     /// Assign a role to signer. 
-    public fun assign_role<Type>(to: address, role: u8, _witness: &Type) acquires Role {
+    public fun assign_role<Type>(
+        to: address, 
+        role: u8, 
+        _witness: &Type
+    ) acquires Role {
         // Check `to` has the Role<Type> resource.
         // Check `to` does't have `role`, and assign `role` to him.
         assert!(exists<Role<Type>>(to), Errors::not_published(EROLE));
@@ -43,7 +53,11 @@ module SFC::RBAC {
     }
 
     /// Revoke a role from address.
-    public fun revoke_role<Type>(addr: address, role: u8, _witness: &Type) acquires Role {
+    public fun revoke_role<Type>(
+        addr: address, 
+        role: u8, 
+        _witness: &Type
+    ) acquires Role {
         // Check `from` has `role`, and revoke the role from him.
         assert!(exists<Role<Type>>(addr), Errors::not_published(EROLE));
         let container = borrow_global_mut<Role<Type>>(addr);
@@ -53,7 +67,10 @@ module SFC::RBAC {
     }
 
     /// Check if `addr` has `role`.
-    public fun has_role<Type>(addr: address, role: u8): bool acquires Role {
+    public fun has_role<Type>(
+        addr: address, 
+        role: u8
+    ): bool acquires Role {
         // Check `addr` has the Role<Type> resource and has the `role`.
         if (exists<Role<Type>>(addr)) {
             let container = borrow_global<Role<Type>>(addr);
@@ -69,13 +86,20 @@ module SFC::RBAC {
         grantees: vector<u8>,
     }
 
-    public fun do_accept_capability<CapType>(owner: &signer, _witness: &CapType) {
+    public fun do_accept_capability<CapType>(
+        owner: &signer, 
+        _witness: &CapType
+    ) {
         assert!(!exists<Capability<CapType>>(Signer::address_of(owner)), Errors::already_published(ECAPABILITY));
         move_to<Capability<CapType>>(owner, Capability<CapType>{ grantees: Vector::empty<u8>() });
     }
 
     /// Assign capability `CapType` to role `role`.
-    public fun assign_capability_for_role<CapType>(owner: &signer, role: u8, _witness: &CapType) acquires Capability {
+    public fun assign_capability_for_role<CapType>(
+        owner: &signer, 
+        role: u8, 
+        _witness: &CapType
+    ) acquires Capability {
         let addr = Signer::address_of(owner);
         assert!(exists<Capability<CapType>>(addr), Errors::not_published(ECAPABILITY));
         let res = borrow_global_mut<Capability<CapType>>(addr);
@@ -84,7 +108,11 @@ module SFC::RBAC {
     }
 
     /// Revoke capability `CapType` from role `role`.
-    public fun revoke_capability_for_role<CapType>(owner: &signer, role: u8, _witness: &CapType) acquires Capability {
+    public fun revoke_capability_for_role<CapType>(
+        owner: &signer, 
+        role: u8, 
+        _witness: &CapType
+    ) acquires Capability {
         let addr = Signer::address_of(owner);
         assert!(exists<Capability<CapType>>(addr), Errors::not_published(ECAPABILITY));
         let res = borrow_global_mut<Capability<CapType>>(addr);
@@ -95,7 +123,11 @@ module SFC::RBAC {
     }
 
     /// Return if `addr` has capability `CapType`
-    public fun has_capability<CapType, RoleType>(addr: address, owner: address, _witness: &CapType): bool acquires Capability, Role {
+    public fun has_capability<CapType, RoleType>(
+        addr: address, 
+        owner: address, 
+        _witness: &CapType
+    ): bool acquires Capability, Role {
         // check roles who are granted with this capability
         assert!(exists<Capability<CapType>>(owner), Errors::not_published(ECAPABILITY));
         let container = borrow_global<Capability<CapType>>(owner);
@@ -116,7 +148,10 @@ module SFC::RBAC {
     }
 
     /// Check if role `role` has capability `CapType`
-    public fun role_has_capability<CapType>(owner: address, role: u8): bool acquires Capability {
+    public fun role_has_capability<CapType>(
+        owner: address, 
+        role: u8
+    ): bool acquires Capability {
         assert!(exists<Capability<CapType>>(owner), Errors::not_published(ECAPABILITY));
         let container = borrow_global<Capability<CapType>>(owner);
         Vector::contains(&container.grantees, &role)

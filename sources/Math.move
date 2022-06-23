@@ -22,7 +22,7 @@ module SFC::Math {
             let x = U256::add(U256::div(copy y, copy two), one);
             while (U256::compare(&x, &z) == LESS_THAN) {
                 z = copy x;
-                x = U256::div(U256::add(U256::div(copy y, copy x),x), copy two);
+                x = U256::div(U256::add(U256::div(copy y, copy x), x), copy two);
             };
             U256::to_u128(&z)
         }
@@ -45,7 +45,7 @@ module SFC::Math {
     }
 
     #[test]
-    fun test_sqrt_u256_big(){
+    fun test_sqrt_u256_big() {
         let n_2 = U256::from_u64(2);
         let n_big = U256::from_u64(254);
         assert!(sqrt_u256(U256::pow(copy n_2, copy n_big)) == U256::to_u128(&U256::pow(copy n_2, U256::div(copy n_big, copy n_2))), 5);

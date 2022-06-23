@@ -16,13 +16,13 @@ module SFC::BitMap {
     }
 
     public fun new(): BitMap {
-        BitMap {
+        BitMap{
             data: Vector::empty<Item>()
         }
     }
 
     public fun get(
-        bitMap: &mut BitMap, 
+        bitMap: &mut BitMap,
         key: u128
     ): bool {
         let targetKey = key >> 7;
@@ -42,7 +42,7 @@ module SFC::BitMap {
     }
 
     public fun set(
-        bitMap: &mut BitMap, 
+        bitMap: &mut BitMap,
         key: u128
     ) {
         let targetKey = key >> 7;
@@ -59,11 +59,11 @@ module SFC::BitMap {
             };
             i = i + 1
         };
-        Vector::push_back(&mut bitMap.data, Item { key: targetKey, bits: mask })
+        Vector::push_back(&mut bitMap.data, Item{ key: targetKey, bits: mask })
     }
 
     public fun unset(
-        bitMap: &mut BitMap, 
+        bitMap: &mut BitMap,
         key: u128
     ) {
         let targetKey = key >> 7;

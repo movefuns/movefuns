@@ -1,10 +1,11 @@
 module SFC::MerkleDistributorScripts {
     use SFC::MerkleDistributor;
     use StarcoinFramework::Account;
+
     public(script) fun create<T: store>(
-        signer: signer, 
-        merkle_root: vector<u8>, 
-        token_amounts: u128, 
+        signer: signer,
+        merkle_root: vector<u8>,
+        token_amounts: u128,
         leafs: u64
     ) {
         let tokens = Account::withdraw<T>(&signer, token_amounts);
@@ -12,19 +13,20 @@ module SFC::MerkleDistributorScripts {
     }
 
     public(script) fun claim_for_address<T: store>(
-        distribution_address: address, 
-        index: u64, 
-        account: address, 
-        amount: u128, 
+        distribution_address: address,
+        index: u64,
+        account: address,
+        amount: u128,
         merkle_proof: vector<vector<u8>>
     ) {
         MerkleDistributor::claim_for_address<T>(distribution_address, index, account, amount, merkle_proof);
     }
+
     public(script) fun claim<T: store>(
-        signer: signer, 
-        distribution_address: address, 
-        index: u64, 
-        amount: u128, 
+        signer: signer,
+        distribution_address: address,
+        index: u64,
+        amount: u128,
         merkle_proof: vector<vector<u8>>
     ) {
         let tokens = MerkleDistributor::claim<T>(&signer, distribution_address, index, amount, merkle_proof);
@@ -39,26 +41,25 @@ module SFC::MerkleProof {
 
     /// verify leaf node with hash of `leaf` with `proof` againest merkle `root`.
     public fun verify(
-        proof: &vector<vector<u8>>, 
-        root: &vector<u8>, 
+        proof: &vector<vector<u8>>,
+        root: &vector<u8>,
         leaf: vector<u8>
     ): bool {
         let computed_hash = leaf;
         let i = 0;
         let proof_length = Vector::length(proof);
-        while(i < proof_length) {
+        while (i < proof_length) {
             let sibling = Vector::borrow(proof, i);
             // computed_hash is left.
-            if (Compare::cmp_bytes(&computed_hash,sibling) < 2) {
+            if (Compare::cmp_bytes(&computed_hash, sibling) < 2) {
                 let concated = concat(computed_hash, *sibling);
                 computed_hash = Hash::sha3_256(concated);
             } else {
                 let concated = concat(*sibling, computed_hash);
                 computed_hash = Hash::sha3_256(concated);
-
             };
 
-            i = i+1;
+            i = i + 1;
         };
         &computed_hash == root
     }
@@ -69,7 +70,6 @@ module SFC::MerkleProof {
         v1
     }
 }
-
 
 
 module SFC::MerkleDistributor {
@@ -88,14 +88,15 @@ module SFC::MerkleDistributor {
         tokens: Token<T>,
         claimed_bitmap: vector<u128>,
     }
+
     const INVALID_PROOF: u64 = 1;
     const ALREADY_CLAIMED: u64 = 2;
 
     /// Initialization.
     public fun create<T: store>(
-        signer: &signer, 
-        merkle_root: vector<u8>, 
-        tokens: Token<T>, 
+        signer: &signer,
+        merkle_root: vector<u8>,
+        tokens: Token<T>,
         leafs: u64
     ) {
         let bitmap_count = leafs / 128;
@@ -119,10 +120,10 @@ module SFC::MerkleDistributor {
     /// claim for some address.
     public fun claim_for_address<T: store>(
         distribution_address: address,
-        index: u64, account: address, 
-        amount: u128, 
+        index: u64, account: address,
+        amount: u128,
         merkle_proof: vector<vector<u8>>
-    )acquires  MerkleDistribution {
+    )acquires MerkleDistribution {
         let distribution = borrow_global_mut<MerkleDistribution<T>>(distribution_address);
         let claimed_tokens = internal_claim(distribution, index, account, amount, merkle_proof);
         Account::deposit(account, claimed_tokens);
@@ -130,19 +131,19 @@ module SFC::MerkleDistributor {
 
     /// claim by myself.
     public fun claim<T: store>(
-        signer: &signer, 
-        distribution_address: address, 
-        index: u64, 
-        amount: u128, 
+        signer: &signer,
+        distribution_address: address,
+        index: u64,
+        amount: u128,
         merkle_proof: vector<vector<u8>>
-    ): Token<T> acquires  MerkleDistribution  {
+    ): Token<T> acquires MerkleDistribution {
         let distribution = borrow_global_mut<MerkleDistribution<T>>(distribution_address);
         internal_claim(distribution, index, Signer::address_of(signer), amount, merkle_proof)
     }
 
     /// Query whether `index` of `distribution_address` has already claimed.
     public fun is_claimed<T: store>(
-        distribution_address: address, 
+        distribution_address: address,
         index: u64
     ): bool acquires MerkleDistribution {
         let distribution = borrow_global<MerkleDistribution<T>>(distribution_address);
@@ -150,13 +151,13 @@ module SFC::MerkleDistributor {
     }
 
     fun internal_claim<T: store>(
-        distribution: &mut MerkleDistribution<T>, 
-        index: u64, 
-        account: address, 
-        amount: u128, 
+        distribution: &mut MerkleDistribution<T>,
+        index: u64,
+        account: address,
+        amount: u128,
         merkle_proof: vector<vector<u8>>
     ): Token<T> {
-        let claimed =  is_claimed_(distribution, index);
+        let claimed = is_claimed_(distribution, index);
         assert!(!claimed, Errors::custom(ALREADY_CLAIMED));
 
         let leaf_data = encode_leaf(&index, &account, &amount);
@@ -169,7 +170,7 @@ module SFC::MerkleDistributor {
     }
 
     fun is_claimed_<T: store>(
-        distribution: &MerkleDistribution<T>, 
+        distribution: &MerkleDistribution<T>,
         index: u64
     ): bool {
         let claimed_word_index = index / 128;
@@ -180,7 +181,7 @@ module SFC::MerkleDistributor {
     }
 
     fun set_claimed_<T: store>(
-        distribution: &mut MerkleDistribution<T>, 
+        distribution: &mut MerkleDistribution<T>,
         index: u64
     ) {
         let claimed_word_index = index / 128;
@@ -192,8 +193,8 @@ module SFC::MerkleDistributor {
     }
 
     fun encode_leaf(
-        index: &u64, 
-        account: &address, 
+        index: &u64,
+        account: &address,
         amount: &u128
     ): vector<u8> {
         let leaf = Vector::empty();

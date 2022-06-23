@@ -11,7 +11,7 @@ module SFC::EthStateVerifier {
         let n2 = (b << 4) >> 4;
         (n1, n2)
     }
-    
+
     public fun to_nibbles(bytes: &vector<u8>): vector<u8> {
         let result = Vector::empty<u8>();
         let i = 0;
@@ -80,7 +80,7 @@ module SFC::EthStateVerifier {
                 let extension_length = Vector::length(&shared_nibbles);
                 if (shared_nibbles ==
                     Bytes::slice(&key, key_index, key_index + extension_length)) {
-                        return verify_inner(*node_value, key, proof, expected_value, key_index + extension_length, proof_index + 1)
+                    return verify_inner(*node_value, key, proof, expected_value, key_index + extension_length, proof_index + 1)
                 }
             } else if (prefix == 1) {
                 // odd extension node
@@ -88,11 +88,11 @@ module SFC::EthStateVerifier {
                 let extension_length = Vector::length(&shared_nibbles);
                 if (nibble == *Vector::borrow(&key, key_index) &&
                     shared_nibbles ==
-                        Bytes::slice(
-                            &key,
-                            key_index + 1,
-                            key_index + 1 + extension_length,
-                        )) {
+                    Bytes::slice(
+                        &key,
+                        key_index + 1,
+                        key_index + 1 + extension_length,
+                    )) {
                     return verify_inner(*node_value, key, proof, expected_value, key_index + 1 + extension_length, proof_index + 1)
                 };
             } else if (prefix == 2) {
@@ -103,9 +103,9 @@ module SFC::EthStateVerifier {
                 // odd leaf node
                 let shared_nibbles = to_nibbles(&Bytes::slice(node_key, 1, Vector::length(node_key)));
                 return &expected_value == node_value &&
-                    nibble == *Vector::borrow(&key, key_index) &&
-                     shared_nibbles ==
-                        Bytes::slice(&key, key_index + 1, Vector::length(&key))
+                       nibble == *Vector::borrow(&key, key_index) &&
+                       shared_nibbles ==
+                       Bytes::slice(&key, key_index + 1, Vector::length(&key))
             } else {
                 // invalid proof
                 abort INVALID_PROOF

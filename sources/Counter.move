@@ -8,14 +8,14 @@ module SFC::Counter {
 
     const MAX_U64: u64 = 18446744073709551615u64;
 
-    struct Counter<phantom T> has key { 
-        value: u64 
+    struct Counter<phantom T> has key {
+        value: u64
     }
-    
+
     /// Publish a `Counter` resource with value `i` under the given `account`
     public fun init<T>(account: &signer) {
         assert!(!exists<Counter<T>>(Signer::address_of(account)), Errors::already_published(E_INITIALIZED));
-        move_to(account, Counter<T> { value: 0 });
+        move_to(account, Counter<T>{ value: 0 });
     }
 
     spec init {

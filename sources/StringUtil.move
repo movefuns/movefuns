@@ -80,5 +80,4 @@ module SFC::StringUtil {
         assert!(b"0x0000bc614e" == ASCII::into_bytes(to_hex_string_fixed_length(12345678, 5)), 1);
         assert!(b"0xffffffffffffffffffffffffffffffff" == ASCII::into_bytes(to_hex_string_fixed_length(MAX_U128, 16)), 1);
     }
-
 }

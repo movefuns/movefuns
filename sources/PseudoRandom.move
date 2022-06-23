@@ -7,7 +7,7 @@
 //! simple scenarios where Miners have no incentive to cheat. If 
 //! large amounts of money are involved, DO NOT USE THIS MODULE to 
 //! generate random numbers, try a more secure way.
-module SFC::PseudoRandom{
+module SFC::PseudoRandom {
     use StarcoinFramework::Account;
     use StarcoinFramework::Block;
     use StarcoinFramework::Timestamp;
@@ -20,16 +20,16 @@ module SFC::PseudoRandom{
     const EINVALID_ARG: u64 = 101;
 
     /// Resource that wraps an integer counter
-    struct Counter has key { 
-        value: u64 
+    struct Counter has key {
+        value: u64
     }
 
     /// Publish a `Counter` resource with value `i` under the given `account`
     public fun init(account: &signer) {
-      // "Pack" (create) a Counter resource. This is a privileged operation that
-      // can only be done inside the module that declares the `Counter` resource
-      assert!(Signer::address_of(account) == @SFC, ENOT_ADMIN);
-      move_to(account, Counter { value: 0 })
+        // "Pack" (create) a Counter resource. This is a privileged operation that
+        // can only be done inside the module that declares the `Counter` resource
+        assert!(Signer::address_of(account) == @SFC, ENOT_ADMIN);
+        move_to(account, Counter{ value: 0 })
     }
 
     /// Increment the value of `addr`'s `Counter` resource
@@ -72,7 +72,7 @@ module SFC::PseudoRandom{
         let value = 0u128;
         let i = 0u64;
         while (i < 16) {
-            value = value | ((*Vector::borrow(&bytes, i) as u128) << ((8*(15 - i)) as u8));
+            value = value | ((*Vector::borrow(&bytes, i) as u128) << ((8 * (15 - i)) as u8));
             i = i + 1;
         };
         return value
@@ -82,12 +82,12 @@ module SFC::PseudoRandom{
         let value = 0u64;
         let i = 0u64;
         while (i < 8) {
-            value = value | ((*Vector::borrow(&bytes, i) as u64) << ((8*(7 - i)) as u8));
+            value = value | ((*Vector::borrow(&bytes, i) as u64) << ((8 * (7 - i)) as u8));
             i = i + 1;
         };
         return value
     }
-    
+
     /// Generate a random u128
     public fun rand_u128(addr: &address): u128 acquires Counter {
         let _seed: vector<u8> = seed(addr);

@@ -7,7 +7,7 @@
 //! simple scenarios where Miners have no incentive to cheat. If 
 //! large amounts of money are involved, DO NOT USE THIS MODULE to 
 //! generate random numbers, try a more secure way.
-module SFC::PseudoRandom{
+module SFC::PseudoRandom {
     use StarcoinFramework::Account;
     use StarcoinFramework::Block;
     use StarcoinFramework::Timestamp;
@@ -20,16 +20,16 @@ module SFC::PseudoRandom{
     const EINVALID_ARG: u64 = 101;
 
     /// Resource that wraps an integer counter
-    struct Counter has key { 
-        value: u64 
+    struct Counter has key {
+        value: u64
     }
 
     /// Publish a `Counter` resource with value `i` under the given `account`
     public fun init(account: &signer) {
-      // "Pack" (create) a Counter resource. This is a privileged operation that
-      // can only be done inside the module that declares the `Counter` resource
-      assert!(Signer::address_of(account) == @SFC, ENOT_ADMIN);
-      move_to(account, Counter { value: 0 })
+        // "Pack" (create) a Counter resource. This is a privileged operation that
+        // can only be done inside the module that declares the `Counter` resource
+        assert!(Signer::address_of(account) == @SFC, ENOT_ADMIN);
+        move_to(account, Counter{ value: 0 })
     }
 
     /// Increment the value of `addr`'s `Counter` resource
@@ -72,7 +72,7 @@ module SFC::PseudoRandom{
         let value = 0u128;
         let i = 0u64;
         while (i < 16) {
-            value = value | ((*Vector::borrow(&bytes, i) as u128) << ((8*(15 - i)) as u8));
+            value = value | ((*Vector::borrow(&bytes, i) as u128) << ((8 * (15 - i)) as u8));
             i = i + 1;
         };
         return value
@@ -82,30 +82,10 @@ module SFC::PseudoRandom{
         let value = 0u64;
         let i = 0u64;
         while (i < 8) {
-            value = value | ((*Vector::borrow(&bytes, i) as u64) << ((8*(7 - i)) as u8));
+            value = value | ((*Vector::borrow(&bytes, i) as u64) << ((8 * (7 - i)) as u8));
             i = i + 1;
         };
         return value
-    }
-    
-    #[test]
-    fun test_bytes_to_u64() {
-        // binary: 01010001 11010011 10101111 11001100 11111101 00001001 10001110 11001101
-        // bytes = [81, 211, 175, 204, 253, 9, 142, 205];
-        let dec = 5896249632111562445;
-
-        let bytes = Vector::empty<u8>();
-        Vector::push_back(&mut bytes, 81);
-        Vector::push_back(&mut bytes, 211);
-        Vector::push_back(&mut bytes, 175);
-        Vector::push_back(&mut bytes, 204);
-        Vector::push_back(&mut bytes, 253);
-        Vector::push_back(&mut bytes, 9);
-        Vector::push_back(&mut bytes, 142);
-        Vector::push_back(&mut bytes, 205);
-
-        let value = bytes_to_u64(bytes);
-        assert!(value == dec, 101);
     }
 
     /// Generate a random u128
@@ -134,4 +114,23 @@ module SFC::PseudoRandom{
         (value % (high - low)) + low
     }
 
+    #[test]
+    fun test_bytes_to_u64() {
+        // binary: 01010001 11010011 10101111 11001100 11111101 00001001 10001110 11001101
+        // bytes = [81, 211, 175, 204, 253, 9, 142, 205];
+        let dec = 5896249632111562445;
+
+        let bytes = Vector::empty<u8>();
+        Vector::push_back(&mut bytes, 81);
+        Vector::push_back(&mut bytes, 211);
+        Vector::push_back(&mut bytes, 175);
+        Vector::push_back(&mut bytes, 204);
+        Vector::push_back(&mut bytes, 253);
+        Vector::push_back(&mut bytes, 9);
+        Vector::push_back(&mut bytes, 142);
+        Vector::push_back(&mut bytes, 205);
+
+        let value = bytes_to_u64(bytes);
+        assert!(value == dec, 101);
+    }
 }

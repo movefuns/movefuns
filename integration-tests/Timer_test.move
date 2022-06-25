@@ -47,6 +47,26 @@ script {
         assert!(Timer::is_started<DummyType>(addr), 100);
         assert!(Timer::is_pending<DummyType>(addr), 100);
         assert!(!Timer::is_expired<DummyType>(addr), 100);
+
+        Timestamp::set_timeout(&account, 0);     // Prepare for is_expired.
+    }
+}
+
+// check: EXCUTED
+
+//# run --signers alice
+script {
+    use alice::Timestamp::DummyType;
+    use SFC::TimestampTimer as Timer;
+    use StarcoinFramework::Signer;
+
+    fun main(account: signer) {
+        let addr = Signer::address_of(&account);
+
+        assert!(Timer::has_timer<DummyType>(addr), 100);
+        assert!(Timer::is_started<DummyType>(addr), 100);
+        assert!(!Timer::is_pending<DummyType>(addr), 100);
+        assert!(Timer::is_expired<DummyType>(addr), 100);
     }
 }
 
@@ -96,11 +116,30 @@ script {
         assert!(Timer::is_started<DummyType>(addr), 100);
         assert!(Timer::is_pending<DummyType>(addr), 100);
         assert!(!Timer::is_expired<DummyType>(addr), 100);
+
+        Block::set_timeout(&account, 0);   // Prepare for is_expired
     }
 }
 
 // check: EXCUTED
 
+//# run --signers alice
+script {
+    use alice::Block::DummyType;
+    use SFC::BlockTimer as Timer;
+    use StarcoinFramework::Signer;
+
+    fun main(account: signer) {
+        let addr = Signer::address_of(&account);
+
+        assert!(Timer::has_timer<DummyType>(addr), 100);
+        assert!(Timer::is_started<DummyType>(addr), 100);
+        assert!(!Timer::is_pending<DummyType>(addr), 100);
+        assert!(Timer::is_expired<DummyType>(addr), 100);
+    }
+}
+
+// check: EXCUTED
 
 //# publish
 module alice::Block {

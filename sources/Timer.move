@@ -1,188 +1,186 @@
-address SFC {
-    module TimestampTimer {
-        use StarcoinFramework::Errors;
-        use StarcoinFramework::Signer;
-            use StarcoinFramework::Timestamp;
+module SFC::TimestampTimer {
+    use StarcoinFramework::Errors;
+    use StarcoinFramework::Signer;
+        use StarcoinFramework::Timestamp;
 
-        const E_INITIALIZED: u64 = 0;
-        const E_NOT_INITIALIZED: u64 = 1;
+    const E_INITIALIZED: u64 = 0;
+    const E_NOT_INITIALIZED: u64 = 1;
 
-        const MAX_U64: u64 = 18446744073709551615u64;
+    const MAX_U64: u64 = 18446744073709551615u64;
 
-        /// An timestamp based on wall clock timestamp;
-        struct Timer<phantom T> has key {
-            deadline: u64,
-        }
-
-        public fun init<T>(account: &signer) {
-            assert!(!exists<Timer<T>>(Signer::address_of(account)), Errors::already_published(E_INITIALIZED));
-            move_to(account, Timer<T>{ deadline: 0 });
-        }
-
-        spec init {
-            aborts_if exists<Timer<T>>(Signer::address_of(account));
-            ensures exists<Timer<T>>(Signer::address_of(account));
-        }
-
-        public fun set_deadline<T>(owner: address, deadline: u64) acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
-            *deadline_ref = deadline;
-        }
-
-        spec set_deadline {
-            aborts_if !exists<Timer<T>>(owner);
-        }
-
-        public fun get_deadline<T>(owner: address): u64 acquires Timer {
-           borrow_global<Timer<T>>(owner).deadline
-        }
-
-        spec get_deadline {
-            aborts_if !exists<Timer<T>>(owner);
-        }
-
-        public fun reset<T>(owner: address) acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
-            *deadline_ref = 0;
-        }
-
-        spec reset {
-            aborts_if !exists<Timer<T>>(owner);
-        }
-
-        public fun is_unset<T>(owner: address): bool acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            borrow_global<Timer<T>>(owner).deadline == 0
-        }
-
-        spec is_unset {
-            aborts_if !exists<Timer<T>>(owner);
-        }
-
-        public fun is_started<T>(owner: address): bool acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            borrow_global<Timer<T>>(owner).deadline > 0
-        }
-
-        spec is_started {
-            aborts_if !exists<Timer<T>>(owner);
-        }
-
-        public fun is_pending<T>(owner: address): bool acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            borrow_global<Timer<T>>(owner).deadline > Timestamp::now_milliseconds()
-        }
-
-        spec is_pending {
-            aborts_if !exists<Timer<T>>(owner);
-        }
-
-        public fun is_expired<T>(owner: address): bool acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            is_started<T>(owner) && borrow_global<Timer<T>>(owner).deadline  <= Timestamp::now_milliseconds()
-        }
-
-        spec is_expired {
-            aborts_if !exists<Timer<T>>(owner);
-        }
-
-        public fun has_timer<T>(owner: address): bool {
-            exists<Timer<T>>(owner)
-        }
+    /// A timer based on wall clock timestamp.
+    struct Timer<phantom T> has key {
+        deadline: u64,
     }
 
-    module BlockTimer {
-        use StarcoinFramework::Block;
-        use StarcoinFramework::Errors;
-        use StarcoinFramework::Signer;
+    public fun init<T>(account: &signer) {
+        assert!(!exists<Timer<T>>(Signer::address_of(account)), Errors::already_published(E_INITIALIZED));
+        move_to(account, Timer<T>{ deadline: 0 });
+    }
 
-        const E_INITIALIZED: u64 = 0;
-        const E_NOT_INITIALIZED: u64 = 1;
+    spec init {
+        aborts_if exists<Timer<T>>(Signer::address_of(account));
+        ensures exists<Timer<T>>(Signer::address_of(account));
+    }
 
-        const MAX_U64: u64 = 18446744073709551615u64;
+    public fun set_deadline<T>(owner: address, deadline: u64) acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
+        *deadline_ref = deadline;
+    }
 
-        /// An timestamp based block number;
-        struct Timer<phantom T> has key {
-            deadline: u64,
-        }
-        public fun init<T>(account: &signer) {
-            assert!(!exists<Timer<T>>(Signer::address_of(account)), Errors::already_published(E_INITIALIZED));
-            move_to(account, Timer<T>{ deadline: 0 });
-        }
+    spec set_deadline {
+        aborts_if !exists<Timer<T>>(owner);
+    }
 
-        spec init {
-            aborts_if exists<Timer<T>>(Signer::address_of(account));
-            ensures exists<Timer<T>>(Signer::address_of(account));
-        }
+    public fun get_deadline<T>(owner: address): u64 acquires Timer {
+       borrow_global<Timer<T>>(owner).deadline
+    }
 
-        public fun set_deadline<T>(owner: address, deadline: u64) acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
-            *deadline_ref = deadline;
-        }
+    spec get_deadline {
+        aborts_if !exists<Timer<T>>(owner);
+    }
 
-        spec set_deadline {
-            aborts_if !exists<Timer<T>>(owner);
-        }
+    public fun reset<T>(owner: address) acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
+        *deadline_ref = 0;
+    }
 
-        public fun get_deadline<T>(owner: address): u64 acquires Timer {
-           borrow_global<Timer<T>>(owner).deadline
-        }
+    spec reset {
+        aborts_if !exists<Timer<T>>(owner);
+    }
 
-        spec get_deadline {
-            aborts_if !exists<Timer<T>>(owner);
-        }
+    public fun is_unset<T>(owner: address): bool acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        borrow_global<Timer<T>>(owner).deadline == 0
+    }
 
-        public fun reset<T>(owner: address) acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
-            *deadline_ref = 0;
-        }
+    spec is_unset {
+        aborts_if !exists<Timer<T>>(owner);
+    }
 
-        spec reset {
-            aborts_if !exists<Timer<T>>(owner);
-        }
+    public fun is_started<T>(owner: address): bool acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        borrow_global<Timer<T>>(owner).deadline > 0
+    }
 
-        public fun is_unset<T>(owner: address): bool acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            borrow_global<Timer<T>>(owner).deadline == 0
-        }
+    spec is_started {
+        aborts_if !exists<Timer<T>>(owner);
+    }
 
-        spec is_unset {
-            aborts_if !exists<Timer<T>>(owner);
-        }
+    public fun is_pending<T>(owner: address): bool acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        borrow_global<Timer<T>>(owner).deadline > Timestamp::now_milliseconds()
+    }
 
-        public fun is_started<T>(owner: address): bool acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            borrow_global<Timer<T>>(owner).deadline > 0
-        }
+    spec is_pending {
+        aborts_if !exists<Timer<T>>(owner);
+    }
 
-        spec is_started {
-            aborts_if !exists<Timer<T>>(owner);
-        }
+    public fun is_expired<T>(owner: address): bool acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        is_started<T>(owner) && borrow_global<Timer<T>>(owner).deadline  <= Timestamp::now_milliseconds()
+    }
 
-        public fun is_pending<T>(owner: address): bool acquires Timer {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            borrow_global<Timer<T>>(owner).deadline > Block::get_current_block_number()
-        }
+    spec is_expired {
+        aborts_if !exists<Timer<T>>(owner);
+    }
 
-        spec is_pending {
-            aborts_if !exists<Timer<T>>(owner);
-        }
+    public fun has_timer<T>(owner: address): bool {
+        exists<Timer<T>>(owner)
+    }
+}
 
-        public fun is_expired<T>(owner: address): bool acquires Timer  {
-            assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
-            is_started<T>(owner) && borrow_global<Timer<T>>(owner).deadline  <= Block::get_current_block_number()
-        }
+module SFC::BlockTimer {
+    use StarcoinFramework::Block;
+    use StarcoinFramework::Errors;
+    use StarcoinFramework::Signer;
 
-        spec is_expired {
-            aborts_if !exists<Timer<T>>(owner);
-        }
+    const E_INITIALIZED: u64 = 0;
+    const E_NOT_INITIALIZED: u64 = 1;
 
-        public fun has_timer<T>(owner: address): bool {
-            exists<Timer<T>>(owner)
-        }
+    const MAX_U64: u64 = 18446744073709551615u64;
+
+    /// A timer based on block number;
+    struct Timer<phantom T> has key {
+        deadline: u64,
+    }
+    public fun init<T>(account: &signer) {
+        assert!(!exists<Timer<T>>(Signer::address_of(account)), Errors::already_published(E_INITIALIZED));
+        move_to(account, Timer<T>{ deadline: 0 });
+    }
+
+    spec init {
+        aborts_if exists<Timer<T>>(Signer::address_of(account));
+        ensures exists<Timer<T>>(Signer::address_of(account));
+    }
+
+    public fun set_deadline<T>(owner: address, deadline: u64) acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
+        *deadline_ref = deadline;
+    }
+
+    spec set_deadline {
+        aborts_if !exists<Timer<T>>(owner);
+    }
+
+    public fun get_deadline<T>(owner: address): u64 acquires Timer {
+       borrow_global<Timer<T>>(owner).deadline
+    }
+
+    spec get_deadline {
+        aborts_if !exists<Timer<T>>(owner);
+    }
+
+    public fun reset<T>(owner: address) acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
+        *deadline_ref = 0;
+    }
+
+    spec reset {
+        aborts_if !exists<Timer<T>>(owner);
+    }
+
+    public fun is_unset<T>(owner: address): bool acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        borrow_global<Timer<T>>(owner).deadline == 0
+    }
+
+    spec is_unset {
+        aborts_if !exists<Timer<T>>(owner);
+    }
+
+    public fun is_started<T>(owner: address): bool acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        borrow_global<Timer<T>>(owner).deadline > 0
+    }
+
+    spec is_started {
+        aborts_if !exists<Timer<T>>(owner);
+    }
+
+    public fun is_pending<T>(owner: address): bool acquires Timer {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        borrow_global<Timer<T>>(owner).deadline > Block::get_current_block_number()
+    }
+
+    spec is_pending {
+        aborts_if !exists<Timer<T>>(owner);
+    }
+
+    public fun is_expired<T>(owner: address): bool acquires Timer  {
+        assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
+        is_started<T>(owner) && borrow_global<Timer<T>>(owner).deadline  <= Block::get_current_block_number()
+    }
+
+    spec is_expired {
+        aborts_if !exists<Timer<T>>(owner);
+    }
+
+    public fun has_timer<T>(owner: address): bool {
+        exists<Timer<T>>(owner)
     }
 }

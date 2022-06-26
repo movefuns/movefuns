@@ -13,16 +13,16 @@ module alice::Timestamp {
     struct DummyType has drop {}
 
     public fun init(account: &signer) {
-        TimestampTimer::init<DummyType>(account);
+        TimestampTimer::init<DummyType>(account, &DummyType{});
     }
 
     public fun set_timeout(account: &signer, timeout: u64) {
         let deadline = Timestamp::now_milliseconds() + timeout;
-        TimestampTimer::set_deadline<DummyType>(Signer::address_of(account), deadline);
+        TimestampTimer::set_deadline<DummyType>(Signer::address_of(account), deadline, &DummyType{});
     }
 
     public fun reset(account: &signer) {
-        TimestampTimer::reset<DummyType>(Signer::address_of(account));
+        TimestampTimer::reset<DummyType>(Signer::address_of(account), &DummyType{});
     }
 
     public fun current(addr: &address): u64 {
@@ -82,16 +82,16 @@ module alice::Block {
     struct DummyType has drop {}
 
     public fun init(account: &signer) {
-        BlockTimer::init<DummyType>(account);
+        BlockTimer::init<DummyType>(account, &DummyType{});
     }
 
     public fun set_timeout(account: &signer, timeout: u64) {
         let deadline = Block::get_current_block_number() + timeout;
-        BlockTimer::set_deadline<DummyType>(Signer::address_of(account), deadline);
+        BlockTimer::set_deadline<DummyType>(Signer::address_of(account), deadline, &DummyType{});
     }
 
     public fun reset(account: &signer) {
-        BlockTimer::reset<DummyType>(Signer::address_of(account));
+        BlockTimer::reset<DummyType>(Signer::address_of(account), &DummyType{});
     }
 
     public fun current(addr: &address): u64 {
@@ -150,16 +150,16 @@ module alice::Block {
     struct DummyType has drop {}
 
     public fun init(account: &signer) {
-        BlockTimer::init<DummyType>(account);
+        BlockTimer::init<DummyType>(account, &DummyType{});
     }
 
     public fun set_timeout(account: &signer, timeout: u64) {
         let deadline = Block::get_current_block_number() + timeout;
-        BlockTimer::set_deadline<DummyType>(Signer::address_of(account), deadline);
+        BlockTimer::set_deadline<DummyType>(Signer::address_of(account), deadline, &DummyType{});
     }
 
     public fun reset(account: &signer) {
-        BlockTimer::reset<DummyType>(Signer::address_of(account));
+        BlockTimer::reset<DummyType>(Signer::address_of(account), &DummyType{});
     }
 
     public fun current(addr: &address): u64 {
@@ -175,8 +175,10 @@ script {
     fun main(_account: signer) {
         // Bob could check the timer of alice but couldn't modify it.
         assert!(Timer::has_timer<DummyType>(@alice), 100);
-        // TODO: Oops, this shouldn't happen.
-        Timer::reset<DummyType>(@alice);
+        // Oops, this shouldn't happen.
+        // Timer::set_deadline<DummyType>(@alice, 1, &DummyType{});
+        // Oops, this shouldn't happen.
+        // Timer::reset<DummyType>(@alice, &DummyType{});
     }
 }
 

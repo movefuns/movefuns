@@ -13,7 +13,7 @@ module SFC::TimestampTimer {
         deadline: u64,
     }
 
-    public fun init<T>(account: &signer) {
+    public fun init<T>(account: &signer, _witness: &T) {
         assert!(!exists<Timer<T>>(Signer::address_of(account)), Errors::already_published(E_INITIALIZED));
         move_to(account, Timer<T>{ deadline: 0 });
     }
@@ -23,7 +23,7 @@ module SFC::TimestampTimer {
         ensures exists<Timer<T>>(Signer::address_of(account));
     }
 
-    public fun set_deadline<T>(owner: address, deadline: u64) acquires Timer {
+    public fun set_deadline<T>(owner: address, deadline: u64, _witness: &T) acquires Timer {
         assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
         let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
         *deadline_ref = deadline;
@@ -41,7 +41,7 @@ module SFC::TimestampTimer {
         aborts_if !exists<Timer<T>>(owner);
     }
 
-    public fun reset<T>(owner: address) acquires Timer {
+    public fun reset<T>(owner: address, _witness: &T) acquires Timer {
         assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
         let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
         *deadline_ref = 0;
@@ -106,7 +106,7 @@ module SFC::BlockTimer {
     struct Timer<phantom T> has key {
         deadline: u64,
     }
-    public fun init<T>(account: &signer) {
+    public fun init<T>(account: &signer, _witness: &T) {
         assert!(!exists<Timer<T>>(Signer::address_of(account)), Errors::already_published(E_INITIALIZED));
         move_to(account, Timer<T>{ deadline: 0 });
     }
@@ -116,7 +116,7 @@ module SFC::BlockTimer {
         ensures exists<Timer<T>>(Signer::address_of(account));
     }
 
-    public fun set_deadline<T>(owner: address, deadline: u64) acquires Timer {
+    public fun set_deadline<T>(owner: address, deadline: u64, _witness: &T) acquires Timer {
         assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
         let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
         *deadline_ref = deadline;
@@ -134,7 +134,7 @@ module SFC::BlockTimer {
         aborts_if !exists<Timer<T>>(owner);
     }
 
-    public fun reset<T>(owner: address) acquires Timer {
+    public fun reset<T>(owner: address, _witness: &T) acquires Timer {
         assert!(exists<Timer<T>>(owner), Errors::not_published(E_NOT_INITIALIZED));
         let deadline_ref = &mut borrow_global_mut<Timer<T>>(owner).deadline;
         *deadline_ref = 0;

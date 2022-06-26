@@ -1,7 +1,7 @@
 module SFC::TimestampTimer {
     use StarcoinFramework::Errors;
     use StarcoinFramework::Signer;
-        use StarcoinFramework::Timestamp;
+    use StarcoinFramework::Timestamp;
 
     const E_INITIALIZED: u64 = 0;
     const E_NOT_INITIALIZED: u64 = 1;

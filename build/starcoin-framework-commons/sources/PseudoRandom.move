@@ -1,12 +1,12 @@
-//! A pseudo random module on-chain.
-//!
-//! Warning: 
-//!     the random mechanism in smart contracts is different from 
-//! that in traditional programming languages. The value generated 
-//! by random is predictable to Miners, so it can only be used in 
-//! simple scenarios where Miners have no incentive to cheat. If 
-//! large amounts of money are involved, DO NOT USE THIS MODULE to 
-//! generate random numbers, try a more secure way.
+/// A pseudo random module on-chain.
+///
+/// Warning: 
+///     the random mechanism in smart contracts is different from 
+/// that in traditional programming languages. The value generated 
+/// by random is predictable to Miners, so it can only be used in 
+/// simple scenarios where Miners have no incentive to cheat. If 
+/// large amounts of money are involved, DO NOT USE THIS MODULE to 
+/// generate random numbers, try a more secure way.
 module SFC::PseudoRandom {
     use StarcoinFramework::Account;
     use StarcoinFramework::Block;

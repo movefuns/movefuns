@@ -2,5 +2,5 @@
 .idea
 
 # Move Build Output sources
-build/StarcoinFramework/sources/*.move
+build/starcoin-framework-commons/sources/*.move
 build/UnitTest

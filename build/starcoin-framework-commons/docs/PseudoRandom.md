@@ -3,6 +3,15 @@
 
 # Module `0x6ee3f577c8da207830c31e1f0abb4244::PseudoRandom`
 
+A pseudo random module on-chain.
+
+Warning:
+the random mechanism in smart contracts is different from
+that in traditional programming languages. The value generated
+by random is predictable to Miners, so it can only be used in
+simple scenarios where Miners have no incentive to cheat. If
+large amounts of money are involved, DO NOT USE THIS MODULE to
+generate random numbers, try a more secure way.
 
 
 -  [Resource `Counter`](#0x6ee3f577c8da207830c31e1f0abb4244_PseudoRandom_Counter)

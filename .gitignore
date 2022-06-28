@@ -1,3 +1,6 @@
-build
 .DS_Store
 .idea
+
+# Move Build Output sources
+build/StarcoinFramework/sources/*.move
+build/UnitTest

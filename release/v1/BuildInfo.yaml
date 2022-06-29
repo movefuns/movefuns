@@ -1,0 +1,335 @@
+---
+compiled_package_info:
+  package_name: starcoin-framework-commons
+  address_alias_instantiation:
+    SFC: "0x6ee3f577c8da207830c31e1f0abb4244"
+    StarcoinAssociation: "0x0000000000000000000000000a550c18"
+    StarcoinFramework: "0x00000000000000000000000000000001"
+    VMReserved: "0x00000000000000000000000000000000"
+  module_resolution_metadata:
+    ? address: "0x00000000000000000000000000000001"
+      name: Account
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: AccountScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Arith
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Authenticator
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: BCS
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: BitOperators
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Block
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: BlockReward
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: ChainId
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Collection
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Collection2
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Compare
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Config
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: ConsensusConfig
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: ConsensusStrategy
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: CoreAddresses
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Dao
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: DaoVoteScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Debug
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: DummyToken
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: DummyTokenScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: EVMAddress
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: EmptyScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Epoch
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Errors
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Event
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: FixedPoint32
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Genesis
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: GenesisNFT
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: GenesisNFTScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: GenesisSignerCapability
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Hash
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: IdentifierNFT
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: IdentifierNFTScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: LanguageVersion
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Math
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: MerkleNFTDistributor
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: MerkleProof
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: MintDaoProposal
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: MintScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: ModifyDaoConfigProposal
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: ModuleUpgradeScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: NFT
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: NFTGallery
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: NFTGalleryScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Offer
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: OnChainConfigDao
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: OnChainConfigScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Option
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Oracle
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: PackageTxnManager
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: PriceOracle
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: PriceOracleAggregator
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: PriceOracleScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: RewardConfig
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: SIP_2
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: SIP_3
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: STC
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: STCUSDOracle
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: SharedEd25519PublicKey
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Signature
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: SignedInteger64
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Signer
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: StdlibUpgradeScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Timestamp
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Token
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: TransactionFee
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: TransactionManager
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: TransactionPublishOption
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: TransactionTimeout
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: TransactionTimeoutConfig
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: TransferScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Treasury
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: TreasuryScripts
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: TreasuryWithdrawDaoProposal
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: U256
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: UpgradeModuleDaoProposal
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: VMConfig
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Vector
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: Version
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: YieldFarming
+    : StarcoinFramework
+    ? address: "0x00000000000000000000000000000001"
+      name: YieldFarmingV2
+    : StarcoinFramework
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: ASCII
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: Base64
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: Bit
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: BitMap
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: BlockTimer
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: Bytes
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: Counter
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: EthStateVerifier
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: Math
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: MerkleDistributor
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: MerkleDistributorScripts
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: MerkleProof
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: PseudoRandom
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: RBAC
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: RLP
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: SFC
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: StarcoinVerifier
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: StarcoinVerifierScripts
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: StringUtil
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: StructuredHash
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: TimestampTimer
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: UpgradeScript
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: Vesting
+    : SFC
+  source_digest: 78A2D42F38D493EC5A881DD586ED80060A5EDBC679729178107D06C7714F3B38
+  build_flags:
+    dev_mode: false
+    test_mode: false
+    generate_docs: true
+    generate_abis: true
+    install_dir: ~
+    force_recompilation: true
+    additional_named_addresses: {}
+dependencies:
+  - StarcoinFramework

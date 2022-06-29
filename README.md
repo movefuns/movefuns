@@ -8,6 +8,11 @@ The library was deployed on the multi-Sign  address     ``` 0x6ee3f577c8da207830
 
 `v1.0.0` has been deployed in `main` and `barnard`  
 
+## Documents
+
+- [latest](./build/starcoin-framework-commons/docs)
+- [v1](./release/v1/docs/)
+
 ## Install mpm
 
 Download from the release page of [starcoiorg/starcoin](https://github.com/starcoinorg/starcoin).
@@ -41,6 +46,14 @@ Contributions in the following are welcome:
 2. Submit a feature request, such as a codec function, an algorithm function.
 3. Implement feature or fix bug.
 
+### How to add new module to starcoin-framework:
+
+1. Add New Move module to `sources` dir, such as `MyModule.move`.
+2. Write Move code and add unit test in the module file.
+3. Add an integration test to [integration-tests](../integration-tests) dir, such as: `test_my_module.move`.
+4. Run the integration test `mpm integration-test test_my_module.move `.
+5. Run script `./script/build.sh` for build and generate documents.
+6. Commit the changes and create a pull request.
 
 You can view our [Code of Conduct](./CODE_OF_CONDUCT.md).
 

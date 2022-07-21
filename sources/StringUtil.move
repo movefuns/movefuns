@@ -10,6 +10,16 @@ module SFC::StringUtil {
     // name is took from https://github.com/move-language/move/blob/a86f31415b9a18867b5edaed6f915a39b8c2ef40/language/move-prover/doc/user/spec-lang.md?plain=1#L214
     const MAX_U128: u128 = 340282366920938463463374607431768211455;
 
+    fun max_u256(): U256 {
+        let buffer = Vector::empty<u8>();
+        let i: u8 = 0;
+        while (i < 32) {
+            Vector::push_back(&mut buffer, 0xffu8);
+            i = i + 1;
+        };
+        U256::from_big_endian(buffer)
+    }
+
     public fun to_string(value: u128): String {
         if (value == 0) {
             return ASCII::string(b"0")
@@ -98,6 +108,7 @@ module SFC::StringUtil {
         assert!(b"0" == ASCII::into_bytes(u256_to_string(U256::zero())), 1);
         assert!(b"1" == ASCII::into_bytes(u256_to_string(U256::one())), 1);
         assert!(b"340282366920938463463374607431768211455" == ASCII::into_bytes(u256_to_string(U256::from_u128(MAX_U128))), 1);
+        assert!(b"115792089237316195423570985008687907853269984665640564039457584007913129639935" == ASCII::into_bytes(u256_to_string(max_u256())), 1);
     }
 
     #[test]
@@ -111,6 +122,8 @@ module SFC::StringUtil {
         assert!(b"0x01" == ASCII::into_bytes(u256_to_hex_string(U256::one())), 1);
         assert!(b"0xffffffffffffffffffffffffffffffff" == ASCII::into_bytes(u256_to_hex_string(U256::from_u128(MAX_U128))), 1);
         assert!(b"0x0100000000000000000000000000000000" == ASCII::into_bytes(u256_to_hex_string(U256::add(U256::from_u128(MAX_U128), U256::one()))), 1);
+        assert!(b"0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" == ASCII::into_bytes(u256_to_hex_string(max_u256())), 1);
+
     }
 
     #[test]

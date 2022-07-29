@@ -34,5 +34,6 @@ the development of DApp SmartContracts on Move, like apache-commons library on J
 -  [`0x6ee3f577c8da207830c31e1f0abb4244::StringUtil`](StringUtil.md#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil)
 -  [`0x6ee3f577c8da207830c31e1f0abb4244::StructuredHash`](StarcoinVerifier.md#0x6ee3f577c8da207830c31e1f0abb4244_StructuredHash)
 -  [`0x6ee3f577c8da207830c31e1f0abb4244::TimestampTimer`](Timer.md#0x6ee3f577c8da207830c31e1f0abb4244_TimestampTimer)
+-  [`0x6ee3f577c8da207830c31e1f0abb4244::TokenLocker`](TokenLocker.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenLocker)
 -  [`0x6ee3f577c8da207830c31e1f0abb4244::UpgradeScript`](UpgradeScript.md#0x6ee3f577c8da207830c31e1f0abb4244_UpgradeScript)
 -  [`0x6ee3f577c8da207830c31e1f0abb4244::Vesting`](Vesting.md#0x6ee3f577c8da207830c31e1f0abb4244_Vesting)

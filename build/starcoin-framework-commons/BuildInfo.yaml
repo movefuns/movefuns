@@ -317,12 +317,15 @@ compiled_package_info:
       name: TimestampTimer
     : SFC
     ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: TokenLocker
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
       name: UpgradeScript
     : SFC
     ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
       name: Vesting
     : SFC
-  source_digest: F39761812CD04D6AC0B0FF115B747AF85F272FEA13985AEF3AB39DA0F543A57A
+  source_digest: A67A4EB499634250C61C2F7941CD2251F4F469718FA57680B0115776F0570439
   build_flags:
     dev_mode: false
     test_mode: false

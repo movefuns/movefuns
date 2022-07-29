@@ -6,12 +6,16 @@
 
 
 -  [Constants](#@Constants_0)
+-  [Function `max_u256`](#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_max_u256)
 -  [Function `to_string`](#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_to_string)
 -  [Function `to_hex_string`](#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_to_hex_string)
 -  [Function `to_hex_string_fixed_length`](#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_to_hex_string_fixed_length)
+-  [Function `u256_to_string`](#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_u256_to_string)
+-  [Function `u256_to_hex_string`](#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_u256_to_hex_string)
 
 
-<pre><code><b>use</b> <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector">0x1::Vector</a>;
+<pre><code><b>use</b> <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256">0x1::U256</a>;
+<b>use</b> <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector">0x1::Vector</a>;
 <b>use</b> <a href="ASCII.md#0x6ee3f577c8da207830c31e1f0abb4244_ASCII">0x6ee3f577c8da207830c31e1f0abb4244::ASCII</a>;
 </code></pre>
 
@@ -39,6 +43,36 @@
 </code></pre>
 
 
+
+<a name="0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_max_u256"></a>
+
+## Function `max_u256`
+
+
+
+<pre><code><b>fun</b> <a href="StringUtil.md#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_max_u256">max_u256</a>(): <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_U256">U256::U256</a>
+</code></pre>
+
+
+
+<details>
+<summary>Implementation</summary>
+
+
+<pre><code><b>fun</b> <a href="StringUtil.md#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_max_u256">max_u256</a>(): <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256">U256</a> {
+    <b>let</b> buffer = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_empty">Vector::empty</a>&lt;u8&gt;();
+    <b>let</b> i: u8 = 0;
+    <b>while</b> (i &lt; 32) {
+        <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> buffer, 0xffu8);
+        i = i + 1;
+    };
+    <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_from_big_endian">U256::from_big_endian</a>(buffer)
+}
+</code></pre>
+
+
+
+</details>
 
 <a name="0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_to_string"></a>
 
@@ -134,6 +168,79 @@ so the returned String is <code>2 * length + 2</code>(with '0x') in size
         i = i + 1;
     };
     <b>assert</b>!(value == 0, 1);
+    <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_append">Vector::append</a>(&<b>mut</b> buffer, b"x0");
+    <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_reverse">Vector::reverse</a>(&<b>mut</b> buffer);
+    <a href="ASCII.md#0x6ee3f577c8da207830c31e1f0abb4244_ASCII_string">ASCII::string</a>(buffer)
+}
+</code></pre>
+
+
+
+</details>
+
+<a name="0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_u256_to_string"></a>
+
+## Function `u256_to_string`
+
+Converts a <code><a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256">U256</a></code> to its <code><a href="ASCII.md#0x6ee3f577c8da207830c31e1f0abb4244_ASCII_String">ASCII::String</a></code> representation.
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="StringUtil.md#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_u256_to_string">u256_to_string</a>(value: <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_U256">U256::U256</a>): <a href="ASCII.md#0x6ee3f577c8da207830c31e1f0abb4244_ASCII_String">ASCII::String</a>
+</code></pre>
+
+
+
+<details>
+<summary>Implementation</summary>
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="StringUtil.md#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_u256_to_string">u256_to_string</a>(value: <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256">U256</a>): String {
+    <b>let</b> ten = <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_from_u64">U256::from_u64</a>(10);
+    <b>let</b> buffer = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_empty">Vector::empty</a>&lt;u8&gt;();
+    <b>let</b> current = value;
+    <b>loop</b> {
+        <b>let</b> digit = (<a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_to_u128">U256::to_u128</a>(&<a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_rem">U256::rem</a>(<b>copy</b> current, <b>copy</b> ten)) <b>as</b> u8);
+        <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> buffer, digit + 0x30);
+        current = <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_div">U256::div</a>(<b>copy</b> current, <b>copy</b> ten);
+        <b>if</b> (<a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_compare">U256::compare</a>(&current, &<a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_zero">U256::zero</a>()) == 0) <b>break</b>;
+    };
+    <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_reverse">Vector::reverse</a>(&<b>mut</b> buffer);
+    <a href="ASCII.md#0x6ee3f577c8da207830c31e1f0abb4244_ASCII_string">ASCII::string</a>(buffer)
+}
+</code></pre>
+
+
+
+</details>
+
+<a name="0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_u256_to_hex_string"></a>
+
+## Function `u256_to_hex_string`
+
+Converts a <code><a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256">U256</a></code> to its <code><a href="ASCII.md#0x6ee3f577c8da207830c31e1f0abb4244_ASCII_String">ASCII::String</a></code> hexadecimal representation.
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="StringUtil.md#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_u256_to_hex_string">u256_to_hex_string</a>(value: <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_U256">U256::U256</a>): <a href="ASCII.md#0x6ee3f577c8da207830c31e1f0abb4244_ASCII_String">ASCII::String</a>
+</code></pre>
+
+
+
+<details>
+<summary>Implementation</summary>
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="StringUtil.md#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_u256_to_hex_string">u256_to_hex_string</a>(value: <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256">U256</a>): String {
+    <b>let</b> sixteen = <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_from_u64">U256::from_u64</a>(16);
+    <b>let</b> buffer = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_empty">Vector::empty</a>&lt;u8&gt;();
+    <b>let</b> current = value;
+    <b>let</b> i: u64 = 0;
+    <b>loop</b> {
+        <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> buffer, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<b>mut</b> <a href="StringUtil.md#0x6ee3f577c8da207830c31e1f0abb4244_StringUtil_HEX_SYMBOLS">HEX_SYMBOLS</a>, (<a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_to_u128">U256::to_u128</a>(&<a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_rem">U256::rem</a>(<b>copy</b> current, <b>copy</b> sixteen)) <b>as</b> u64)));
+        i = i + 1;
+        current = <a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_div">U256::div</a>(<b>copy</b> current, <b>copy</b> sixteen);
+        <b>if</b> (<a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_compare">U256::compare</a>(&current, &<a href="../../../build/StarcoinFramework/docs/U256.md#0x1_U256_zero">U256::zero</a>()) == 0) <b>break</b>;
+    };
+    <b>if</b> (i % 2 != 0) <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_append">Vector::append</a>(&<b>mut</b> buffer, b"0");
     <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_append">Vector::append</a>(&<b>mut</b> buffer, b"x0");
     <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_reverse">Vector::reverse</a>(&<b>mut</b> buffer);
     <a href="ASCII.md#0x6ee3f577c8da207830c31e1f0abb4244_ASCII_string">ASCII::string</a>(buffer)

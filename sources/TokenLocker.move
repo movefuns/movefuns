@@ -1,60 +1,83 @@
 module SFC::TokenLocker {
-    use StarcoinFramework::Token::Token;
-    use StarcoinFramework::Signer;
     use StarcoinFramework::Account;
+    use StarcoinFramework::Signer;
     use StarcoinFramework::Timestamp;
+    use StarcoinFramework::Token::Token;
     use StarcoinFramework::Vector;
 
-    const LOCK_TIME_PASSD:u64= 2;
+    const LOCK_TIME_PASSD: u64 = 2;
 
-    struct Locker<phantom T:store> has store{
-        token:Token<T>,
-        unlock_time:u64,
+    struct Locker<phantom T: store> has store {
+        token: Token<T>,
+        unlock_time: u64,
     }
 
-    struct TokenLocker<phantom T:store> has store,key{
+    struct LockerContainer<phantom T: store> has key {
         locks: vector<Locker<T>>
     }
 
-    public fun lock<TokenT:store>(sender:&signer,t:Token<TokenT>,timestamp:u64) acquires TokenLocker{
-        assert!(timestamp > Timestamp::now_milliseconds(), LOCK_TIME_PASSD);
+    public fun lock<TokenT: store>(sender: &signer, token: Token<TokenT>, unlock_time: u64) acquires LockerContainer {
+        assert!(unlock_time > Timestamp::now_milliseconds(), LOCK_TIME_PASSD);
 
-        let lock = Locker<TokenT>{
-            token:t,
-            unlock_time:timestamp,
+        let lock = Locker<TokenT> {
+            token,
+            unlock_time,
         };
 
         let addresses = Signer::address_of(sender);
-        if (!exists<TokenLocker<TokenT>>(addresses)) {
-            let locker = TokenLocker<TokenT>{locks:Vector::empty<Locker<TokenT>>()};
-            Vector::push_back<Locker<TokenT>>(&mut locker.locks,lock);
-            move_to<TokenLocker<TokenT>>(sender,locker);
+        if (!exists<LockerContainer<TokenT>>(addresses)) {
+            let locker = LockerContainer<TokenT> { locks: Vector::empty<Locker<TokenT>>() };
+            Vector::push_back<Locker<TokenT>>(&mut locker.locks, lock);
+            move_to<LockerContainer<TokenT>>(sender, locker);
         } else {
-            let locker = borrow_global_mut<TokenLocker<TokenT>>(addresses); 
-            //let _locker = borrow_global<TokenLocker<TokenT>>(addresses);
-            Vector::push_back<Locker<TokenT>>(&mut locker.locks,lock);
-            //move_to<TokenLocker<TokenT>>(sender,locker);
+            let locker = borrow_global_mut<LockerContainer<TokenT>>(addresses);
+            Vector::push_back<Locker<TokenT>>(&mut locker.locks, lock);
         }
     }
 
-    public fun unlock<TokenT:store>(sender:&signer) acquires TokenLocker{
+    public fun unlock<TokenT: store>(sender: &signer): vector<Token<TokenT>> acquires LockerContainer {
         let addresses = Signer::address_of(sender);
+        let locker_tokens = Vector::empty<Token<TokenT>>();
 
-        let locker = borrow_global_mut<TokenLocker<TokenT>>(addresses);
+        let locker = borrow_global_mut<LockerContainer<TokenT>>(addresses);
         if (!Vector::is_empty<Locker<TokenT>>(&locker.locks)) {
             let locker_len = Vector::length<Locker<TokenT>>(&locker.locks);
-
             let i = 0;
             while (i < locker_len) {
-                let token_lock = Vector::borrow(&locker.locks,i);
+                let token_lock = Vector::borrow(&locker.locks, i);
                 if (token_lock.unlock_time <= Timestamp::now_milliseconds()) {
-                    let Locker{token:t,unlock_time:_} =  Vector::remove<Locker<TokenT>>(&mut locker.locks,i);          
-                    Account::deposit_to_self<TokenT>(sender, t);
+                    let Locker { token: t, unlock_time: _ } = Vector::remove<Locker<TokenT>>(&mut locker.locks, i);
+                    Vector::push_back<Token<TokenT>>(&mut locker_tokens, t);
                     locker_len = locker_len - 1;
                 } else {
-                    i = i +1;
+                    i = i + 1;
                 };
             };
         };
+
+        locker_tokens
+    }
+
+
+    public fun lock_self<TokenT: store>(sender: &signer, amount: u128, unlock_time: u64) acquires LockerContainer {
+        let t = Account::withdraw<TokenT>(sender, amount);
+        Self::lock(sender, t, unlock_time);
+    }
+
+    public fun unlock_self<TokenT: store>(sender: &signer) acquires LockerContainer {
+        let tokens = Self::unlock<TokenT>(sender);
+
+        if (!Vector::is_empty<Token<TokenT>>(&tokens)) {
+            let locker_len = Vector::length<Token<TokenT>>(&tokens);
+
+            let i = 0;
+            while (i < locker_len) {
+                let t = Vector::remove<Token<TokenT>>(&mut tokens, i);
+                Account::deposit_to_self(sender, t);
+                locker_len = locker_len - 1;
+            };
+        };
+
+        Vector::destroy_empty(tokens);
     }
 }

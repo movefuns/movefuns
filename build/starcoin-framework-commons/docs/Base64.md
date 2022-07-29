@@ -55,24 +55,24 @@
 
     <b>let</b> m = 0 ;
     <b>while</b> (m &lt; size ) {
-        <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a> ,(((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m) & 0xfc) &gt;&gt; 2 ) <b>as</b> u64 )) );
-        <b>if</b>( m + 3 &gt;= size){
-            <b>if</b>( size % 3 == 1){
-                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a> ,(((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m) & 0x03) &lt;&lt; 4 ) <b>as</b> u64 )) );
+        <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, (((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m) & 0xfc) &gt;&gt; 2) <b>as</b> u64)));
+        <b>if</b> ( m + 3 &gt;= size) {
+            <b>if</b> ( size % 3 == 1) {
+                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, (((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m) & 0x03) &lt;&lt; 4) <b>as</b> u64)));
                 <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, eq);
                 <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, eq);
-            }<b>else</b> <b>if</b>(size % 3 == 2){
-                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m) & 0x03) &lt;&lt; 4) + ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0xf0 ) &gt;&gt; 4) ) <b>as</b> u64 )));
-                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, (((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0x0f ) &lt;&lt; 2 ) <b>as</b> u64 )));
+            }<b>else</b> <b>if</b> (size % 3 == 2) {
+                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m) & 0x03) &lt;&lt; 4) + ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0xf0) &gt;&gt; 4)) <b>as</b> u64)));
+                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, (((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0x0f) &lt;&lt; 2) <b>as</b> u64)));
                 <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, eq);
-            }<b>else</b>{
-                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m) & 0x03) &lt;&lt; 4) + ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0xf0 ) &gt;&gt; 4) ) <b>as</b> u64 )));
-                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0x0f) &lt;&lt; 2 ) + ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 2) & 0xc0 ) &gt;&gt; 6 )) <b>as</b> u64) ));
+            }<b>else</b> {
+                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m) & 0x03) &lt;&lt; 4) + ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0xf0) &gt;&gt; 4)) <b>as</b> u64)));
+                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0x0f) &lt;&lt; 2) + ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 2) & 0xc0) &gt;&gt; 6)) <b>as</b> u64)));
                 <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 2) & 0x3f) <b>as</b> u64)));
             };
-        }<b>else</b>{
-            <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m) & 0x03) &lt;&lt; 4) + ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0xf0 ) &gt;&gt; 4) ) <b>as</b> u64 )));
-            <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0x0f) &lt;&lt; 2 ) + ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 2) & 0xc0 ) &gt;&gt; 6 )) <b>as</b> u64) ));
+        }<b>else</b> {
+            <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m) & 0x03) &lt;&lt; 4) + ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0xf0) &gt;&gt; 4)) <b>as</b> u64)));
+            <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 1) & 0x0f) &lt;&lt; 2) + ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 2) & 0xc0) &gt;&gt; 6)) <b>as</b> u64)));
             <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, *<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_TABLE">TABLE</a>, ((*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(str, m + 2) & 0x3f) <b>as</b> u64)));
         };
         m = m + 3;
@@ -111,14 +111,14 @@
     <b>let</b> m = 0 ;
     <b>while</b> (m &lt; size) {
         <b>let</b> pos_of_char_1 = <a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_pos_of_char">pos_of_char</a>(*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 1));
-        <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, (<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_pos_of_char">pos_of_char</a>(*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m )) &lt;&lt; 2) +  ((pos_of_char_1 & 0x30 ) &gt;&gt; 4) );
-        <b>if</b>( ( m + 2 &lt; size) && (*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 2) != 61) && (*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 2) != 46)){
+        <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, (<a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_pos_of_char">pos_of_char</a>(*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m)) &lt;&lt; 2) + ((pos_of_char_1 & 0x30) &gt;&gt; 4));
+        <b>if</b> ( (m + 2 &lt; size) && (*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 2) != 61) && (*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 2) != 46)) {
             <b>let</b> pos_of_char_2 = <a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_pos_of_char">pos_of_char</a>(*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 2));
-            <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res,  ((pos_of_char_1 & 0x0f ) &lt;&lt; 4) + (( pos_of_char_2 & 0x3c) &gt;&gt; 2));
+            <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>(&<b>mut</b> res, ((pos_of_char_1 & 0x0f) &lt;&lt; 4) + ((pos_of_char_2 & 0x3c) &gt;&gt; 2));
 
-            <b>if</b>( ( m + 3 &lt; size) && (*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 3) != 61) && (*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 3) != 46)){
+            <b>if</b> ( (m + 3 &lt; size) && (*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 3) != 61) && (*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 3) != 46)) {
                 <b>let</b> pos_of_char_2 = <a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_pos_of_char">pos_of_char</a>(*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 2));
-                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>&lt;u8&gt;(&<b>mut</b> res,  ((pos_of_char_2 & 0x03 ) &lt;&lt; 6) + <a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_pos_of_char">pos_of_char</a>(*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 3)) );
+                <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>&lt;u8&gt;(&<b>mut</b> res, ((pos_of_char_2 & 0x03) &lt;&lt; 6) + <a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_pos_of_char">pos_of_char</a>(*<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(code, m + 3)));
             };
         };
 
@@ -148,16 +148,16 @@
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_pos_of_char">pos_of_char</a>(char: u8):u8{
-    <b>if</b> (char &gt;= 65 && char &lt;= 90){
+<pre><code><b>fun</b> <a href="Base64.md#0x6ee3f577c8da207830c31e1f0abb4244_Base64_pos_of_char">pos_of_char</a>(char: u8): u8 {
+    <b>if</b> (char &gt;= 65 && char &lt;= 90) {
         <b>return</b> char - 65
-    }<b>else</b> <b>if</b> (char &gt;= 97 && char &lt;= 122){
+    }<b>else</b> <b>if</b> (char &gt;= 97 && char &lt;= 122) {
         <b>return</b> char - 97 + (90 - 65) + 1
-    }<b>else</b> <b>if</b> (char &gt;= 48 && char &lt;= 57){
+    }<b>else</b> <b>if</b> (char &gt;= 48 && char &lt;= 57) {
         <b>return</b> char - 48 + (90 - 65) + (122 - 97) + 2
-    }<b>else</b> <b>if</b> (char == 43 || char == 45){
+    }<b>else</b> <b>if</b> (char == 43 || char == 45) {
         <b>return</b> 62
-    }<b>else</b> <b>if</b> (char == 47 || char == 95){
+    }<b>else</b> <b>if</b> (char == 47 || char == 95) {
         <b>return</b> 63
     };
     <b>abort</b> 1001

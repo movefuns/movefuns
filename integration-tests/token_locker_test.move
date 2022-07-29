@@ -6,17 +6,17 @@
 
 //# publish
 module creator::MockToken {
-    use StarcoinFramework::Token;
     use StarcoinFramework::Account;
+    use StarcoinFramework::Token;
 
-    struct MyToken has copy, drop, store { }
+    struct MyToken has copy, drop, store {}
 
     public fun init(account: &signer) {
         Token::register_token<MyToken>(account, 3);
         Account::do_accept_token<MyToken>(account);
     }
 
-    public fun mint(account: &signer, to:address, amount: u128) {
+    public fun mint(account: &signer, to: address, amount: u128) {
         let token = Token::mint<MyToken>(account, amount);
         Account::deposit<MyToken>(to, token);
     }
@@ -35,11 +35,13 @@ script {
 //# run --signers creator
 script {
     use creator::MockToken;
+
     use StarcoinFramework::Account;
+
     fun send(sender: signer) {
         MockToken::mint(&sender, @alice, 100000);
         let balance = Account::balance<MockToken::MyToken>(@alice);
-        assert!(balance == 100000 ,1000);
+        assert!(balance == 100000, 1000);
     }
 }
 // check: EXECUTED
@@ -49,12 +51,14 @@ script {
 //# run --signers alice
 script {
     use creator::MockToken::{Self, MyToken};
-    use StarcoinFramework::Account;
+
     use SFC::TokenLocker;
+    use StarcoinFramework::Account;
+
     fun lock(sender: signer) {
         TokenLocker::lock_self<MyToken>(sender, 100000, 9000);
         let balance = Account::balance<MockToken::MyToken>(@alice);
-        assert!(balance == 0 ,1001);
+        assert!(balance == 0, 1001);
     }
 }
 // check: EXECUTED
@@ -64,12 +68,14 @@ script {
 //# run --signers alice
 script {
     use creator::MockToken::{Self, MyToken};
-    use StarcoinFramework::Account;
+
     use SFC::TokenLocker;
+    use StarcoinFramework::Account;
+
     fun unlock(sender: signer) {
         TokenLocker::unlock_self<MyToken>(sender);
         let balance = Account::balance<MockToken::MyToken>(@alice);
-        assert!(balance == 100000 ,1002);
+        assert!(balance == 100000, 1002);
     }
 }
 // check: EXECUTED
@@ -79,12 +85,14 @@ script {
 //# run --signers alice
 script {
     use creator::MockToken::{Self, MyToken};
-    use StarcoinFramework::Account;
+
     use SFC::TokenLocker;
+    use StarcoinFramework::Account;
+
     fun lock_two_token(sender: signer) {
         TokenLocker::lock_self<MyToken>(sender, 50000, 9210);
         let balance = Account::balance<MockToken::MyToken>(@alice);
-        assert!(balance == 50000 ,1001);  
+        assert!(balance == 50000, 1001);
     }
 }
 // check: EXECUTED
@@ -92,12 +100,14 @@ script {
 //# run --signers alice
 script {
     use creator::MockToken::{Self, MyToken};
-    use StarcoinFramework::Account;
+
     use SFC::TokenLocker;
+    use StarcoinFramework::Account;
+
     fun lock_two_token(sender: signer) {
         TokenLocker::lock_self<MyToken>(sender, 50000, 9600);
         let balance = Account::balance<MockToken::MyToken>(@alice);
-        assert!(balance == 0 ,1003);        
+        assert!(balance == 0, 1003);
     }
 }
 // check: EXECUTED
@@ -107,12 +117,14 @@ script {
 //# run --signers alice
 script {
     use creator::MockToken::{Self, MyToken};
-    use StarcoinFramework::Account;
+
     use SFC::TokenLocker;
+    use StarcoinFramework::Account;
+
     fun unlock(sender: signer) {
         TokenLocker::unlock_self<MyToken>(sender);
         let balance = Account::balance<MockToken::MyToken>(@alice);
-        assert!(balance == 50000 ,1004);
+        assert!(balance == 50000, 1004);
     }
 }
 // check: EXECUTED
@@ -122,12 +134,14 @@ script {
 //# run --signers alice
 script {
     use creator::MockToken::{Self, MyToken};
-    use StarcoinFramework::Account;
+
     use SFC::TokenLocker;
+    use StarcoinFramework::Account;
+
     fun unlock(sender: signer) {
         TokenLocker::unlock_self<MyToken>(sender);
         let balance = Account::balance<MockToken::MyToken>(@alice);
-        assert!(balance == 100000 ,1005);
+        assert!(balance == 100000, 1005);
     }
 }
 // check: EXECUTED
@@ -135,12 +149,14 @@ script {
 //# run --signers alice
 script {
     use creator::MockToken::{Self, MyToken};
-    use StarcoinFramework::Account;
+
     use SFC::TokenLocker;
+    use StarcoinFramework::Account;
+
     fun unlock(sender: signer) {
         TokenLocker::unlock_self<MyToken>(sender);
         let balance = Account::balance<MockToken::MyToken>(@alice);
-        assert!(balance == 50000 ,1006);
+        assert!(balance == 50000, 1006);
     }
 }
 // check: EXECUTED

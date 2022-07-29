@@ -1,10 +1,10 @@
 module SFC::TokenLocker {
     use StarcoinFramework::Account;
+    use StarcoinFramework::Errors;
     use StarcoinFramework::Signer;
     use StarcoinFramework::Timestamp;
     use StarcoinFramework::Token::Token;
     use StarcoinFramework::Vector;
-    use StarcoinFramework::Errors;
 
     const ERR_LOCK_TIME_PASSD: u64 = 101;
 

@@ -1,4 +1,4 @@
-processed 18 tasks
+processed 19 tasks
 
 task 4 'run'. lines 25-33:
 {
@@ -16,7 +16,25 @@ task 5 'run'. lines 35-47:
   }
 }
 
-task 7 'run'. lines 51-64:
+task 7 'run'. lines 51-65:
+{
+  "gas_used": 70891,
+  "status": {
+    "Keep": {
+      "MoveAbort": [
+        {
+          "Module": {
+            "address": "0x6ee3f577c8da207830c31e1f0abb4244",
+            "name": "TokenLocker"
+          }
+        },
+        25863
+      ]
+    }
+  }
+}
+
+task 8 'run'. lines 67-80:
 {
   "gas_used": 97685,
   "status": {
@@ -24,7 +42,7 @@ task 7 'run'. lines 51-64:
   }
 }
 
-task 9 'run'. lines 68-81:
+task 10 'run'. lines 84-97:
 {
   "gas_used": 130304,
   "status": {
@@ -32,7 +50,7 @@ task 9 'run'. lines 68-81:
   }
 }
 
-task 11 'run'. lines 85-98:
+task 12 'run'. lines 101-114:
 {
   "gas_used": 91605,
   "status": {
@@ -40,7 +58,7 @@ task 11 'run'. lines 85-98:
   }
 }
 
-task 12 'run'. lines 100-113:
+task 13 'run'. lines 116-129:
 {
   "gas_used": 91605,
   "status": {
@@ -48,7 +66,7 @@ task 12 'run'. lines 100-113:
   }
 }
 
-task 14 'run'. lines 117-130:
+task 15 'run'. lines 133-146:
 {
   "gas_used": 143965,
   "status": {
@@ -56,7 +74,7 @@ task 14 'run'. lines 117-130:
   }
 }
 
-task 16 'run'. lines 134-147:
+task 17 'run'. lines 150-163:
 {
   "gas_used": 130304,
   "status": {
@@ -64,7 +82,7 @@ task 16 'run'. lines 134-147:
   }
 }
 
-task 17 'run'. lines 149-162:
+task 18 'run'. lines 165-178:
 {
   "gas_used": 32009,
   "status": {

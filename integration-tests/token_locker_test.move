@@ -56,6 +56,22 @@ script {
     use StarcoinFramework::Account;
 
     fun lock(sender: signer) {
+        TokenLocker::lock_self<MyToken>(sender, 100000, 8100);
+        let balance = Account::balance<MockToken::MyToken>(@alice);
+        assert!(balance == 0, 1001);
+    }
+}
+
+// check: ABROT
+
+//# run --signers alice
+script {
+    use creator::MockToken::{Self, MyToken};
+
+    use SFC::TokenLocker;
+    use StarcoinFramework::Account;
+
+    fun lock(sender: signer) {
         TokenLocker::lock_self<MyToken>(sender, 100000, 9000);
         let balance = Account::balance<MockToken::MyToken>(@alice);
         assert!(balance == 0, 1001);

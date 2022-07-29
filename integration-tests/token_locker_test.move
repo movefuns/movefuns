@@ -172,7 +172,7 @@ script {
     fun unlock(sender: signer) {
         TokenLocker::unlock_self<MyToken>(sender);
         let balance = Account::balance<MockToken::MyToken>(@alice);
-        assert!(balance == 50000, 1006);
+        assert!(balance == 100000, 1006);
     }
 }
 // check: EXECUTED

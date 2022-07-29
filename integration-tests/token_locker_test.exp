@@ -84,13 +84,8 @@ task 17 'run'. lines 150-163:
 
 task 18 'run'. lines 165-178:
 {
-  "gas_used": 32009,
+  "gas_used": 39844,
   "status": {
-    "Keep": {
-      "MoveAbort": [
-        "Script",
-        1006
-      ]
-    }
+    "Keep": "Executed"
   }
 }

@@ -4,8 +4,9 @@ module SFC::TokenLocker {
     use StarcoinFramework::Timestamp;
     use StarcoinFramework::Token::Token;
     use StarcoinFramework::Vector;
+    use StarcoinFramework::Errors;
 
-    const LOCK_TIME_PASSD: u64 = 2;
+    const ERR_LOCK_TIME_PASSD: u64 = 101;
 
     struct Locker<phantom T: store> has store {
         token: Token<T>,
@@ -17,7 +18,7 @@ module SFC::TokenLocker {
     }
 
     public fun lock<TokenT: store>(sender: &signer, token: Token<TokenT>, unlock_time: u64) acquires LockerContainer {
-        assert!(unlock_time > Timestamp::now_milliseconds(), LOCK_TIME_PASSD);
+        assert!(unlock_time > Timestamp::now_seconds(), Errors::invalid_argument(ERR_LOCK_TIME_PASSD));
 
         let lock = Locker<TokenT> {
             token,
@@ -45,7 +46,7 @@ module SFC::TokenLocker {
             let i = 0;
             while (i < locker_len) {
                 let token_lock = Vector::borrow(&locker.locks, i);
-                if (token_lock.unlock_time <= Timestamp::now_milliseconds()) {
+                if (token_lock.unlock_time <= Timestamp::now_seconds()) {
                     let Locker { token: t, unlock_time: _ } = Vector::remove<Locker<TokenT>>(&mut locker.locks, i);
                     Vector::push_back<Token<TokenT>>(&mut locker_tokens, t);
                     locker_len = locker_len - 1;
@@ -59,13 +60,13 @@ module SFC::TokenLocker {
     }
 
 
-    public fun lock_self<TokenT: store>(sender: &signer, amount: u128, unlock_time: u64) acquires LockerContainer {
-        let t = Account::withdraw<TokenT>(sender, amount);
-        Self::lock(sender, t, unlock_time);
+    public(script) fun lock_self<TokenT: store>(sender: signer, amount: u128, unlock_time: u64) acquires LockerContainer {
+        let t = Account::withdraw<TokenT>(&sender, amount);
+        Self::lock(&sender, t, unlock_time);
     }
 
-    public fun unlock_self<TokenT: store>(sender: &signer) acquires LockerContainer {
-        let tokens = Self::unlock<TokenT>(sender);
+    public(script) fun unlock_self<TokenT: store>(sender: signer) acquires LockerContainer {
+        let tokens = Self::unlock<TokenT>(&sender);
 
         if (!Vector::is_empty<Token<TokenT>>(&tokens)) {
             let locker_len = Vector::length<Token<TokenT>>(&tokens);
@@ -73,7 +74,7 @@ module SFC::TokenLocker {
             let i = 0;
             while (i < locker_len) {
                 let t = Vector::remove<Token<TokenT>>(&mut tokens, i);
-                Account::deposit_to_self(sender, t);
+                Account::deposit_to_self(&sender, t);
                 locker_len = locker_len - 1;
             };
         };

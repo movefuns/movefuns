@@ -28,7 +28,8 @@ module SFC::Escrow {
             obj: obj,
         } = escrow;
         let t_escrow = borrow_global_mut<Escrow<T>>(recipient);
-        Option::fill(&mut t_escrow.obj, obj);
+        let obj_in = Option::destroy_some(obj);
+        Option::fill(&mut t_escrow.obj, obj_in);
     }
 
     /// @dev Accepts the escrowed object.

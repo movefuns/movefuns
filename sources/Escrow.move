@@ -40,18 +40,9 @@ module SFC::Escrow {
         });
     }
 
-    public fun contains<T: store>(account: address): bool {
-        exists<Escrow<T>>(account)
+    public fun contains<T: store>(account: address): bool acquires Escrow {
+        if (exists<Escrow<T>>(account) == false) return false;
+        let escrow = borrow_global<Escrow<T>>(account);
+        Option::is_some(&escrow.obj)
     }
-
-    public fun get_obj<T: store+copy>(sender: address): Option<T> acquires Escrow {
-        let escrow = borrow_global<Escrow<T>>(sender);
-        *&escrow.obj
-    }
-
-    public fun get_recipient<T: store+copy>(sender: address): address acquires Escrow {
-        let escrow = borrow_global<Escrow<T>>(sender);
-        *&escrow.recipient
-    }
-
 }

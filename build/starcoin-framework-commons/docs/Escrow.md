@@ -12,8 +12,6 @@
 -  [Function `transfer`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_transfer)
 -  [Function `accept`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_accept)
 -  [Function `contains`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_contains)
--  [Function `get_obj`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_get_obj)
--  [Function `get_recipient`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_get_recipient)
 
 
 <pre><code><b>use</b> <a href="../../../build/StarcoinFramework/docs/Option.md#0x1_Option">0x1::Option</a>;
@@ -161,58 +159,10 @@
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_contains">contains</a>&lt;T: store&gt;(account: <b>address</b>): bool {
-    <b>exists</b>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(account)
-}
-</code></pre>
-
-
-
-</details>
-
-<a name="0x6ee3f577c8da207830c31e1f0abb4244_Escrow_get_obj"></a>
-
-## Function `get_obj`
-
-
-
-<pre><code><b>public</b> <b>fun</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_get_obj">get_obj</a>&lt;T: <b>copy</b>, store&gt;(sender: <b>address</b>): <a href="../../../build/StarcoinFramework/docs/Option.md#0x1_Option_Option">Option::Option</a>&lt;T&gt;
-</code></pre>
-
-
-
-<details>
-<summary>Implementation</summary>
-
-
-<pre><code><b>public</b> <b>fun</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_get_obj">get_obj</a>&lt;T: store+<b>copy</b>&gt;(sender: <b>address</b>): <a href="../../../build/StarcoinFramework/docs/Option.md#0x1_Option">Option</a>&lt;T&gt; <b>acquires</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a> {
-    <b>let</b> escrow = <b>borrow_global</b>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(sender);
-    *&escrow.obj
-}
-</code></pre>
-
-
-
-</details>
-
-<a name="0x6ee3f577c8da207830c31e1f0abb4244_Escrow_get_recipient"></a>
-
-## Function `get_recipient`
-
-
-
-<pre><code><b>public</b> <b>fun</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_get_recipient">get_recipient</a>&lt;T: <b>copy</b>, store&gt;(sender: <b>address</b>): <b>address</b>
-</code></pre>
-
-
-
-<details>
-<summary>Implementation</summary>
-
-
-<pre><code><b>public</b> <b>fun</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_get_recipient">get_recipient</a>&lt;T: store+<b>copy</b>&gt;(sender: <b>address</b>): <b>address</b> <b>acquires</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a> {
-    <b>let</b> escrow = <b>borrow_global</b>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(sender);
-    *&escrow.recipient
+<pre><code><b>public</b> <b>fun</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_contains">contains</a>&lt;T: store&gt;(account: <b>address</b>): bool <b>acquires</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a> {
+    <b>if</b> (<b>exists</b>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(account) == <b>false</b>) <b>return</b> <b>false</b>;
+    <b>let</b> escrow = <b>borrow_global</b>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(account);
+    <a href="../../../build/StarcoinFramework/docs/Option.md#0x1_Option_is_some">Option::is_some</a>(&escrow.obj)
 }
 </code></pre>
 

@@ -8,7 +8,7 @@
 module alice::TestEscrow {
     use SFC::Escrow;
     use StarcoinFramework::Signer;
-    use StarcoinFramework::Option;
+    // use StarcoinFramework::Option;
 
     struct MyToken has key, store, copy, drop {}
 
@@ -17,26 +17,19 @@ module alice::TestEscrow {
     }
 
     public fun test_escrow(sender: &signer) {
+        assert!(Escrow::contains<MyToken>(Signer::address_of(sender)) == false, 1);
         Escrow::escrow<MyToken>(sender, @bob, Self::init());
-        assert!(Escrow::contains<MyToken>(Signer::address_of(sender)) == true, 1);
+        assert!(Escrow::contains<MyToken>(Signer::address_of(sender)) == true, 2);
     }
 
     public fun test_accept(recipient: &signer) {
-        assert!(Escrow::contains<MyToken>(Signer::address_of(recipient)) == false, 2);
+        assert!(Escrow::contains<MyToken>(Signer::address_of(recipient)) == false, 3);
         Escrow::accept<MyToken>(recipient);
-        assert!(Escrow::contains<MyToken>(Signer::address_of(recipient)) == true, 3);
-        let obj = Escrow::get_obj<MyToken>(Signer::address_of(recipient));
-        assert!(Option::is_none(&obj) == true, 2);
     }
 
     public fun test_transfer(sender: &signer) {
-        let recipient_addr = Escrow::get_recipient<MyToken>(Signer::address_of(sender));
         Escrow::transfer<MyToken>(sender);
         assert!(Escrow::contains<MyToken>(Signer::address_of(sender)) == false, 4);
-
-        assert!(Escrow::contains<MyToken>(recipient_addr) == true, 5);
-        let obj = Escrow::get_obj<MyToken>(recipient_addr);
-        assert!(Option::is_some(&obj) == true, 6);
     }
 }
 

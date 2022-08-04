@@ -275,6 +275,9 @@ compiled_package_info:
       name: Counter
     : SFC
     ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: Escrow
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
       name: EthStateVerifier
     : SFC
     ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
@@ -314,6 +317,9 @@ compiled_package_info:
       name: StructuredHash
     : SFC
     ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: TimeHelper
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
       name: TimestampTimer
     : SFC
     ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
@@ -325,7 +331,7 @@ compiled_package_info:
     ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
       name: Vesting
     : SFC
-  source_digest: ED04FA860F7FAAB0292533AB3C87D981BBD4F54CF51611E2A7293F1DF92188E5
+  source_digest: 13ECBA919DE0CE14B4C92130AEA09E4EAA24290308A8DEB3B035CFCC0ADA5DC2
   build_flags:
     dev_mode: false
     test_mode: false

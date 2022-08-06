@@ -1,0 +1,39 @@
+/// @title Escrow
+/// @dev token escrow module: holds an token object designated for a recipient until the sender approves withdrawal.
+module SFC::TokenEscrow {
+
+    use StarcoinFramework::Token::Token;
+    use StarcoinFramework::Account;
+    use StarcoinFramework::Vector;
+    use StarcoinFramework::Signer;
+    use SFC::Escrow;
+
+    public fun deposit<TokenType: store>(sender: &signer, amount: u128, recipient: address) {
+        let t = Account::withdraw<TokenType>(sender, amount);
+        Escrow::escrow(sender, recipient, t);
+    }
+
+    public fun withdraw<TokenType: store>(account: &signer, sender: address) {
+        let tokens = Escrow::claim<Token<TokenType>>(account, sender);
+
+        if (!Vector::is_empty<Token<TokenType>>(&tokens)) {
+            let token_len = Vector::length<Token<TokenType>>(&tokens);
+
+            let i = 0;
+            while (i < token_len) {
+                let t = Vector::remove<Token<TokenType>>(&mut tokens, i);
+                Account::deposit<TokenType>(Signer::address_of(account), t);
+                token_len = token_len - 1;
+            };
+        };
+        Vector::destroy_empty(tokens);
+    }
+
+    public(script) fun deposit_to_entry<TokenType: store>(sender: signer, amount: u128, recipient: address) {
+        deposit<TokenType>(&sender, amount, recipient);
+    }
+
+    public(script) fun transfer_to_entry<TokenType: store>(account: signer, sender: address) {
+        withdraw<TokenType>(&account, sender);
+    }
+}

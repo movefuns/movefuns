@@ -48,6 +48,7 @@ the development of DApp SmartContracts on Move, like apache-commons library on J
 -  [`0x1::Timestamp`](../../../build/StarcoinFramework/docs/Timestamp.md#0x1_Timestamp)
 -  [`0x6ee3f577c8da207830c31e1f0abb4244::TimestampTimer`](Timer.md#0x6ee3f577c8da207830c31e1f0abb4244_TimestampTimer)
 -  [`0x1::Token`](../../../build/StarcoinFramework/docs/Token.md#0x1_Token)
+-  [`0x6ee3f577c8da207830c31e1f0abb4244::TokenEscrow`](TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow)
 -  [`0x6ee3f577c8da207830c31e1f0abb4244::TokenLocker`](TokenLocker.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenLocker)
 -  [`0x1::U256`](../../../build/StarcoinFramework/docs/U256.md#0x1_U256)
 -  [`0x6ee3f577c8da207830c31e1f0abb4244::UpgradeScript`](UpgradeScript.md#0x6ee3f577c8da207830c31e1f0abb4244_UpgradeScript)

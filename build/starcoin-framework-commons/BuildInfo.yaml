@@ -323,6 +323,9 @@ compiled_package_info:
       name: TimestampTimer
     : SFC
     ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
+      name: TokenEscrow
+    : SFC
+    ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
       name: TokenLocker
     : SFC
     ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
@@ -331,7 +334,7 @@ compiled_package_info:
     ? address: "0x6ee3f577c8da207830c31e1f0abb4244"
       name: Vesting
     : SFC
-  source_digest: 226265B11C6B2C762B4D6B7F0BB0B943A9B53CB40444C2399DF672E279F0D99F
+  source_digest: A6B9297D7980679DD260DBBAED869807FCDE0FF33AF5F2206844823952D5EF18
   build_flags:
     dev_mode: false
     test_mode: false

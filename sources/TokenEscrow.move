@@ -13,7 +13,7 @@ module SFC::TokenEscrow {
         Escrow::escrow(sender, recipient, t);
     }
 
-    public fun withdraw<TokenType: store>(account: &signer, sender: address) {
+    public fun transfer<TokenType: store>(account: &signer, sender: address) {
         let tokens = Escrow::claim<Token<TokenType>>(account, sender);
 
         if (!Vector::is_empty<Token<TokenType>>(&tokens)) {
@@ -29,11 +29,11 @@ module SFC::TokenEscrow {
         Vector::destroy_empty(tokens);
     }
 
-    public(script) fun deposit_to_entry<TokenType: store>(sender: signer, amount: u128, recipient: address) {
+    public(script) fun deposit_entry<TokenType: store>(sender: signer, amount: u128, recipient: address) {
         deposit<TokenType>(&sender, amount, recipient);
     }
 
-    public(script) fun transfer_to_entry<TokenType: store>(account: signer, sender: address) {
-        withdraw<TokenType>(&account, sender);
+    public(script) fun transfer_entry<TokenType: store>(account: signer, sender: address) {
+        transfer<TokenType>(&account, sender);
     }
 }

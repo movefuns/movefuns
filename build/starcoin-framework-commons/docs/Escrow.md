@@ -9,13 +9,15 @@
 
 -  [Struct `Escrow`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_Escrow)
 -  [Resource `EscrowContainer`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_EscrowContainer)
+-  [Constants](#@Constants_0)
 -  [Function `escrow`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_escrow)
 -  [Function `claim`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_claim)
 -  [Function `set_claimable`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_set_claimable)
 -  [Function `contains`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_contains)
 
 
-<pre><code><b>use</b> <a href="../../../build/StarcoinFramework/docs/Signer.md#0x1_Signer">0x1::Signer</a>;
+<pre><code><b>use</b> <a href="../../../build/StarcoinFramework/docs/Errors.md#0x1_Errors">0x1::Errors</a>;
+<b>use</b> <a href="../../../build/StarcoinFramework/docs/Signer.md#0x1_Signer">0x1::Signer</a>;
 <b>use</b> <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector">0x1::Vector</a>;
 </code></pre>
 
@@ -86,6 +88,20 @@
 
 
 </details>
+
+<a name="@Constants_0"></a>
+
+## Constants
+
+
+<a name="0x6ee3f577c8da207830c31e1f0abb4244_Escrow_ERR_INDEX_OUT_OF_RANGE"></a>
+
+
+
+<pre><code><b>const</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_ERR_INDEX_OUT_OF_RANGE">ERR_INDEX_OUT_OF_RANGE</a>: u64 = 0;
+</code></pre>
+
+
 
 <a name="0x6ee3f577c8da207830c31e1f0abb4244_Escrow_escrow"></a>
 
@@ -194,10 +210,9 @@
     <b>let</b> escrow_container = <b>borrow_global_mut</b>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_EscrowContainer">EscrowContainer</a>&lt;T&gt;&gt;(sender_addr);
     <b>if</b> (!<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_is_empty">Vector::is_empty</a>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(&escrow_container.escrows)) {
         <b>let</b> escrow_len = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_length">Vector::length</a>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(&escrow_container.escrows);
-        <b>if</b> (index &lt; escrow_len) {
-            <b>let</b> escrow = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow_mut">Vector::borrow_mut</a>(&<b>mut</b> escrow_container.escrows, index);
-            escrow.claimable = <b>true</b>;
-        }
+        <b>assert</b>!(index &lt; escrow_len, <a href="../../../build/StarcoinFramework/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_ERR_INDEX_OUT_OF_RANGE">ERR_INDEX_OUT_OF_RANGE</a>));
+        <b>let</b> escrow = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow_mut">Vector::borrow_mut</a>(&<b>mut</b> escrow_container.escrows, index);
+        escrow.claimable = <b>true</b>;
     }
 }
 </code></pre>

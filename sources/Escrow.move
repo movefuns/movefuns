@@ -4,6 +4,9 @@ module SFC::Escrow {
 
     use StarcoinFramework::Signer;
     use StarcoinFramework::Vector;
+    use StarcoinFramework::Errors;
+
+    const ERR_INDEX_OUT_OF_RANGE: u64 = 0;
 
     struct Escrow<T: store> has store {
         recipient: address,
@@ -67,10 +70,9 @@ module SFC::Escrow {
         let escrow_container = borrow_global_mut<EscrowContainer<T>>(sender_addr);
         if (!Vector::is_empty<Escrow<T>>(&escrow_container.escrows)) {
             let escrow_len = Vector::length<Escrow<T>>(&escrow_container.escrows);
-            if (index < escrow_len) {
-                let escrow = Vector::borrow_mut(&mut escrow_container.escrows, index);
-                escrow.claimable = true;
-            }
+            assert!(index < escrow_len, Errors::invalid_argument(ERR_INDEX_OUT_OF_RANGE));
+            let escrow = Vector::borrow_mut(&mut escrow_container.escrows, index);
+            escrow.claimable = true;
         }
     }
 

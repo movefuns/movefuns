@@ -6,6 +6,8 @@
 
 //# faucet --addr chris --amount 1000000
 
+//# faucet --addr dale --amount 1000000
+
 //# publish
 module alice::TestEscrow {
     use SFC::Escrow;
@@ -16,6 +18,11 @@ module alice::TestEscrow {
 
     public fun init(): MyObj {
         MyObj {}
+    }
+
+    public fun test_escrow_index_out_of_range(sender: &signer) {
+        Escrow::escrow<MyObj>(sender, @alice, Self::init());
+        Escrow::set_claimable<MyObj>(sender, 1u64);
     }
 
     public fun test_escrow(sender: &signer) {
@@ -63,6 +70,16 @@ module alice::TestEscrow {
         assert!(Vector::length<MyObj>(&tokens) == 2, 31);
     }
 }
+
+//# run --signers dale
+script {
+    use alice::TestEscrow;
+
+    fun main(sender: signer) {
+        TestEscrow::test_escrow_index_out_of_range(&sender);
+    }
+}
+// check: ABORTED
 
 //# run --signers alice
 script {

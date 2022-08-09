@@ -20,16 +20,31 @@ module alice::TestEscrow {
 
     public fun test_escrow(sender: &signer) {
         let sender_addr = Signer::address_of(sender);
-        assert!(Escrow::contains<MyObj>(sender_addr, @bob) == false, 11);
+        assert!(Escrow::contains<MyObj>(sender_addr, @bob) == false, 10);
         Escrow::escrow<MyObj>(sender, @bob, Self::init());
-        assert!(Escrow::contains<MyObj>(sender_addr, @bob) == true, 11);
+        assert!(Escrow::contains<MyObj>(sender_addr, @bob) == true, 10);
+        Escrow::set_claimable<MyObj>(sender, 0u64);
     }
 
     public fun test_claim(account: &signer) {
         let account_addr = Signer::address_of(account);
         let tokens = Escrow::claim<MyObj>(account, @alice);
-        assert!(Escrow::contains<MyObj>(account_addr, @alice) == false, 20);
+        assert!(Escrow::contains<MyObj>(@alice, account_addr) == false, 11);
         assert!(Vector::length<MyObj>(&tokens) == 1, 21);
+    }
+
+    public fun test_escrow_without_claimable(sender: &signer) {
+        let sender_addr = Signer::address_of(sender);
+        assert!(Escrow::contains<MyObj>(sender_addr, @bob) == false, 20);
+        Escrow::escrow<MyObj>(sender, @bob, Self::init());
+        assert!(Escrow::contains<MyObj>(sender_addr, @bob) == true, 20);
+    }
+
+    public fun test_claim_without_claimable(account: &signer) {
+        let account_addr = Signer::address_of(account);
+        let tokens = Escrow::claim<MyObj>(account, @alice);
+        assert!(Escrow::contains<MyObj>(@alice, account_addr) == true, 21);
+        assert!(Vector::length<MyObj>(&tokens) == 0, 21);
     }
 
     public fun test_multiple_escrows(sender: &signer) {
@@ -39,11 +54,13 @@ module alice::TestEscrow {
         Escrow::escrow<MyObj>(sender, @chris, Self::init());
         assert!(Escrow::contains<MyObj>(sender_addr, @bob) == true, 30);
         assert!(Escrow::contains<MyObj>(sender_addr, @chris) == true, 30);
+        Escrow::set_claimable<MyObj>(sender, 2u64);
+        Escrow::set_claimable<MyObj>(sender, 3u64);
     }
 
     public fun test_multiple_claims(account: &signer) {
         let tokens = Escrow::claim<MyObj>(account, @alice);
-        assert!(Vector::length<MyObj>(&tokens) == 2, 21);
+        assert!(Vector::length<MyObj>(&tokens) == 2, 31);
     }
 }
 
@@ -63,6 +80,26 @@ script {
 
     fun main(account: signer) {
         TestEscrow::test_claim(&account);
+    }
+}
+// check: EXECUTED
+
+//# run --signers alice
+script {
+    use alice::TestEscrow;
+
+    fun main(sender: signer) {
+        TestEscrow::test_escrow_without_claimable(&sender);
+    }
+}
+// check: EXECUTED
+
+//# run --signers bob
+script {
+    use alice::TestEscrow;
+
+    fun main(account: signer) {
+        TestEscrow::test_claim_without_claimable(&account);
     }
 }
 // check: EXECUTED

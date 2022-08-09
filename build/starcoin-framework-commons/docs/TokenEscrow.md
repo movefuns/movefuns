@@ -8,9 +8,11 @@
 
 
 -  [Function `deposit`](#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit)
--  [Function `withdraw`](#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_withdraw)
--  [Function `deposit_to_entry`](#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit_to_entry)
--  [Function `transfer_to_entry`](#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer_to_entry)
+-  [Function `set_claimable`](#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_set_claimable)
+-  [Function `transfer`](#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer)
+-  [Function `deposit_entry`](#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit_entry)
+-  [Function `set_claimable_entry`](#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_set_claimable_entry)
+-  [Function `transfer_entry`](#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer_entry)
 
 
 <pre><code><b>use</b> <a href="../../../build/StarcoinFramework/docs/Account.md#0x1_Account">0x1::Account</a>;
@@ -39,7 +41,7 @@
 
 <pre><code><b>public</b> <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit">deposit</a>&lt;TokenType: store&gt;(sender: &signer, amount: u128, recipient: <b>address</b>) {
     <b>let</b> t = <a href="../../../build/StarcoinFramework/docs/Account.md#0x1_Account_withdraw">Account::withdraw</a>&lt;TokenType&gt;(sender, amount);
-    <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_escrow">Escrow::escrow</a>(sender, recipient, t);
+    <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_escrow">Escrow::escrow</a>&lt;<a href="../../../build/StarcoinFramework/docs/Token.md#0x1_Token">Token</a>&lt;TokenType&gt;&gt;(sender, recipient, t);
 }
 </code></pre>
 
@@ -47,13 +49,13 @@
 
 </details>
 
-<a name="0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_withdraw"></a>
+<a name="0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_set_claimable"></a>
 
-## Function `withdraw`
+## Function `set_claimable`
 
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_withdraw">withdraw</a>&lt;TokenType: store&gt;(account: &signer, sender: <b>address</b>)
+<pre><code><b>public</b> <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_set_claimable">set_claimable</a>&lt;TokenType: store&gt;(sender: &signer, index: u64)
 </code></pre>
 
 
@@ -62,7 +64,31 @@
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_withdraw">withdraw</a>&lt;TokenType: store&gt;(account: &signer, sender: <b>address</b>) {
+<pre><code><b>public</b> <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_set_claimable">set_claimable</a>&lt;TokenType: store&gt;(sender: &signer, index: u64) {
+    <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_set_claimable">Escrow::set_claimable</a>&lt;<a href="../../../build/StarcoinFramework/docs/Token.md#0x1_Token">Token</a>&lt;TokenType&gt;&gt;(sender, index);
+}
+</code></pre>
+
+
+
+</details>
+
+<a name="0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer"></a>
+
+## Function `transfer`
+
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer">transfer</a>&lt;TokenType: store&gt;(account: &signer, sender: <b>address</b>)
+</code></pre>
+
+
+
+<details>
+<summary>Implementation</summary>
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer">transfer</a>&lt;TokenType: store&gt;(account: &signer, sender: <b>address</b>) {
     <b>let</b> tokens = <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_claim">Escrow::claim</a>&lt;<a href="../../../build/StarcoinFramework/docs/Token.md#0x1_Token">Token</a>&lt;TokenType&gt;&gt;(account, sender);
 
     <b>if</b> (!<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_is_empty">Vector::is_empty</a>&lt;<a href="../../../build/StarcoinFramework/docs/Token.md#0x1_Token">Token</a>&lt;TokenType&gt;&gt;(&tokens)) {
@@ -83,13 +109,13 @@
 
 </details>
 
-<a name="0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit_to_entry"></a>
+<a name="0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit_entry"></a>
 
-## Function `deposit_to_entry`
+## Function `deposit_entry`
 
 
 
-<pre><code><b>public</b>(<b>script</b>) <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit_to_entry">deposit_to_entry</a>&lt;TokenType: store&gt;(sender: signer, amount: u128, recipient: <b>address</b>)
+<pre><code><b>public</b>(<b>script</b>) <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit_entry">deposit_entry</a>&lt;TokenType: store&gt;(sender: signer, amount: u128, recipient: <b>address</b>)
 </code></pre>
 
 
@@ -98,7 +124,7 @@
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b>(<b>script</b>) <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit_to_entry">deposit_to_entry</a>&lt;TokenType: store&gt;(sender: signer, amount: u128, recipient: <b>address</b>) {
+<pre><code><b>public</b>(<b>script</b>) <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit_entry">deposit_entry</a>&lt;TokenType: store&gt;(sender: signer, amount: u128, recipient: <b>address</b>) {
     <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_deposit">deposit</a>&lt;TokenType&gt;(&sender, amount, recipient);
 }
 </code></pre>
@@ -107,13 +133,13 @@
 
 </details>
 
-<a name="0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer_to_entry"></a>
+<a name="0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_set_claimable_entry"></a>
 
-## Function `transfer_to_entry`
+## Function `set_claimable_entry`
 
 
 
-<pre><code><b>public</b>(<b>script</b>) <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer_to_entry">transfer_to_entry</a>&lt;TokenType: store&gt;(account: signer, sender: <b>address</b>)
+<pre><code><b>public</b>(<b>script</b>) <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_set_claimable_entry">set_claimable_entry</a>&lt;TokenType: store&gt;(sender: signer, index: u64)
 </code></pre>
 
 
@@ -122,8 +148,32 @@
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b>(<b>script</b>) <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer_to_entry">transfer_to_entry</a>&lt;TokenType: store&gt;(account: signer, sender: <b>address</b>) {
-    <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_withdraw">withdraw</a>&lt;TokenType&gt;(&account, sender);
+<pre><code><b>public</b>(<b>script</b>) <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_set_claimable_entry">set_claimable_entry</a>&lt;TokenType: store&gt;(sender: signer, index: u64) {
+    <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_set_claimable">set_claimable</a>&lt;TokenType&gt;(&sender, index);
+}
+</code></pre>
+
+
+
+</details>
+
+<a name="0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer_entry"></a>
+
+## Function `transfer_entry`
+
+
+
+<pre><code><b>public</b>(<b>script</b>) <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer_entry">transfer_entry</a>&lt;TokenType: store&gt;(account: signer, sender: <b>address</b>)
+</code></pre>
+
+
+
+<details>
+<summary>Implementation</summary>
+
+
+<pre><code><b>public</b>(<b>script</b>) <b>fun</b> <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer_entry">transfer_entry</a>&lt;TokenType: store&gt;(account: signer, sender: <b>address</b>) {
+    <a href="TokenEscrow.md#0x6ee3f577c8da207830c31e1f0abb4244_TokenEscrow_transfer">transfer</a>&lt;TokenType&gt;(&account, sender);
 }
 </code></pre>
 

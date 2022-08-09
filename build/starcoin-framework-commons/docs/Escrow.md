@@ -11,6 +11,7 @@
 -  [Resource `EscrowContainer`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_EscrowContainer)
 -  [Function `escrow`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_escrow)
 -  [Function `claim`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_claim)
+-  [Function `set_claimable`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_set_claimable)
 -  [Function `contains`](#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_contains)
 
 
@@ -44,6 +45,12 @@
 </dd>
 <dt>
 <code>obj: T</code>
+</dt>
+<dd>
+
+</dd>
+<dt>
+<code>claimable: bool</code>
 </dt>
 <dd>
 
@@ -102,11 +109,12 @@
 
     <b>let</b> escrow = <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt; {
         recipient,
-        obj: obj_in
+        obj: obj_in,
+        claimable: <b>false</b>,
     };
 
     <b>if</b> (!<b>exists</b>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_EscrowContainer">EscrowContainer</a>&lt;T&gt;&gt;(sender_addr)){
-        <b>let</b> escrow_container = <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_EscrowContainer">EscrowContainer</a>&lt;T&gt; { escrows: <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_empty">Vector::empty</a>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;() };
+        <b>let</b> escrow_container = <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_EscrowContainer">EscrowContainer</a>&lt;T&gt;{ escrows: <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_empty">Vector::empty</a>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;() };
         <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(&<b>mut</b> escrow_container.escrows, escrow);
         <b>move_to</b>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_EscrowContainer">EscrowContainer</a>&lt;T&gt;&gt;(sender, escrow_container);
     } <b>else</b> {
@@ -147,8 +155,8 @@
         <b>let</b> i = 0;
         <b>while</b> (i &lt; escrow_len) {
             <b>let</b> escrow = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow">Vector::borrow</a>(&escrow_container.escrows, i);
-            <b>if</b> (escrow.recipient == account_addr) {
-                <b>let</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a> { obj: t, recipient: _ } = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_remove">Vector::remove</a>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(&<b>mut</b> escrow_container.escrows, i);
+            <b>if</b> (escrow.recipient == account_addr && escrow.claimable) {
+                <b>let</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a> { obj: t, recipient: _, claimable: _ } = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_remove">Vector::remove</a>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(&<b>mut</b> escrow_container.escrows, i);
                 <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_push_back">Vector::push_back</a>&lt;T&gt;(&<b>mut</b> escrows, t);
                 escrow_len = escrow_len - 1;
             } <b>else</b> {
@@ -157,6 +165,40 @@
         }
     };
     escrows
+}
+</code></pre>
+
+
+
+</details>
+
+<a name="0x6ee3f577c8da207830c31e1f0abb4244_Escrow_set_claimable"></a>
+
+## Function `set_claimable`
+
+@dev make escrowed object claimable at index.
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_set_claimable">set_claimable</a>&lt;T: store&gt;(sender: &signer, index: u64)
+</code></pre>
+
+
+
+<details>
+<summary>Implementation</summary>
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_set_claimable">set_claimable</a>&lt;T: store&gt;(sender: &signer, index: u64) <b>acquires</b> <a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_EscrowContainer">EscrowContainer</a> {
+    <b>let</b> sender_addr = <a href="../../../build/StarcoinFramework/docs/Signer.md#0x1_Signer_address_of">Signer::address_of</a>(sender);
+
+    <b>let</b> escrow_container = <b>borrow_global_mut</b>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow_EscrowContainer">EscrowContainer</a>&lt;T&gt;&gt;(sender_addr);
+    <b>if</b> (!<a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_is_empty">Vector::is_empty</a>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(&escrow_container.escrows)) {
+        <b>let</b> escrow_len = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_length">Vector::length</a>&lt;<a href="Escrow.md#0x6ee3f577c8da207830c31e1f0abb4244_Escrow">Escrow</a>&lt;T&gt;&gt;(&escrow_container.escrows);
+        <b>if</b> (index &lt; escrow_len) {
+            <b>let</b> escrow = <a href="../../../build/StarcoinFramework/docs/Vector.md#0x1_Vector_borrow_mut">Vector::borrow_mut</a>(&<b>mut</b> escrow_container.escrows, index);
+            escrow.claimable = <b>true</b>;
+        }
+    }
 }
 </code></pre>
 

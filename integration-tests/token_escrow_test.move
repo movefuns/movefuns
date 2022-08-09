@@ -19,11 +19,12 @@ module alice::TestTokenEscrow {
         TokenEscrow::deposit<STC>(sender, 1000, @bob);
         let sender_balance_after = Account::balance<STC>(Signer::address_of(sender));
         assert!(sender_balance_before - sender_balance_after == 1000, 1);
+        TokenEscrow::set_claimable<STC>(sender, 0u64);
     }
 
-    public fun test_withdraw(account: &signer) {
+    public fun test_transfer(account: &signer) {
         let balance_before = Account::balance<STC>(Signer::address_of(account));
-        TokenEscrow::withdraw<STC>(account, @alice);
+        TokenEscrow::transfer<STC>(account, @alice);
         let balance_after = Account::balance<STC>(Signer::address_of(account));
         assert!(balance_after - balance_before == 1000, 1);
     }
@@ -35,11 +36,13 @@ module alice::TestTokenEscrow {
         TokenEscrow::deposit<STC>(sender, 1000, @bob);
         let sender_balance_after = Account::balance<STC>(Signer::address_of(sender));
         assert!(sender_balance_before - sender_balance_after == 3000, 1);
+        TokenEscrow::set_claimable<STC>(sender, 0u64);
+        TokenEscrow::set_claimable<STC>(sender, 2u64);
     }
 
-    public fun test_multi_withdraws(account: &signer) {
+    public fun test_multi_transfers(account: &signer) {
         let balance_before = Account::balance<STC>(Signer::address_of(account));
-        TokenEscrow::withdraw<STC>(account, @alice);
+        TokenEscrow::transfer<STC>(account, @alice);
         let balance_after = Account::balance<STC>(Signer::address_of(account));
         assert!(balance_after - balance_before == 2000, 1);
     }
@@ -60,7 +63,7 @@ script {
     use alice::TestTokenEscrow;
 
     fun main(account: signer) {
-        TestTokenEscrow::test_withdraw(&account);
+        TestTokenEscrow::test_transfer(&account);
     }
 }
 // check: EXECUTED
@@ -80,7 +83,7 @@ script {
     use alice::TestTokenEscrow;
 
     fun main(account: signer) {
-        TestTokenEscrow::test_multi_withdraws(&account);
+        TestTokenEscrow::test_multi_transfers(&account);
     }
 }
 // check: EXECUTED

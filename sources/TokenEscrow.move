@@ -10,7 +10,11 @@ module SFC::TokenEscrow {
 
     public fun deposit<TokenType: store>(sender: &signer, amount: u128, recipient: address) {
         let t = Account::withdraw<TokenType>(sender, amount);
-        Escrow::escrow(sender, recipient, t);
+        Escrow::escrow<Token<TokenType>>(sender, recipient, t);
+    }
+
+    public fun set_claimable<TokenType: store>(sender: &signer, index: u64) {
+        Escrow::set_claimable<Token<TokenType>>(sender, index);
     }
 
     public fun transfer<TokenType: store>(account: &signer, sender: address) {
@@ -31,6 +35,10 @@ module SFC::TokenEscrow {
 
     public(script) fun deposit_entry<TokenType: store>(sender: signer, amount: u128, recipient: address) {
         deposit<TokenType>(&sender, amount, recipient);
+    }
+
+    public(script) fun set_claimable_entry<TokenType: store>(sender: signer, index: u64) {
+        set_claimable<TokenType>(&sender, index);
     }
 
     public(script) fun transfer_entry<TokenType: store>(account: signer, sender: address) {

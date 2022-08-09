@@ -8,6 +8,7 @@ module SFC::Escrow {
     struct Escrow<T: store> has store {
         recipient: address,
         obj: T,
+        claimable: bool
     }
 
     struct EscrowContainer<T: store> has key {
@@ -21,11 +22,12 @@ module SFC::Escrow {
 
         let escrow = Escrow<T> {
             recipient,
-            obj: obj_in
+            obj: obj_in,
+            claimable: false,
         };
 
         if (!exists<EscrowContainer<T>>(sender_addr)){
-            let escrow_container = EscrowContainer<T> { escrows: Vector::empty<Escrow<T>>() };
+            let escrow_container = EscrowContainer<T>{ escrows: Vector::empty<Escrow<T>>() };
             Vector::push_back<Escrow<T>>(&mut escrow_container.escrows, escrow);
             move_to<EscrowContainer<T>>(sender, escrow_container);
         } else {
@@ -46,8 +48,8 @@ module SFC::Escrow {
             let i = 0;
             while (i < escrow_len) {
                 let escrow = Vector::borrow(&escrow_container.escrows, i);
-                if (escrow.recipient == account_addr) {
-                    let Escrow { obj: t, recipient: _ } = Vector::remove<Escrow<T>>(&mut escrow_container.escrows, i);
+                if (escrow.recipient == account_addr && escrow.claimable) {
+                    let Escrow { obj: t, recipient: _, claimable: _ } = Vector::remove<Escrow<T>>(&mut escrow_container.escrows, i);
                     Vector::push_back<T>(&mut escrows, t);
                     escrow_len = escrow_len - 1;
                 } else {
@@ -56,6 +58,20 @@ module SFC::Escrow {
             }
         };
         escrows
+    }
+
+    /// @dev make escrowed object claimable at index.
+    public fun set_claimable<T: store>(sender: &signer, index: u64) acquires EscrowContainer {
+        let sender_addr = Signer::address_of(sender);
+
+        let escrow_container = borrow_global_mut<EscrowContainer<T>>(sender_addr);
+        if (!Vector::is_empty<Escrow<T>>(&escrow_container.escrows)) {
+            let escrow_len = Vector::length<Escrow<T>>(&escrow_container.escrows);
+            if (index < escrow_len) {
+                let escrow = Vector::borrow_mut(&mut escrow_container.escrows, index);
+                escrow.claimable = true;
+            }
+        }
     }
 
     /// @dev Check if there is an escrow object in sender address for recipient.

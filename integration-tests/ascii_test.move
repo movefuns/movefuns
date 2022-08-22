@@ -31,7 +31,59 @@ script {
             assert!(*ASCII::as_bytes(&string) ==  b"1234567890", 107);
 
             assert!( ASCII::length(&string) == 10,108);
+        }; 
+    }
+}
 
+//# run --signers SFC
+//split string by char,  1th scence
+script {
+    use SFC::ASCII;
+    use StarcoinFramework::Option;
+    use StarcoinFramework::Vector;
+    fun main(_sender: signer) {
+        // 1th scence
+        let bytes = b"a_b_c";
+        let string_op = ASCII::try_string(bytes);
+        if(Option::is_some<ASCII::String>(&string_op)){
+            let string = Option::destroy_some<ASCII::String>(string_op);
+            let result = ASCII::split(string,  ASCII::char(95u8)); // _ ansci is 95
+            assert!(Vector::length(&mut result) == 3, 110);
+        }; 
+    }
+}
+
+
+//# run --signers SFC
+//split string by char,  2th scence
+script {
+    use SFC::ASCII;
+    use StarcoinFramework::Option;
+    use StarcoinFramework::Vector;
+    fun main(_sender: signer) {
+        let bytes = b"a_b_";
+        let string_op = ASCII::try_string(bytes);
+        if(Option::is_some<ASCII::String>(&string_op)){
+            let string = Option::destroy_some<ASCII::String>(string_op);
+            let result = ASCII::split(string,  ASCII::char(95u8)); // _ ansci is 95
+            assert!(Vector::length(&mut result) == 2, 120);
+        }; 
+    }
+}
+
+//# run --signers SFC
+//split string by char,  3th scence
+script {
+    use SFC::ASCII;
+    use StarcoinFramework::Option;
+    use StarcoinFramework::Vector;
+    fun main(_sender: signer) {
+        let bytes = b"a";
+        let string_op = ASCII::try_string(bytes);
+        if(Option::is_some<ASCII::String>(&string_op)){
+            let string = Option::destroy_some<ASCII::String>(string_op);
+            let result = ASCII::split(string,  ASCII::char(95u8)); // _ ansci is 95
+            assert!(Vector::length(&mut result) == 1, 130);
         }; 
     }
 }

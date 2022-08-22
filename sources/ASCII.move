@@ -107,4 +107,27 @@ module SFC::ASCII {
         byte >= 0x20 && // Disallow metacharacters
         byte <= 0x7E // Don't allow DEL metacharacter
     }
+
+    /// split string by char. Returns vector<String>
+   public fun split(string: String, char: Char) :  vector<String> {
+      let result = Vector::empty<String>();
+
+      let len = length(&string);
+      let i = 0; 
+      let buffer = Vector::empty<u8>();
+      while ( i < len ) {
+         let byte = *Vector::borrow(&string.bytes, i);
+         if (byte != char.byte) {
+            Vector::push_back(&mut buffer, byte);
+         } else {
+            Vector::push_back(&mut result, string(buffer));
+            buffer = Vector::empty<u8>();
+         };
+         i = i+1; 
+      };
+      if (Vector::length(&buffer) != 0) {
+         Vector::push_back(&mut result, string(buffer));
+      }; 
+      result
+   }
 }

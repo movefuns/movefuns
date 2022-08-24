@@ -24,7 +24,7 @@ module SFC::ASCII {
     /// Convert a `byte` into a `Char` that is checked to make sure it is valid ASCII.
     public fun char(byte: u8): Char {
         assert!(is_valid_char(byte), Errors::invalid_argument(EINVALID_ASCII_CHARACTER));
-        Char{ byte }
+        Char { byte }
     }
 
 
@@ -50,7 +50,7 @@ module SFC::ASCII {
             if (!is_valid_char(possible_byte)) return Option::none();
             i = i + 1;
         };
-        Option::some(String{ bytes })
+        Option::some(String { bytes })
     }
 
     /// Returns `true` if all characters in `string` are printable characters
@@ -72,7 +72,7 @@ module SFC::ASCII {
 
 
     public fun pop_char(string: &mut String): Char {
-        Char{ byte: Vector::pop_back(&mut string.bytes) }
+        Char { byte: Vector::pop_back(&mut string.bytes) }
     }
 
 
@@ -87,13 +87,13 @@ module SFC::ASCII {
 
     /// Unpack the `string` to get its backing bytes
     public fun into_bytes(string: String): vector<u8> {
-        let String{ bytes } = string;
+        let String { bytes } = string;
         bytes
     }
 
     /// Unpack the `char` into its underlying byte.
     public fun byte(char: Char): u8 {
-        let Char{ byte } = char;
+        let Char { byte } = char;
         byte
     }
 
@@ -109,25 +109,28 @@ module SFC::ASCII {
     }
 
     /// split string by char. Returns vector<String>
-   public fun split(string: String, char: Char) :  vector<String> {
-      let result = Vector::empty<String>();
+    public fun split_by_char(string: String, char: Char): vector<String> {
+        let result = Vector::empty<String>();
+        let len = length(&string);
+        let i = 0;
+        let buffer = Vector::empty<u8>();
+        while ( i < len ) {
+            let byte = *Vector::borrow(&string.bytes, i);
+            if (byte != char.byte) {
+                Vector::push_back(&mut buffer, byte);
+            } else {
+                Vector::push_back(&mut result, string(buffer));
+                buffer = Vector::empty<u8>();
+                if (i == len - 1) {  // special
+                    Vector::push_back(&mut result, string(copy buffer));
+                };
+            };
 
-      let len = length(&string);
-      let i = 0; 
-      let buffer = Vector::empty<u8>();
-      while ( i < len ) {
-         let byte = *Vector::borrow(&string.bytes, i);
-         if (byte != char.byte) {
-            Vector::push_back(&mut buffer, byte);
-         } else {
+            i = i + 1;
+        };
+        if (Vector::length(&buffer) != 0) {
             Vector::push_back(&mut result, string(buffer));
-            buffer = Vector::empty<u8>();
-         };
-         i = i+1; 
-      };
-      if (Vector::length(&buffer) != 0) {
-         Vector::push_back(&mut result, string(buffer));
-      }; 
-      result
-   }
+        };
+        result
+    }
 }

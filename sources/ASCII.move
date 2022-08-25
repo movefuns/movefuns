@@ -121,14 +121,16 @@ module SFC::ASCII {
             } else {
                 Vector::push_back(&mut result, string(buffer));
                 buffer = Vector::empty<u8>();
-                if (i == len - 1) {  // special
+                if (i != 0 && i == len - 1) {
+                    // special
                     Vector::push_back(&mut result, string(copy buffer));
                 };
             };
 
             i = i + 1;
         };
-        if (Vector::length(&buffer) != 0) {
+
+        if (len == 0 || Vector::length(&buffer) != 0) {
             Vector::push_back(&mut result, string(buffer));
         };
         result

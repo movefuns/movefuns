@@ -91,3 +91,39 @@ script {
         };
     }
 }
+
+//# run --signers SFC
+//split string by char,  4th scene
+script {
+    use SFC::ASCII;
+    use StarcoinFramework::Option;
+    use StarcoinFramework::Vector;
+
+    fun main(_sender: signer) {
+        let bytes = b"_";
+        let string_op = ASCII::try_string(bytes);
+        if (Option::is_some<ASCII::String>(&string_op)) {
+            let string = Option::destroy_some<ASCII::String>(string_op);
+            let result = ASCII::split_by_char(string, ASCII::char(95u8)); // _ ascii is 95
+            assert!(Vector::length(&mut result) == 1, 130);
+        };
+    }
+}
+
+//# run --signers SFC
+//split string by char,  5th scene
+script {
+    use SFC::ASCII;
+    use StarcoinFramework::Option;
+    use StarcoinFramework::Vector;
+
+    fun main(_sender: signer) {
+        let bytes = b"";
+        let string_op = ASCII::try_string(bytes);
+        if (Option::is_some<ASCII::String>(&string_op)) {
+            let string = Option::destroy_some<ASCII::String>(string_op);
+            let result = ASCII::split_by_char(string, ASCII::char(95u8)); // _ ascii is 95
+            assert!(Vector::length(&mut result) == 1, 130);
+        };
+    }
+}

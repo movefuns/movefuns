@@ -2,7 +2,7 @@
 
 ## Documents
 
-- [latest](./build/starcoin-framework-commons/docs)
+- [latest](./build/movefuns/docs)
 - [v1](./release/v1/docs/)
 
 ## Usage
@@ -16,7 +16,7 @@ SFC = "0x6ee3f577c8da207830c31e1f0abb4244"
 
 [dependencies]
 StarcoinFramework = {git = "https://github.com/starcoinorg/starcoin-framework.git", rev="cf1deda180af40a8b3e26c0c7b548c4c290cd7e7"}
-starcoin-framework-commons = { git = "https://github.com/starcoinorg/starcoin-framework-commons.git", rev = "e7f538175a5f50a97207692569b6631a87ee08cc" }
+movefuns = { git = "https://github.com/starcoinorg/movefuns.git", subdir = "starcoin", rev = "e7f538175a5f50a97207692569b6631a87ee08cc" }
 ```
 
 * v1 git version: e7f538175a5f50a97207692569b6631a87ee08cc

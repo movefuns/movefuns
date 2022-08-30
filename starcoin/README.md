@@ -33,7 +33,7 @@ fun random(addr: address){
 
 ## Install mpm
 
-Download from the release page of [starcoiorg/starcoin](https://github.com/starcoinorg/starcoin).
+Download from the release page of [starcoinorg/starcoin](https://github.com/starcoinorg/starcoin).
 
 Or use:
 

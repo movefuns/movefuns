@@ -1,6 +1,6 @@
 # movefuns
 
-The Move commons library for across multiple Move chains.
+The Move commons library for support multiple Move chains.
 
 The goal of this library is to provide a common extension library for Move and to simplify the development of DApp SmartContracts on Move, like [apache-commons](https://commons.apache.org/) library on Java or [openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts) on Solidity.
 

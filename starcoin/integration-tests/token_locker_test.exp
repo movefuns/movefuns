@@ -1,0 +1,71 @@
+processed 19 tasks
+
+task 4 'run'. lines 25-33:
+{
+  "gas_used": 113964,
+  "status": "Executed"
+}
+
+task 5 'run'. lines 35-47:
+{
+  "gas_used": 132112,
+  "status": "Executed"
+}
+
+task 7 'run'. lines 51-65:
+{
+  "gas_used": 70891,
+  "status": {
+    "MoveAbort": {
+      "location": {
+        "Module": {
+          "address": "0x6ee3f577c8da207830c31e1f0abb4244",
+          "name": "TokenLocker"
+        }
+      },
+      "abort_code": "25863"
+    }
+  }
+}
+
+task 8 'run'. lines 67-80:
+{
+  "gas_used": 97685,
+  "status": "Executed"
+}
+
+task 10 'run'. lines 84-97:
+{
+  "gas_used": 130304,
+  "status": "Executed"
+}
+
+task 12 'run'. lines 101-114:
+{
+  "gas_used": 91605,
+  "status": "Executed"
+}
+
+task 13 'run'. lines 116-129:
+{
+  "gas_used": 91605,
+  "status": "Executed"
+}
+
+task 15 'run'. lines 133-146:
+{
+  "gas_used": 143965,
+  "status": "Executed"
+}
+
+task 17 'run'. lines 150-163:
+{
+  "gas_used": 130304,
+  "status": "Executed"
+}
+
+task 18 'run'. lines 165-178:
+{
+  "gas_used": 39844,
+  "status": "Executed"
+}

@@ -1,0 +1,41 @@
+processed 7 tasks
+
+task 2 'run'. lines 40-55:
+{
+  "gas_used": 72575,
+  "status": "Executed"
+}
+
+task 3 'run'. lines 56-69:
+{
+  "gas_used": 39417,
+  "status": "Executed"
+}
+
+task 4 'run'. lines 70-91:
+{
+  "gas_used": 176122,
+  "status": {
+    "MoveAbort": {
+      "location": {
+        "Module": {
+          "address": "0x6ee3f577c8da207830c31e1f0abb4244",
+          "name": "MerkleDistributor"
+        }
+      },
+      "abort_code": "511"
+    }
+  }
+}
+
+task 5 'run'. lines 92-113:
+{
+  "gas_used": 233004,
+  "status": "Executed"
+}
+
+task 6 'run'. lines 114-124:
+{
+  "gas_used": 18763,
+  "status": "Executed"
+}

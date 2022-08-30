@@ -1,0 +1,99 @@
+processed 18 tasks
+
+task 5 'run'. lines 101-113:
+{
+  "gas_used": 56179,
+  "status": "Executed"
+}
+
+task 6 'run'. lines 115-126:
+{
+  "gas_used": 257645,
+  "status": "Executed"
+}
+
+task 7 'run'. lines 128-136:
+{
+  "gas_used": 51146,
+  "status": {
+    "MoveAbort": {
+      "location": {
+        "Module": {
+          "address": "0x6ee3f577c8da207830c31e1f0abb4244",
+          "name": "RBAC"
+        }
+      },
+      "abort_code": "5"
+    }
+  }
+}
+
+task 8 'run'. lines 138-146:
+{
+  "gas_used": 25478,
+  "status": "Executed"
+}
+
+task 9 'run'. lines 148-156:
+{
+  "gas_used": 25478,
+  "status": "Executed"
+}
+
+task 10 'run'. lines 158-167:
+{
+  "gas_used": 83169,
+  "status": "Executed"
+}
+
+task 11 'run'. lines 169-177:
+{
+  "gas_used": 37580,
+  "status": {
+    "MoveAbort": {
+      "location": {
+        "Module": {
+          "address": "0xa7dcef9aef26202fce82a7c7d6672afb",
+          "name": "AnyDapp"
+        }
+      },
+      "abort_code": "101"
+    }
+  }
+}
+
+task 12 'run'. lines 179-190:
+{
+  "gas_used": 83169,
+  "status": "Executed"
+}
+
+task 13 'run'. lines 191-212:
+{
+  "gas_used": 326014,
+  "status": "Executed"
+}
+
+task 14 'run'. lines 214-236:
+{
+  "gas_used": 138997,
+  "status": "Executed"
+}
+
+task 15 'run'. lines 238-265:
+{
+  "gas_used": 91957,
+  "status": "Executed"
+}
+
+task 16 'run'. lines 267-277:
+{
+  "gas_used": 128585,
+  "status": "Executed"
+}
+
+task 17 'run'. lines 280-292:
+{
+  "gas_used": 109406,
+  "status": "Executed"
+}

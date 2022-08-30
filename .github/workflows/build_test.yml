@@ -22,15 +22,18 @@ jobs:
         run: |
           sudo apt install curl -y
           curl -s https://raw.githubusercontent.com/starcoinorg/starcoin-framework/main/scripts/dev_setup.sh | bash /dev/stdin -b -t -y -p
-      - name: build
+      - name: build for starcoin
+        working-directory: starcoin
         run: |
           source "$HOME/.profile"
           mpm package build
-      - name: test
+      - name: test for stracoin
+        working-directory: starcoin
         run: |
           source "$HOME/.profile"
           mpm package test
-      - name: integration test
+      - name: integration test for starcoin
+        working-directory: starcoin
         run: |
           source "$HOME/.profile"
           mpm integration-test

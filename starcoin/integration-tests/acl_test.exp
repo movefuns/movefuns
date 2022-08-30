@@ -1,0 +1,24 @@
+processed 5 tasks
+
+task 3 'run'. lines 32-40:
+{
+  "gas_used": 38859,
+  "status": "Executed"
+}
+
+task 4 'run'. lines 42-50:
+{
+  "gas_used": 29877,
+  "status": {
+    "ExecutionFailure": {
+      "location": {
+        "Module": {
+          "address": "0xa7dcef9aef26202fce82a7c7d6672afb",
+          "name": "ACLTest"
+        }
+      },
+      "function": 0,
+      "code_offset": 10
+    }
+  }
+}

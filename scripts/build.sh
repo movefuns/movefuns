@@ -1,12 +1,14 @@
 #!/bin/bash
 
-# Copyright (c) The Strcoin Core Contributors
+# Copyright (c) The MoveFuns DAO
 # SPDX-License-Identifier: Apache-2.0
+
+#TODO add build script for aptos and sui
 
 set -e
 
 SCRIPT_PATH="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )"
-cd "$SCRIPT_PATH/.." || exit
+cd "$SCRIPT_PATH/starcoin/.." || exit
 
 mpm package build --doc --abi --force
 

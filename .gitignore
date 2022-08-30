@@ -3,5 +3,5 @@
 .bpl
 
 # Move Build Output sources
-build/starcoin-framework-commons/sources/*.move
-build/UnitTest
+starcoin/build/starcoin-framework-commons/sources/*.move
+starcoin/build/UnitTest

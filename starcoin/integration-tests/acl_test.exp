@@ -3,26 +3,22 @@ processed 5 tasks
 task 3 'run'. lines 32-40:
 {
   "gas_used": 38859,
-  "status": {
-    "Keep": "Executed"
-  }
+  "status": "Executed"
 }
 
 task 4 'run'. lines 42-50:
 {
   "gas_used": 29877,
   "status": {
-    "Keep": {
-      "ExecutionFailure": {
-        "location": {
-          "Module": {
-            "address": "0x15d0b101053497f9a2354d63f744d5d0",
-            "name": "ACLTest"
-          }
-        },
-        "function": 0,
-        "code_offset": 10
-      }
+    "ExecutionFailure": {
+      "location": {
+        "Module": {
+          "address": "0xa7dcef9aef26202fce82a7c7d6672afb",
+          "name": "ACLTest"
+        }
+      },
+      "function": 0,
+      "code_offset": 10
     }
   }
 }

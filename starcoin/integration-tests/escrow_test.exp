@@ -4,16 +4,14 @@ task 6 'run'. lines 74-82:
 {
   "gas_used": 49255,
   "status": {
-    "Keep": {
-      "MoveAbort": [
-        {
-          "Module": {
-            "address": "0x6ee3f577c8da207830c31e1f0abb4244",
-            "name": "Escrow"
-          }
-        },
-        7
-      ]
+    "MoveAbort": {
+      "location": {
+        "Module": {
+          "address": "0x6ee3f577c8da207830c31e1f0abb4244",
+          "name": "Escrow"
+        }
+      },
+      "abort_code": "7"
     }
   }
 }
@@ -21,47 +19,35 @@ task 6 'run'. lines 74-82:
 task 7 'run'. lines 84-92:
 {
   "gas_used": 81173,
-  "status": {
-    "Keep": "Executed"
-  }
+  "status": "Executed"
 }
 
 task 8 'run'. lines 94-102:
 {
   "gas_used": 66232,
-  "status": {
-    "Keep": "Executed"
-  }
+  "status": "Executed"
 }
 
 task 9 'run'. lines 104-112:
 {
   "gas_used": 57052,
-  "status": {
-    "Keep": "Executed"
-  }
+  "status": "Executed"
 }
 
 task 10 'run'. lines 114-122:
 {
   "gas_used": 53886,
-  "status": {
-    "Keep": "Executed"
-  }
+  "status": "Executed"
 }
 
 task 11 'run'. lines 124-132:
 {
   "gas_used": 145307,
-  "status": {
-    "Keep": "Executed"
-  }
+  "status": "Executed"
 }
 
 task 12 'run'. lines 134-142:
 {
   "gas_used": 78344,
-  "status": {
-    "Keep": "Executed"
-  }
+  "status": "Executed"
 }

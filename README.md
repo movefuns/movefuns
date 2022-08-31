@@ -12,7 +12,7 @@ The library was deployed on the multi-Sign  address   ``` 0x6ee3f577c8da207830c3
 | Chain                   | MoveFuns version |    # Network |
 | ----------------------- | :--------------: | -----------: |
 | [Starcoin](./starcoin/) |      1.0.0       | main/barnard |
-| [L0](./l0/)             |      1.0.0       |   main(TODO) |
+| [0l](./0l/)             |      1.0.0       |   main(TODO) |
 | [Aptos](./aptos/)       |      1.0.0       |   test(TODO) |
 | [Sui](./sui/)           |      1.0.0       |    dev(TODO) |
 

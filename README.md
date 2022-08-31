@@ -4,17 +4,15 @@ The Move commons library for support multiple Move chains.
 
 The goal of this library is to provide a common extension library for Move and to simplify the development of DApp SmartContracts on Move, like [apache-commons](https://commons.apache.org/) library on Java or [openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts) on Solidity.
 
-The library was deployed on the multi-Sign  address   ``` 0x6ee3f577c8da207830c31e1f0abb4244 ```  
-
 
 ## Deploy status
 
-| Chain                   | MoveFuns version |    # Network |
-| ----------------------- | :--------------: | -----------: |
-| [Starcoin](./starcoin/) |      1.0.0       | main/barnard |
-| [0l](./0l/)             |      1.0.0       |   main(TODO) |
-| [Aptos](./aptos/)       |      1.0.0       |   test(TODO) |
-| [Sui](./sui/)           |      1.0.0       |    dev(TODO) |
+| Chain                   | MoveFuns version |      Network |                   Deployed Address |
+| ----------------------- | :--------------: | -----------: |----------------------------------: |
+| [Starcoin](./starcoin/) |      1.0.0       | main/barnard | 0x6ee3f577c8da207830c31e1f0abb4244 | 
+| [0l](./0l/)             |      1.0.0       |   main(TODO) ||
+| [Aptos](./aptos/)       |      1.0.0       |   test(TODO) ||
+| [Sui](./sui/)           |      1.0.0       |    dev(TODO) ||
 
 ## Roadmap
 

@@ -1,4 +1,10 @@
 [package]
 authors = ["MoveFuns DAO contributors"]
-name = "movefuns"
+name = "movefuns-aptos"
 version = "1.0.0"
+
+[addresses]
+Movefuns = "0x6ee3f577c8da207830c31e1f0abb4244"
+
+[dependencies]
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-framework/", rev = "devnet" }

@@ -45,7 +45,7 @@ You can view our [Code of Conduct](./CODE_OF_CONDUCT.md).
 Reach out to the maintainer at one of the following places:
 
 - [Move Discord](https://discord.gg/f4JSrK8T2t)
-- [Starcoin&Move Contributor Telegram group](https://t.me/starcoin_contributor)
+- [MoveFunsDAO Telegram](https://t.me/movefunsdao)
 
 ## License
 

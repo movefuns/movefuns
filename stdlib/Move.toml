@@ -1,0 +1,15 @@
+[package]
+authors = ["MoveFuns DAO contributors"]
+name = "MoveFunsStdlib"
+version = "1.0.0"
+
+[addresses]
+std = "0x1"
+# TODO: deploy and get the exact address
+movefuns = "0x1"
+
+[dependencies]
+MoveStdlib = { git = "https://github.com/move-language/move.git", subdir = "language/move-stdlib", rev = "164bf33c8b396b9a29305d9c1b9a0d3b0c5b8cef" }
+MoveNursery = { git = "https://github.com/move-language/move.git", subdir = "language/move-stdlib/nursery", rev = "164bf33c8b396b9a29305d9c1b9a0d3b0c5b8cef" }
+
+[dev-addresses]

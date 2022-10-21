@@ -5,7 +5,7 @@
 /// English auction (https://en.wikipedia.org/wiki/English_auction),
 /// one using single-owner objects only and the other using shared
 /// objects.
-module funs::auction_lib {
+module movefuns::auction_lib {
     use std::option::{Self, Option};
 
     use sui::coin;
@@ -15,8 +15,8 @@ module funs::auction_lib {
     use sui::transfer;
     use sui::tx_context::{Self,TxContext};
 
-    friend funs::auction;
-    friend funs::shared_auction;
+    friend movefuns::auction;
+    friend movefuns::shared_auction;
 
     /// Stores information about an auction bid.
     struct BidData has store {

@@ -32,7 +32,7 @@
 /// everyone. While the latter gives additional profits to the liquidity pool by
 /// charging extensive (and potentially slowing) usage.
 /// 
-module funs::dev_pass {
+module movefuns::dev_pass {
     use sui::tx_context::{TxContext};
     use sui::object::{Self, UID};
     use sui::transfer;
@@ -105,8 +105,8 @@ module funs::dev_pass {
 /// Rough outline of an AMM.
 /// For simplicity pool implementation details are omitted but marked as comments to
 /// show correllation with the `defi/pool.move` example.
-module funs::some_amm {
-    use funs::dev_pass::{Self, Subscription, SingleUse};
+module movefuns::some_amm {
+    use movefuns::dev_pass::{Self, Subscription, SingleUse};
     use sui::tx_context::{Self, TxContext};
 
     /// A type to Mark subscription
@@ -145,9 +145,9 @@ module funs::some_amm {
 
 /// Sketch for an application that uses multiple pools.
 /// Shows how subscriptions are used in `some_amm` module.
-module funs::smart_swapper {
-    use funs::some_amm::{Self, DEVPASS};
-    use funs::dev_pass::{Self, Subscription};
+module movefuns::smart_swapper {
+    use movefuns::some_amm::{Self, DEVPASS};
+    use movefuns::dev_pass::{Self, Subscription};
 
     // just some types to use as generics for pools
     struct ETH {} struct BTC {} struct KTS {}

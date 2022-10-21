@@ -12,7 +12,7 @@
 /// To publish a new pool, a type is required. Eg:
 /// ```
 /// module me::my_pool {
-///   use funs::pool;
+///   use movefuns::pool;
 ///   use sui::coin::Coin;
 ///   use sui::sui::SUI;
 ///   use sui::tx_context::TxContext;
@@ -32,7 +32,7 @@
 ///
 /// This solution is rather simple and is based on the example from the Move repo:
 /// https://github.com/move-language/move/blob/main/language/documentation/examples/experimental/coin-swap/sources/CoinSwap.move
-module funs::pool {
+module movefuns::pool {
     use sui::object::{Self, UID};
     use sui::coin::{Self, Coin};
     use sui::balance::{Self, Supply, Balance};
@@ -343,12 +343,12 @@ module funs::pool {
 /// |               +-- test_withdraw_almost_all
 /// |               +-- test_withdraw_all
 /// ```
-module funs::pool_tests {
+module movefuns::pool_tests {
     use sui::sui::SUI;
     use sui::coin::{mint_for_testing as mint, destroy_for_testing as burn};
     use sui::test_scenario::{Self as test, Scenario, next_tx, ctx}
     ;
-    use funs::pool::{Self, Pool, LSP};
+    use movefuns::pool::{Self, Pool, LSP};
 
     /// Gonna be our test token.
     struct BEEP {}

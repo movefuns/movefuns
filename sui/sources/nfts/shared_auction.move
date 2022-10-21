@@ -25,13 +25,13 @@
 ///   - otherwise the funds accumulated in the auction go to the owner
 ///   and the item goes to the bidder that won the auction
 
-module funs::shared_auction {
+module movefuns::shared_auction {
     use sui::coin::{Self, Coin};
     use sui::object;
     use sui::sui::SUI;
     use sui::tx_context::{Self, TxContext};
 
-    use funs::auction_lib::{Self, Auction};
+    use movefuns::auction_lib::{Self, Auction};
 
     // Error codes.
 

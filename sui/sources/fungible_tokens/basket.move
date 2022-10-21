@@ -6,8 +6,8 @@
 /// but this approach would work for a basket with arbitrary assets/ratios.
 /// E.g., [SDR](https://www.imf.org/en/About/Factsheets/Sheets/2016/08/01/14/51/Special-Drawing-Right-SDR)
 /// could be implemented this way.
-module funs::basket {
-    use funs::managed::MANAGED;
+module movefuns::basket {
+    use movefuns::managed::MANAGED;
     use sui::coin::{Self, Coin};
     use sui::balance::{Self, Balance, Supply};
     use sui::object::{Self, UID};

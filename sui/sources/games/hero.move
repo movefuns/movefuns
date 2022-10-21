@@ -3,7 +3,7 @@
 
 /// Example of a game character with basic attributes, inventory, and
 /// associated logic.
-module funs::hero {
+module movefuns::hero {
     use sui::coin::{Self, Coin};
     use sui::event;
     use sui::object::{Self, ID, UID};

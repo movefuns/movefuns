@@ -24,26 +24,21 @@ movefuns = { git = "https://github.com/starcoinorg/movefuns.git", subdir = "sui"
 Use SFC modules in Move:
 
 ```move
-use funs::PseudoRandom;
+use movefuns::PseudoRandom;
 
 fun random(addr: address){
     let u128 = PseudoRandom::rand_u128(&addr);
 }
 ```
 
-## Install mpm
+## Install Sui
 
-Download from the release page of [starcoinorg/starcoin](https://github.com/starcoinorg/starcoin).
+Learn how to [install and configure Sui]().
 
-Or use:
-
-```shell
-curl -s https://raw.githubusercontent.com/starcoinorg/starcoin-framework/main/scripts/dev_setup.sh | bash /dev/stdin -b -t
-```
 
 ## Build and test
 
 ```shell
-mpm package build
-mpm package test
+sui move package build
+sui move package test
 ```

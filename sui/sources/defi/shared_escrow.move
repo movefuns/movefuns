@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /// An escrow for atomic swap of objects without a trusted third party
-module funs::shared_escrow {
+module movefuns::shared_escrow {
     use std::option::{Self, Option};
 
     use sui::object::{Self, ID, UID};

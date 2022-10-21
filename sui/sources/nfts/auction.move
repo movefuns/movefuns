@@ -32,7 +32,7 @@
 ///   - otherwise the funds accumulated in the auction go to the
 ///   original owner and the item goes to the bidder that won the
 ///   auction
-module funs::auction {
+module movefuns::auction {
     use sui::coin::{Self, Coin};
     use sui::balance::Balance;
     use sui::sui::SUI;
@@ -40,7 +40,7 @@ module funs::auction {
     use sui::transfer;
     use sui::tx_context::{Self,TxContext};
 
-    use funs::auction_lib::{Self, Auction};
+    use movefuns::auction_lib::{Self, Auction};
 
     // Error codes.
 

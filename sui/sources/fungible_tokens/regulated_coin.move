@@ -9,7 +9,7 @@
 /// `borrow_mut()` and `zero()`.
 ///
 /// Each of the methods of this module requires a Witness struct to be sent.
-module funs::regulated_coin {
+module movefuns::regulated_coin {
     use sui::balance::{Self, Balance};
     use sui::tx_context::TxContext;
     use sui::object::{Self, UID};
@@ -89,8 +89,8 @@ module funs::regulated_coin {
 /// - is managed account creation (only admins can create a new balance)
 /// - has a denylist for addresses managed by the coin admins
 /// - has restricted transfers which can not be taken by anyone except the recipient
-module funs::abc {
-    use funs::regulated_coin::{Self as rcoin, RegulatedCoin as RCoin};
+module movefuns::abc {
+    use movefuns::regulated_coin::{Self as rcoin, RegulatedCoin as RCoin};
     use sui::tx_context::{Self, TxContext};
     use sui::balance::{Self, Supply, Balance};
     use sui::object::{Self, UID};
@@ -294,9 +294,9 @@ module funs::abc {
 /// |               +-- test_different_account_fail
 /// |               +-- test_not_owned_balance_fail
 /// ```
-module funs::tests {
-    use funs::funs::{Self, Abc, AbcTreasuryCap, Registry};
-    use funs::regulated_coin::{Self as rcoin, RegulatedCoin as RCoin};
+module movefuns::tests {
+    use movefuns::movefuns::{Self, Abc, AbcTreasuryCap, Registry};
+    use movefuns::regulated_coin::{Self as rcoin, RegulatedCoin as RCoin};
 
     use sui::coin::{Coin};
     use sui::test_scenario::{Self, Scenario, next_tx, ctx};
@@ -374,7 +374,7 @@ module funs::tests {
 
         next_tx(test, admin);
         {
-            funs::init_for_testing(ctx(test))
+            movefuns::init_for_testing(ctx(test))
         };
 
         next_tx(test, admin);
@@ -382,7 +382,7 @@ module funs::tests {
             let cap = test_scenario::take_from_sender<AbcTreasuryCap>(test);
             let coin = test_scenario::take_from_sender<RCoin<Abc>>(test);
 
-            funs::mint(&mut cap, &mut coin, 1000000);
+            movefuns::mint(&mut cap, &mut coin, 1000000);
 
             assert!(rcoin::value(&coin) == 1000000, 0);
 
@@ -401,7 +401,7 @@ module funs::tests {
         {
             let cap = test_scenario::take_from_sender<AbcTreasuryCap>(test);
 
-            funs::create(&cap, user1, ctx(test));
+            movefuns::create(&cap, user1, ctx(test));
 
             test_scenario::return_to_sender(test, cap);
         };
@@ -430,7 +430,7 @@ module funs::tests {
             let reg = test_scenario::take_shared<Registry>(test);
             let reg_ref = &mut reg;
 
-            funs::transfer(reg_ref, &mut coin, 500000, user1, ctx(test));
+            movefuns::transfer(reg_ref, &mut coin, 500000, user1, ctx(test));
 
             test_scenario::return_shared(reg);
             test_scenario::return_to_sender(test, coin);
@@ -439,11 +439,11 @@ module funs::tests {
         next_tx(test, user1);
         {
             let coin = test_scenario::take_from_sender<RCoin<Abc>>(test);
-            let transfer = test_scenario::take_from_sender<funs::Transfer>(test);
+            let transfer = test_scenario::take_from_sender<movefuns::Transfer>(test);
             let reg = test_scenario::take_shared<Registry>(test);
             let reg_ref = &mut reg;
 
-            funs::accept_transfer(reg_ref, &mut coin, transfer, ctx(test));
+            movefuns::accept_transfer(reg_ref, &mut coin, transfer, ctx(test));
 
             assert!(rcoin::value(&coin) == 500000, 3);
 
@@ -463,7 +463,7 @@ module funs::tests {
             let coin = test_scenario::take_from_sender<RCoin<Abc>>(test);
             let treasury_cap = test_scenario::take_from_sender<AbcTreasuryCap>(test);
 
-            funs::burn(&mut treasury_cap, &mut coin, 100000);
+            movefuns::burn(&mut treasury_cap, &mut coin, 100000);
 
             assert!(rcoin::value(&coin) == 400000, 4);
 
@@ -485,9 +485,9 @@ module funs::tests {
             let reg = test_scenario::take_shared<Registry>(test);
             let reg_ref = &mut reg;
 
-            funs::take(reg_ref, &mut coin, 100000, ctx(test));
+            movefuns::take(reg_ref, &mut coin, 100000, ctx(test));
 
-            assert!(funs::swapped_amount(reg_ref) == 100000, 5);
+            assert!(movefuns::swapped_amount(reg_ref) == 100000, 5);
             assert!(rcoin::value(&coin) == 400000, 5);
 
             test_scenario::return_shared( reg);
@@ -521,7 +521,7 @@ module funs::tests {
             let reg = test_scenario::take_shared<Registry>(test);
             let reg_ref = &mut reg;
 
-            funs::put_back(reg_ref, &mut reg_coin, coin, ctx(test));
+            movefuns::put_back(reg_ref, &mut reg_coin, coin, ctx(test));
 
             test_scenario::return_to_sender(test, reg_coin);
             test_scenario::return_shared(reg);
@@ -540,7 +540,7 @@ module funs::tests {
             let reg = test_scenario::take_shared<Registry>(test);
             let reg_ref = &mut reg;
 
-            funs::ban(&cap, reg_ref, user1);
+            movefuns::ban(&cap, reg_ref, user1);
 
             test_scenario::return_shared(reg);
             test_scenario::return_to_sender(test, cap);
@@ -559,7 +559,7 @@ module funs::tests {
             let reg = test_scenario::take_shared<Registry>(test);
             let reg_ref = &mut reg;
 
-            funs::transfer(reg_ref, &mut coin, 250000, user2, ctx(test));
+            movefuns::transfer(reg_ref, &mut coin, 250000, user2, ctx(test));
 
             test_scenario::return_shared(reg);
             test_scenario::return_to_sender(test, coin);
@@ -578,7 +578,7 @@ module funs::tests {
             let reg = test_scenario::take_shared<Registry>(test);
             let reg_ref = &mut reg;
 
-            funs::transfer(reg_ref, &mut coin, 250000, user1, ctx(test));
+            movefuns::transfer(reg_ref, &mut coin, 250000, user1, ctx(test));
 
             test_scenario::return_shared(reg);
             test_scenario::return_to_sender(test, coin);
@@ -604,7 +604,7 @@ module funs::tests {
             let reg = test_scenario::take_shared<Registry>(test);
             let reg_ref = &mut reg;
 
-            funs::transfer(reg_ref, &mut coin, 500000, user1, ctx(test));
+            movefuns::transfer(reg_ref, &mut coin, 500000, user1, ctx(test));
 
             test_scenario::return_shared(reg);
             test_scenario::return_to_sender(test, coin);

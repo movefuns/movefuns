@@ -7,7 +7,7 @@
 
 /// An example implementation of a 'private balance' that stores a balance
 /// that can be spent, but has a value that is known only to the owner of the balance.
-module funs::private_balance {
+module movefuns::private_balance {
     /// For when trying to destroy a non-zero balance.
     const ENonZero: u64 = 0;
     /// For when an overflow is happening on Supply operations.

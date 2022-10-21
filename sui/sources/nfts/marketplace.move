@@ -1,8 +1,8 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-module funs::marketplace {
-    use funs::bag::{Self, Bag};
+module movefuns::marketplace {
+    use movefuns::bag::{Self, Bag};
     use sui::tx_context::{Self, TxContext};
     use sui::object::{Self, ID, UID};
     use sui::typed_id::{Self, TypedID};
@@ -122,14 +122,14 @@ module funs::marketplace {
 }
 
 #[test_only]
-module funs::marketplaceTests {
+module movefuns::marketplaceTests {
     use sui::object::{Self, UID};
     use sui::transfer;
     use sui::coin;
     use sui::sui::SUI;
     use sui::test_scenario::{Self, Scenario};
-    // use funs::bag::{Self, Bag};
-    use funs::marketplace;
+    // use movefuns::bag::{Self, Bag};
+    use movefuns::marketplace;
 
     // Simple Kitty-NFT data structure.
     struct Kitty has key, store {

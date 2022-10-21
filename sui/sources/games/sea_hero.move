@@ -8,8 +8,8 @@
 /// earns RUM tokens for hero's owner.
 /// Note that this mod does not require special permissions from `Hero` module;
 /// anyone is free to create a mod like this.
-module funs::sea_hero {
-    use funs::hero::{Self, Hero};
+module movefuns::sea_hero {
+    use movefuns::hero::{Self, Hero};
 
     use sui::balance::{Self, Balance, Supply};
     use sui::object::{Self, UID};

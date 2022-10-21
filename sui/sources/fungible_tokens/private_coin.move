@@ -10,11 +10,11 @@
 /// To implement any of the methods, module defining the type for the currency
 /// is expected to implement the main set of methods such as `borrow()`,
 /// `borrow_mut()` and `zero()`.
-module funs::private_coin {
+module movefuns::private_coin {
     use sui::transfer;
     use sui::tx_context::{Self, TxContext};
     use sui::object::{Self, UID};
-    use funs::private_balance::{Self, PrivateBalance, Supply};
+    use movefuns::private_balance::{Self, PrivateBalance, Supply};
     use sui::elliptic_curve::{Self as ec, RistrettoPoint};
 
     /// A private coin of type `T` worth `value`.
@@ -218,10 +218,10 @@ module funs::private_coin {
 ///////////////////////////////////////////
 
 #[test_only]
-module funs::private_coin_tests {
+module movefuns::private_coin_tests {
     use sui::test_scenario::{Self as test, Scenario, next_tx, ctx};
-    use funs::private_coin::{Self as pc};
-    use funs::private_balance::{Self as pb};
+    use movefuns::private_coin::{Self as pc};
+    use movefuns::private_balance::{Self as pb};
     use sui::transfer;
     use sui::elliptic_curve::{Self as ec};
     use std::option;

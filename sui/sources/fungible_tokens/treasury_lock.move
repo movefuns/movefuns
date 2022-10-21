@@ -9,7 +9,7 @@
 /// of a Coin so that additional whitelisted parties (bearers of the `MintCap`)
 /// can mint new Coins up to a pre-defined per epoch limit. This can be used e.g.
 /// to create a faucet.
-module funs::treasury_lock {
+module movefuns::treasury_lock {
     use sui::object::{Self, UID, ID};
     use sui::coin::{Self, TreasuryCap};
     use sui::balance::{Balance};
@@ -167,13 +167,13 @@ module funs::treasury_lock {
 }
 
 #[test_only]
-module funs::treasury_lock_tests {
+module movefuns::treasury_lock_tests {
     use sui::test_scenario::{Self, Scenario};
     use sui::balance::{Self, Balance};
     use sui::transfer;
     use sui::coin;
     use sui::object::{Self};
-    use funs::treasury_lock::{Self, TreasuryLock, LockAdminCap, MintCap, create_and_transfer_mint_cap, new_lock, mint_balance};
+    use movefuns::treasury_lock::{Self, TreasuryLock, LockAdminCap, MintCap, create_and_transfer_mint_cap, new_lock, mint_balance};
 
     const ADMIN: address = @0xABBA;
     const USER: address = @0xB0B;

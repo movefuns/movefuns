@@ -7,9 +7,9 @@
 /// the monster for them in exchange for some of the reward.
 /// Anyone can create a mod like this--the permission of the `SeaHero` game
 /// is not required.
-module funs::sea_hero_helper {
-    use funs::sea_hero::{Self, SeaMonster, RUM};
-    use funs::hero::Hero;
+module movefuns::sea_hero_helper {
+    use movefuns::sea_hero::{Self, SeaMonster, RUM};
+    use movefuns::hero::Hero;
     use sui::coin::{Self, Coin};
     use sui::object::{Self, UID};
     use sui::transfer;

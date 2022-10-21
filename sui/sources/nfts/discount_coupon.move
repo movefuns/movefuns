@@ -1,7 +1,7 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-module funs::discount_coupon {
+module movefuns::discount_coupon {
     use sui::coin;
     use sui::object::{Self, UID};
     use sui::sui::SUI;

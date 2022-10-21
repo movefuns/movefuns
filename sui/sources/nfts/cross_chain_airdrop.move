@@ -5,7 +5,7 @@
 /// only be one copy for each unique pair of contract_address and token_id. We only
 /// support a single chain(Ethereum) right now, but this can be extended to other
 /// chains by adding a chain_id field.
-module funs::cross_chain_airdrop {
+module movefuns::cross_chain_airdrop {
     use std::vector;
     use sui::erc721_metadata::{Self, ERC721Metadata, TokenID};
     use sui::object::{Self, UID};

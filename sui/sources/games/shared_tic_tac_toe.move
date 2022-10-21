@@ -14,7 +14,7 @@
 // to take turns to place the marker, there won't be a significant overhead in practice.
 // As we can see, by using shared object, the implementation is much
 // simpler than the other implementation.
-module funs::shared_tic_tac_toe {
+module movefuns::shared_tic_tac_toe {
     use std::vector;
 
     use sui::object::{Self, ID, UID};

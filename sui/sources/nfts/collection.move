@@ -11,7 +11,7 @@
 /// Collection allows us to own a list of same-typed objects, but still able to
 /// access and operate on each individual object.
 /// In contrast to `Bag`, `Collection` requires all objects have the same type.
-module funs::collection {
+module movefuns::collection {
     use sui::object::{Self, ID, UID};
     use sui::transfer;
     use sui::typed_id::{Self, TypedID};

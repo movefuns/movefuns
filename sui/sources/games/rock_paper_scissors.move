@@ -25,7 +25,7 @@
 // - If player never revealed the secret
 // - If game owner never took or revealed the results (incentives?)
 
-module funs::rock_paper_scissors {
+module movefuns::rock_paper_scissors {
     use sui::object::{Self, UID};
     use sui::tx_context::{Self, TxContext};
     use sui::transfer::{Self};

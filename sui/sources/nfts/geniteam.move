@@ -1,9 +1,9 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-module funs::geniteam {
-    use funs::bag::{Self, Bag};
-    use funs::collection::{Self, Collection};
+module movefuns::geniteam {
+    use movefuns::bag::{Self, Bag};
+    use movefuns::collection::{Self, Collection};
     use sui::object::{Self, UID};
     use sui::typed_id::{Self, TypedID};
     use sui::tx_context::{Self, TxContext};

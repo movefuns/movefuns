@@ -2,3 +2,12 @@
 authors = ["MoveFuns DAO contributors"]
 name = "movefuns"
 version = "1.0.0"
+
+[dependencies]
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework", rev = "devnet" }
+
+[addresses]
+funs =  "0x0"
+sui =  "0000000000000000000000000000000000000002"
+
+[dev-dependencies]

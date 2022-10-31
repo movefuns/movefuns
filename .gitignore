@@ -7,3 +7,5 @@ starcoin/build/movefuns/sources
 starcoin/build/StarcoinFramework
 
 stdlib/build
+
+build/

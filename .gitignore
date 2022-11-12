@@ -1,11 +1,14 @@
 .DS_Store
 .idea
 .bpl
+.aptos
+
+build/
+stdlib/build
 
 # Move Build Output sources
 starcoin/build/movefuns/sources
 starcoin/build/StarcoinFramework
 
-stdlib/build
 
-build/
+

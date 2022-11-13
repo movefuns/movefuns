@@ -6,7 +6,6 @@ module movefuns::coin_locker_test {
     use aptos_framework::managed_coin;
     use aptos_framework::timestamp;
     use std::signer;
-    use std::vector;
 
     struct DummyCoin has store {}
 
@@ -25,7 +24,6 @@ module movefuns::coin_locker_test {
         let framework_signer = account::create_account_for_test(@aptos_framework);
         let admin = account::create_account_for_test(@movefuns);
         let alice = account::create_account_for_test(@0x1234);
-        let admin_addr = signer::address_of(&admin);
         let alice_addr = signer::address_of(&alice);
 
         timestamp::set_time_has_started_for_testing(&framework_signer);
@@ -39,7 +37,7 @@ module movefuns::coin_locker_test {
         coin_locker::lock_self<DummyCoin>(&alice, 1000000, 200000);
         assert!(coin::balance<DummyCoin>(alice_addr) == 0, 2);
 
-        timestamp::update_global_time_for_test(200000);
+        timestamp::update_global_time_for_test_secs(200000);
         coin_locker::unlock_self<DummyCoin>(&alice);
         assert!(coin::balance<DummyCoin>(alice_addr) == 1000000, 3);
     }

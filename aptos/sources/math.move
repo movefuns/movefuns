@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 /// The module provide some improved math calculations.
 module movefuns::math {
     use std::vector;

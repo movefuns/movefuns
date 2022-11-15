@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 #[test_only]
 module movefuns::linear_vesting_test {
     use movefuns::linear_vesting as lv;

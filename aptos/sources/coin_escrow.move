@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 /// @title Escrow
 /// @dev token escrow module: holds an token object designated for a recipient until the sender approves withdrawal.
 module movefuns::coin_escrow {

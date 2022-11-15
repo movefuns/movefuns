@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 module movefuns::merkle_distributor {
     use movefuns::merkle_proof;
     use aptos_framework::coin::{Self, Coin};

@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 module movefuns::linear_vesting {
     use movefuns::counter;
     use movefuns::math;

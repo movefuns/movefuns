@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 /// A generic module for role-based access control (RBAC).
 ///
 /// Every account can be assigned with multiple roles, and

@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 module movefuns::coin_locker {
     use aptos_framework::coin::{Self, Coin};
     use aptos_framework::timestamp;

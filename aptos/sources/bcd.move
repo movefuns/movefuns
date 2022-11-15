@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 /// Utility for deserializing a Move value from its binary representation in BCS (Diem Canonical
 /// Serialization) format. BCS is the binary encoding for Move resources and other non-module values
 /// published on-chain.

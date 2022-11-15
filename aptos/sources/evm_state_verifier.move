@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 /// Utilities to verify EVM states.
 module movefuns::evm_state_verifier {
     use movefuns::rlp;

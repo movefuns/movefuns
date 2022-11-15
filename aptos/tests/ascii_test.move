@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 #[test_only]
 module movefuns::ascii_test {
     use movefuns::ascii;

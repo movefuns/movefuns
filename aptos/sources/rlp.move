@@ -1,5 +1,8 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 /// Recursive Length Prefix (RLP) serialization is used extensively in Ethereum's execution clients.
-/// See here: https://ethereum.org/en/developers/docs/data-structures-and-encoding/rlp/
+/// See details here: https://ethereum.org/en/developers/docs/data-structures-and-encoding/rlp/
 module movefuns::rlp {
     use movefuns::vector_utils;
     use std::vector;

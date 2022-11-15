@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 module movefuns::time {
     const SECOND_IN_SECONDS: u64 = 1;
     const MINUTE_IN_SECONDS: u64 = 1 * 60;

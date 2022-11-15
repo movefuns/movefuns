@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 #[test_only]
 module movefuns::evm_state_verifier_test {
     use movefuns::evm_state_verifier;

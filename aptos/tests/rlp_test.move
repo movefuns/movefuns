@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 #[test_only]
 module movefuns::rlp_test {
     use movefuns::rlp::{encode_integer_in_big_endian, encode_list, decode_list};

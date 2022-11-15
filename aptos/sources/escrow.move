@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 /// @title Escrow
 /// @dev Basic escrow module: holds an object designated for a recipient until the sender approves withdrawal.
 module movefuns::escrow {

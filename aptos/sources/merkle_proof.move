@@ -1,3 +1,6 @@
+// Copyright (c) The MoveFuns DAO
+// SPDX-License-Identifier: Apache-2.0
+
 module movefuns::merkle_proof {
     use aptos_std::comparator;
     use std::hash;
